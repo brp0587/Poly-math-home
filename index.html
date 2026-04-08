@@ -47,7 +47,38 @@
             flex-direction: column;
             overflow-x: hidden;
         }
+/* Ticker Container Styles */
+.acknowledgment-ticker-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: #f1f5f9; /* Soft, professional light blue/grey background */
+    color: #334155; /* Dark slate text for high readability */
+    padding: 12px 0;
+    border-top: 2px solid #e2e8f0;
+    position: relative; /* Change to 'fixed' and add 'bottom: 0;' if you want it to always float on the screen */
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    z-index: 1000;
+}
 
+/* Ticker Animation Styles */
+.acknowledgment-ticker {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%; /* Starts the text off-screen to the right */
+    animation: scrollTicker 30s linear infinite;
+}
+
+/* Pause the animation when the user hovers over it with their mouse */
+.acknowledgment-ticker-container:hover .acknowledgment-ticker {
+    animation-play-state: paused;
+}
+
+/* Keyframes for the scrolling effect */
+@keyframes scrollTicker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -502,5 +533,10 @@
 
     
     </script>
+    <div class="acknowledgment-ticker-container">
+    <div class="acknowledgment-ticker">
+        <strong>Acknowledgments:</strong> We extend our heartfelt gratitude to <strong>Mr. P. S. Patel</strong> (Lecturer in Mathematics, GP Navsari), <strong>Ms. Mallika Patel</strong> (Lecturer in Mathematics, GP Waghai), and <strong>Dr. S. R. Barot</strong> (Lecturer in Mathematics, GP Valsad) for their generous time, expert guidance, and invaluable suggestions in improving this educational module.
+    </div>
+</div>
 </body>
 </html>
