@@ -852,11 +852,25 @@
 
     </div>
 
-    <footer>
-        <div class="footer-left">
-            Page Visits / પેજની મુલાકાતો: <span id="visit-counter">0</span>
+   <footer>
+        <!-- Left Side: Individual Page Visits -->
+        <div style="flex: 1; text-align: left;">
+            <span style="color: white; background: var(--primary); padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
+                Page Visits: 
+                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FYOUR_PAGE_NAME&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="height: 20px;">
+            </span>
         </div>
-        <div class="footer-right">
+
+        <!-- Center: Global Site Visits -->
+        <div style="flex: 1; text-align: center;">
+            <span style="color: white; background: #1e293b; border: 1px solid #475569; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                Total Site Visits: 
+                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="height: 20px;">
+            </span>
+        </div>
+
+        <!-- Right Side: Copyright -->
+        <div style="flex: 1; text-align: right; font-weight: bold; color: var(--accent);">
             Prepared by Bhavin R Patel, Lecturer Mathematics
         </div>
     </footer>
