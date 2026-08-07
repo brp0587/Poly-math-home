@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GTU Semester 1 Mathematics: Complete Practice Bank</title>
+    
+    <script>
+        window.MathJax = { 
+            tex: { 
+                inlineMath: [['$', '$'], ['\\(', '\\)']], 
+                displayMath: [['$$', '$$'], ['\\[', '\\]']], 
+                processEscapes: true 
+            }, 
+            options: { 
+                ignoreHtmlClass: 'tex2jax_ignore', 
+                processHtmlClass: 'tex2jax_process' 
+            } 
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root { --primary: #0f172a; --secondary: #b91c1c; --bg-light: #f8fafc; --text-main: #1e293b; --text-muted: #475569; --accent: #0284c7; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #cbd5e1; color: var(--text-main); margin: 0; padding: 20px; padding-bottom: 100px; line-height: 1.6; }
+        .container { max-width: 1100px; width: 100%; margin: auto; background: #fff; padding: 35px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); position: relative; }
+        .header-section { text-align: center; margin-bottom: 25px; border-bottom: 4px solid var(--secondary); padding-bottom: 15px; }
+        h1 { color: var(--primary); margin: 0; font-size: 2.2em; }
+        #timer-display { display: none; position: absolute; top: 25px; right: 35px; background: var(--primary); color: white; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 1.2em; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .student-info-section, .controls { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #7dd3fc; }
+        .student-info-section { background: #e0f2fe; }
+        .controls { background: var(--bg-light); border-color: #94a3b8; }
+        .info-group, .control-group { flex: 1; min-width: 250px; display: flex; flex-direction: column; }
+        .info-label, label.control-label { font-weight: bold; margin-bottom: 8px; color: var(--primary); font-size: 1.05em; }
+        input[type="text"], select, button { padding: 12px; font-size: 1.05em; border-radius: 6px; border: 1px solid #64748b; width: 100%; font-family: inherit; }
+        input[type="text"]:disabled { background-color: transparent; color: var(--primary); font-weight: bold; border-color: transparent; padding-left: 0; }
+        .timestamp-display { font-size: 1.1em; font-weight: bold; color: var(--secondary); padding: 10px 0; }
+        button.primary-btn { background: var(--accent); color: white; border: none; cursor: pointer; font-weight: bold; transition: background 0.3s; margin-top: auto; }
+        button.primary-btn:hover { background: #0369a1; }
+        button.action-btn { background: #059669; color: white; border: none; font-size: 1.2em; padding: 18px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; transition: background 0.3s; }
+        button.action-btn:hover { background: #047857; }
+        button.print-btn { background: #475569; }
+        button.print-btn:hover { background: #334155; }
+        .action-buttons-container { display: none; flex-direction: column; gap: 15px; margin-top: 30px; }
+        .question-block { margin-bottom: 30px; padding: 25px; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 6px solid var(--accent); box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-size: 1.15em; overflow-x: auto; }
+        .bilingual-en { font-weight: 600; color: var(--primary); margin-bottom: 8px;}
+        .bilingual-gu { color: var(--text-muted); font-size: 0.95em; margin-bottom: 15px; }
+        
+        .gtu-table { width: 100%; max-width: 800px; border-collapse: collapse; margin: 15px 0; text-align: center; font-size: 0.95em; }
+        .gtu-table th, .gtu-table td { border: 1px solid #94a3b8; padding: 10px; }
+        .gtu-table th { background-color: #f8fafc; color: var(--primary); font-weight: bold; }
+
+        .options { list-style-type: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .options label { display: flex; align-items: flex-start; padding: 15px; background: var(--bg-light); border: 2px solid transparent; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 1.05em; word-break: break-word; }
+        .options label:hover { background: #e0f2fe; border-color: #38bdf8; }
+        .options input[type="radio"] { margin-right: 12px; margin-top: 5px; transform: scale(1.3); flex-shrink: 0; }
+        .options input[type="radio"]:checked + span { font-weight: bold; color: var(--accent); }
+        .solution { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; font-size: 1.05em; line-height: 1.6; border-top: 2px dashed #cbd5e1; overflow-x: auto; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .solution-correct { background-color: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; border-left-color: #059669; }
+        .solution-incorrect { background-color: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; border-left-color: #dc2626;}
+        #summary-card { display: none; text-align: center; margin-bottom: 30px; padding: 25px; background: #f0f9ff; color: #0369a1; border-radius: 12px; border: 2px solid #38bdf8; }
+        .summary-title { font-size: 1.8em; font-weight: bold; margin-bottom: 10px; }
+        .summary-stats { font-size: 1.2em; margin-bottom: 15px; }
+        .summary-msg { font-size: 1.1em; font-weight: bold; padding: 10px; border-radius: 6px; display: inline-block; }
+        @media(max-width: 768px) { body { padding: 10px; padding-bottom: 110px; } .container { padding: 15px; } .options { grid-template-columns: 1fr; } }
+        @media(min-width: 769px) { .action-buttons-container { flex-direction: row; } }
+        @media print { body { background: #fff; padding: 0; color: #000; } .container { box-shadow: none; margin: 0; padding: 0; } .controls, .action-buttons-container, .page-footer, #timer-display, nav { display: none !important; } .question-block { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; } }
+        
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: #0F172A;
+            color: #9CA3AF;
+            border-top: 4px solid #2563EB;
+            font-size: 0.95rem;
+            margin-top: 3rem;
+        }
+        .page-footer .copyright { text-align: right; line-height: 1.5; }
+        @media (max-width: 768px) { 
+            .page-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .page-footer .copyright { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+<div class="container">
+    <div class="header-section">
+        <h1>GTU Semester 1 Mathematics: Complete Practice Bank</h1>
+        <div id="timer-display">⏱ 00:00</div>
+    </div>
+    
+    <div class="student-info-section">
+        <div class="info-group">
+            <label class="info-label" for="studentName">Student Name:</label>
+            <input type="text" id="studentName" placeholder="Enter your full name (Alphabets only)">
+        </div>
+        <div class="info-group">
+            <label class="info-label" for="enrollmentNo">Enrollment No.:</label>
+            <input type="text" id="enrollmentNo" placeholder="Enter 12-digit enrollment number" maxlength="12">
+        </div>
+        <div class="info-group" id="timestamp-group" style="display: none; justify-content: flex-end;">
+            <label class="info-label">Test Completed On:</label>
+            <div id="test-timestamp" class="timestamp-display"></div>
+        </div>
+    </div>
+    <div class="controls">
+        <div class="control-group">
+            <label class="control-label" for="topicSelect">1. Select Unit (યુનિટ પસંદ કરો):</label>
+            <select id="topicSelect">
+                <option value="determinant">Unit 1: Determinant and Function</option>
+                <option value="trigonometry">Unit 2: Trigonometry</option>
+                <option value="vectors">Unit 3: Vectors</option>
+                <option value="coordinate_geometry">Unit 4: Coordinate Geometry</option>
+                <option value="limits">Unit 5: Limit</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="typeSelect">2. Practice Type (પ્રેક્ટિસ પ્રકાર):</label>
+            <select id="typeSelect">
+                <option value="mcq">MCQ Objectives (15 Questions)</option>
+                <option value="examples">Practice Examples (10 Questions)</option>
+            </select>
+        </div>
+        <div class="control-group" style="justify-content: flex-end;">
+            <button class="primary-btn" onclick="generateQuiz()">Generate GTU-Aligned Test</button>
+        </div>
+    </div>
+
+    <div id="summary-card"></div>
+    <form id="quiz-form"></form>
+    
+    <div class="action-buttons-container" id="action-buttons">
+        <button type="button" class="action-btn" id="submit-btn" onclick="gradeQuiz()">Submit Test & View Solutions</button>
+        <button type="button" class="action-btn print-btn" onclick="window.print()">🖨️ Save / Print as PDF</button>
+    </div>
+</div>
+
+<footer class="page-footer">
+    <div class="counters-wrapper">
+        <div class="visit-counter" style="margin-bottom: 5px;">
+            This Page Visits: 
+            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2Fpractice-test-sem1&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+        </div>
+
+        <div class="visit-counter" style="margin-bottom: 5px;">
+            Total Site Visits: 
+            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+    </div>
+</footer>
+
+<script>
+    function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
+
+    let timerInterval; let secondsElapsed = 0;
+    function startTimer() { clearInterval(timerInterval); secondsElapsed = 0; const td = document.getElementById('timer-display'); td.style.display = window.innerWidth > 768 ? 'block' : 'inline-block'; td.innerText = "⏱ 00:00"; timerInterval = setInterval(() => { secondsElapsed++; let m = Math.floor(secondsElapsed / 60).toString().padStart(2, '0'); let s = (secondsElapsed % 60).toString().padStart(2, '0'); td.innerText = `⏱ ${m}:${s}`; }, 1000); }
+    function stopTimer() { clearInterval(timerInterval); let m = Math.floor(secondsElapsed / 60).toString().padStart(2, '0'); let s = (secondsElapsed % 60).toString().padStart(2, '0'); return `${m} minutes and ${s} seconds`; }
+    function renderMath() { if (window.MathJax && window.MathJax.typesetPromise) { MathJax.typesetPromise().catch(err => console.error(err)); } else { setTimeout(renderMath, 150); } }
+
+    const generators = {
+        "determinant": {
+            "mcq": [
+                () => ({ en: `$\\log_3 1 = $`, gu: `$\\log_3 1 = $`, correct: `0`, distractors: [`1`, `3`, `1/3`], sol: `Logarithm of 1 to any base is 0.` }),
+                () => ({ en: `If $f(x) = e^{x-1}$, then $f(1) = $`, gu: `જો $f(x) = e^{x-1}$ હોય તો $f(1) = $`, correct: `1`, distractors: [`0`, `-1`, `$e$`], sol: `$f(1) = e^{1-1} = e^0 = 1$.` }),
+                () => ({ en: `$\\log_5 125 = $`, gu: `$\\log_5 125 = $`, correct: `3`, distractors: [`25`, `125`, `0`], sol: `$5^3 = 125 \\implies \\log_5 125 = 3$.` }),
+                () => ({ en: `If $f(x) = x^3 - 7$, then $f(-2) = $`, gu: `જો $f(x) = x^3 - 7$ હોય તો સીધી કિંમત મૂકતા $f(-2) = $`, correct: `-15`, distractors: [`1`, `-1`, `15`], sol: `$f(-2) = (-2)^3 - 7 = -8 - 7 = -15$.` }),
+                () => ({ en: `If $a = 4i - 3j$, then $|a| = $`, gu: `જો $a = 4i - 3j$ હોય તો સદિશનું મૂલ્ય $|a| = $`, correct: `5`, distractors: [`0`, `1`, `7`], sol: `$|a| = \\sqrt{4^2 + (-3)^2} = \\sqrt{16 + 9} = \\sqrt{25} = 5$.` }),
+                () => ({ en: `If $f(x) = x^2$, then $f(-1) = $`, gu: `જો $f(x) = x^2$ હોય તો $f(-1) = $`, correct: `1`, distractors: [`0`, `-1`, `2`], sol: `$f(-1) = (-1)^2 = 1$.` }),
+                () => ({ en: `$\\log_{10} 1 = $`, gu: `$\\log_{10} 1 = $`, correct: `0`, distractors: [`1`, `10`, `-1`], sol: `Logarithm of 1 is always 0.` }),
+                () => ({ en: `If $\\begin{vmatrix} x & 1 \\\\ 4 & 2 \\end{vmatrix} = 6$, then $x = $`, gu: `જો $\\begin{vmatrix} x & 1 \\\\ 4 & 2 \\end{vmatrix} = 6$ તો $x = $`, correct: `5`, distractors: [`1`, `-5`, `-1`], sol: `$2x - (4)(1) = 6 \\implies 2x - 4 = 6 \\implies 2x = 10 \\implies x = 5$.` }),
+                () => ({ en: `If $\\log_3 x = 2$, then $x = $`, gu: `જો $\\log_3 x = 2$ તો $x = $`, correct: `9`, distractors: [`1`, `6`, `8`], sol: `Exponential form: $x = 3^2 = 9$.` }),
+                () => ({ en: `$4^{\\log_4 16} = $`, gu: `$4^{\\log_4 16} = $`, correct: `16`, distractors: [`1`, `4`, `2`], sol: `Using identity $a^{\\log_a N} = N$, answer is 16.` }),
+                () => ({ en: `If $f(x) = 5^x$, then $f(-2) = $`, gu: `જો $f(x) = 5^x$ હોય તો $f(-2) = $`, correct: `$1/25$`, distractors: [`10`, `25`, `-10`], sol: `$f(-2) = 5^{-2} = 1/5^2 = 1/25$.` }),
+                () => ({ en: `$\\begin{vmatrix} -1 & 3 \\\\ -4 & 6 \\end{vmatrix} = $`, gu: `$\\begin{vmatrix} -1 & 3 \\\\ -4 & 6 \\end{vmatrix} = $`, correct: `6`, distractors: [`-18`, `-6`, `18`], sol: `$= (-1)(6) - (3)(-4) = -6 + 12 = 6$.` }),
+                () => ({ en: `If $\\log_x (9/16) = -2$, then $x = $`, gu: `જો $\\log_x (9/16) = -2$ તો $x =$`, correct: `$4/3$`, distractors: [`$3/4$`, `$81/256$`, `$256/81$`], sol: `$x^{-2} = 9/16 \\implies x^2 = 16/9 \\implies x = 4/3$.` }),
+                () => ({ en: `$\\log_b a \\times \\log_a b = $`, gu: `$\\log_b a \\times \\log_a b = $`, correct: `1`, distractors: [`0`, `$a^b$`, `$ab$`], sol: `Base change rule yields 1.` }),
+                () => ({ en: `$\\log x - \\log y = $`, gu: `$\\log x - \\log y = $`, correct: `$\\log(x/y)$`, distractors: [`$\\log(xy)$`, `$\\log(y/x)$`, `$\\log(x-y)$`], sol: `Standard logarithmic quotient law.` })
+            ],
+            "examples": [
+                () => ({ en: `Find the value of the 3rd order determinant: $\\begin{vmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{vmatrix}$`, gu: `નિશ્ચાયકનું મૂલ્ય શોધો: $\\begin{vmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{vmatrix}$`, correct: `0`, distractors: [`1`, `-1`, `12`], sol: `Expanding along rows/columns gives 0.` }),
+                () => { let a=rand(2,4); return { en: `Solve the equation: $\\begin{vmatrix} 4 & 2 & x \\\\ 1 & 5 & -1 \\\\ 3 & 2 & 3 \\end{vmatrix} = 4$.`, gu: `સમીકરણ ઉકેલો: $\\begin{vmatrix} 4 & 2 & x \\\\ 1 & 5 & -1 \\\\ 3 & 2 & 3 \\end{vmatrix} = 4$.`, correct: `4`, distractors: [`-4`, `0`, `2`], sol: `Expand and solve for $x$ to get $x=4$.` }; },
+                () => ({ en: `Prove that $\\frac{1}{\\log_{24} 12} + \\frac{1}{\\log_{8} 12} + \\frac{1}{\\log_{9} 12} = 3$.`, gu: `સાબિત કરો કે $\\frac{1}{\\log_{24} 12} + \\frac{1}{\\log_{8} 12} + \\frac{1}{\\log_{9} 12} = 3$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Using base change rule, expression becomes $\\log_{12}(24 \\times 8 \\times 9) = \\log_{12}(1728) = \\log_{12}(12^3) = 3$.` }),
+                () => ({ en: `If $f(x) = \\frac{1-x}{1+x}$, prove that $f(x) \\cdot f(-x) = 1$ and $f(x) + f(1/x) = 0$.`, gu: `જો $f(x) = \\frac{1-x}{1+x}$ હોય તો સાબિત કરો કે (1) $f(x) \\cdot f(-x) = 1$ (2) $f(x) + f(1/x) = 0$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Substitute functions and verify identities algebraically.` }),
+                () => ({ en: `Solve: $\\log_3 x + \\log_3 16 / \\log_3 32 = \\log_3 256$ (Simplified standard form).`, gu: `ઉકેલો.`, correct: `x = 1024`, distractors: [`x = 64`, `x = 256`, `x = 32`], sol: `Apply logarithmic laws to isolate $x$.` }),
+                () => ({ en: `If $\\log_{10} x^{b-c} = \\log_{10} y^{c-a} = \\log_{10} z^{a-b}$, prove that $xyz = 1$ and $x^a y^b z^c = 1$.`, gu: `જો $\\log_{10} x^{b-c} = \\log_{10} y^{c-a} = \\log_{10} z^{a-b}$ હોય તો સાબિત કરો કે $xyz = 1$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Equate each term to $k$, express $x, y, z$ in terms of $k$, and substitute.` }),
+                () => ({ en: `If $f(x) = \\log\\left(\\frac{1-x}{1+x}\\right)$, prove that $f\\left(\\frac{2x}{1+x^2}\\right) = 2f(x)$.`, gu: `જો $f(x) = \\log\\left(\\frac{1-x}{1+x}\\right)$ હોય તો સાબિત કરો કે $f\\left(\\frac{2x}{1+x^2}\\right) = 2f(x)$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Substitute argument and use logarithmic properties to factor out 2.` }),
+                () => ({ en: `Evaluate the determinant: $\\begin{vmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{vmatrix}$.`, gu: `નિશ્ચાયકનું મૂલ્ય શોધો: $\\begin{vmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{vmatrix}$.`, correct: `0`, distractors: [`1`, `15`, `-3`], sol: `Expansion yields 0.` }),
+                () => ({ en: `If $\\log\\left(\\frac{a+b}{2}\\right) = \\frac{1}{2}(\\log a + \\log b)$, prove that $a = b$.`, gu: `જો $\\log\\left(\\frac{a+b}{2}\\right) = \\frac{1}{2}(\\log a + \\log b)$ હોય તો સાબિત કરો કે $a = b$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Exponentiate both sides: $\\frac{a+b}{2} = \\sqrt{ab} \\implies (a-b)^2 = 0 \\implies a=b$.` }),
+                () => ({ en: `Solve the matrix/determinant equation: $\\begin{vmatrix} x & 2 & 3 \\\\ 5 & 0 & 7 \\\\ 3 & 1 & 2 \\end{vmatrix} = 30$.`, gu: `સમીકરણ ઉકેલો: $\\begin{vmatrix} x & 2 & 3 \\\\ 5 & 0 & 7 \\\\ 3 & 1 & 2 \\end{vmatrix} = 30$.`, correct: `x = 1`, distractors: [`x = -1`, `x = 2`, `x = 0`], sol: `Expand and solve for $x$ to get $x = 1$.` })
+            ]
+        },
+        "trigonometry": {
+            "mcq": [
+                () => ({ en: `Principal period of $\\cos x$ is:`, gu: `$\\cos x$ વિધેયનું મુખ્ય આવતમાન = `, correct: `$2\\pi$`, distractors: [`$\\pi$`, `$4\\pi$`, `$3\\pi$`], sol: `Standard cosine period is $2\\pi$.` }),
+                () => ({ en: `$150^\\circ =$ __________ Radian`, gu: `$150^\\circ =$ `, correct: `$5\\pi/6$`, distractors: [`$5\\pi/3$`, `$3\\pi/5$`, `$2\\pi/3$`], sol: `$150 \\times \\pi/180 = 5\\pi/6$.` }),
+                () => ({ en: `$\\sin^{-1} x + \\cos^{-1} x = $`, gu: `$\\sin^{-1} x + \\cos^{-1} x = $`, correct: `$\\pi/2$`, distractors: [`1`, `$\\pi$`, `0`], sol: `Standard inverse trigonometric identity.` }),
+                () => ({ en: `Principal period of $2\\sin\\theta \\cos\\theta = $`, gu: `$2\\sin\\theta \\cos\\theta$ નો મુખ્ય આવતકાળ = `, correct: `$\\pi$`, distractors: [`$2\\pi$`, `0`, `$\\pi/2$`], sol: `$2\\sin\\theta\\cos\\theta = \\sin(2\\theta)$, period is $2\\pi/2 = \\pi$.` }),
+                () => ({ en: `$\\tan^{-1} x + \\cot^{-1} x = $ _____`, gu: `$\\tan^{-1} x + \\cot^{-1} x = $ _____`, correct: `$\\pi/2$`, distractors: [`1`, `0`, `$\\pi$`], sol: `Standard identity for all $x \\in R$.` }),
+                () => ({ en: `$216^\\circ =$ _________ Radian`, gu: `$216^\\circ =$ _________ રેડિયન`, correct: `$6\\pi/5$`, distractors: [`$5\\pi/6$`, `$5\\pi/3$`, `$3\\pi/5$`], sol: `$216 \\times \\pi/180 = 6\\pi/5$.` }),
+                () => ({ en: `Principal period of $\\sin(2x + 7) = $`, gu: `$\\sin(2x + 7)$ નું મુખ્ય આવતમાન ___________ છે.`, correct: `$\\pi$`, distractors: [`$2\\pi$`, `$3\\pi$`, `$7\\pi$`], sol: `$2\\pi/2 = \\pi$.` }),
+                () => ({ en: `$450^\\circ =$ __________ radian`, gu: `$450^\\circ =$ __________ રેડિયન`, correct: `$5\\pi/2$`, distractors: [`$2\\pi/5$`, `$3\\pi/5$`, `$3\\pi/2$`], sol: `$450 \\times \\pi/180 = 5\\pi/2$.` }),
+                () => ({ en: `$\\sin 120^\\circ =$`, gu: `$\\sin 120^\\circ =$`, correct: `$\\sqrt{3}/2$`, distractors: [`$2/\\sqrt{3}$`, `$1/2$`, `$\\sqrt{3}$`], sol: `$\\sin(180-60) = \\sin 60 = \\sqrt{3}/2$.` }),
+                () => ({ en: `$\\sin(\\pi/2 + \\theta) =$`, gu: `$\\sin(\\pi/2 + \\theta) =$`, correct: `$\\cos \\theta$`, distractors: [`$\\sin \\theta$`, `$-\\sin \\theta$`, `$-\\csc \\theta$`], sol: `Allied angle formula.` }),
+                () => ({ en: `$\\sin^2 40^\\circ + \\sin^2 50^\\circ = $`, gu: `$\\sin^2 40^\\circ + \\sin^2 50^\\circ = $`, correct: `1`, distractors: [`-1`, `0`, `2`], sol: `$\\sin^2 40 + \\cos^2 40 = 1$.` }),
+                () => ({ en: `$\\sin 30^\\circ + \\cos 60^\\circ =$`, gu: `$\\sin 30^\\circ + \\cos 60^\\circ =$`, correct: `1`, distractors: [`1/2`, `2`, `$\\sqrt{3}/2$`], sol: `$1/2 + 1/2 = 1$.` }),
+                () => ({ en: `3 $\\tan^{-1}(\\sqrt{3}) = $`, gu: `3 $\\tan^{-1}(\\sqrt{3}) = $`, correct: `$\\pi$`, distractors: [`$\\pi/2$`, `$2\\pi/3$`, `$\\pi/3$`], sol: `$3 \\times \\pi/3 = \\pi$.` }),
+                () => ({ en: `$135^\\circ =$ __________ Radian.`, gu: `$135^\\circ =$ __________ રેડિયન`, correct: `$3\\pi/4$`, distractors: [`$\\pi/4$`, `$5\\pi/4$`, `$5\\pi/6$`], sol: `$135 \\times \\pi/180 = 3\\pi/4$.` }),
+                () => ({ en: `Principal period of $\\cos(\\frac{2x}{3} + 5) = $`, gu: `$\\cos(\\frac{2x}{3} + 5)$ નું મુખ્ય આવતમાન =`, correct: `$3\\pi$`, distractors: [`$\\pi$`, `$\\pi/2$`, `$2\\pi$`], sol: `Period $= \\frac{2\\pi}{2/3} = 3\\pi$.` })
+            ],
+            "examples": [
+                () => ({ en: `Prove that: $\\tan 35^\\circ + \\tan 10^\\circ + \\tan 35^\\circ \\cdot \\tan 10^\\circ = 1$.`, gu: `સાબિત કરો કે $\\tan 35^\\circ + \\tan 10^\\circ + \\tan 35^\\circ \\cdot \\tan 10^\\circ = 1$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Use $\\tan(35+10) = 1$.` }),
+                () => ({ en: `Prove that: $\\frac{\\cos\\theta + \\cos 3\\theta + \\cos 5\\theta}{\\sin\\theta + \\sin 3\\theta + \\sin 5\\theta} = \\cot 3\\theta$`, gu: `સાબિત કરો કે: $\\frac{\\cos\\theta + \\cos 3\\theta + \\cos 5\\theta}{\\sin\\theta + \\sin 3\\theta + \\sin 5\\theta} = \\cot 3\\theta$`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Group terms and use factor formulas.` }),
+                () => ({ en: `Prove that $\\tan 55^\\circ = \\frac{\\cos 10^\\circ + \\sin 10^\\circ}{\\cos 10^\\circ - \\sin 10^\\circ}$.`, gu: `સાબિત કરો કે $\\tan 55^\\circ = \\frac{\\cos 10^\\circ + \\sin 10^\\circ}{\\cos 10^\\circ - \\sin 10^\\circ}$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Divide by $\\cos 10^\\circ$.` }),
+                () => ({ en: `Prove that $\\tan^{-1}(1/2) + \\tan^{-1}(1/3) = \\pi/4$.`, gu: `સાબિત કરો કે $\\tan^{-1}(1/2) + \\tan^{-1}(1/3) = \\pi/4$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Use $\\tan^{-1}a + \\tan^{-1}b$ identity.` }),
+                () => ({ en: `Prove that: $\\frac{\\sin A + \\sin 2A + \\sin 3A}{\\cos A + \\cos 2A + \\cos 3A} = \\tan 2A$`, gu: `સાબિત કરો કે: $\\frac{\\sin A + \\sin 2A + \\sin 3A}{\\cos A + \\cos 2A + \\cos 3A} = \\tan 2A$`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Group terms and apply formulas.` }),
+                () => ({ en: `Prove that: $(1+\\tan 20^\\circ)(1+\\tan 25^\\circ) = 2$`, gu: `સાબિત કરો કે: $(1+\\tan 20^\\circ)(1+\\tan 25^\\circ) = 2$`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Use $\\tan(20+25) = 1$.` }),
+                () => ({ en: `Prove that: $\\frac{\\sin 79^\\circ + \\sin 19^\\circ}{\\cos 19^\\circ - \\cos 79^\\circ} = \\sqrt{3}$`, gu: `સાબિત કરો કે $\\frac{\\sin 79^\\circ + \\sin 19^\\circ}{\\cos 19^\\circ - \\cos 79^\\circ} = \\sqrt{3}$`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Apply sum-to-product formulas.` }),
+                () => ({ en: `Prove that: $\\tan^{-1}(2/3) + \\tan^{-1}(10/11) + \\tan^{-1}(1/4) = \\pi/2$`, gu: `સાબિત કરો કે $\\tan^{-1}(2/3) + \\tan^{-1}(10/11) + \\tan^{-1}(1/4) = \\pi/2$`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Combine terms successively.` }),
+                () => ({ en: `Prove that $8\\cos(20^\\circ)\\cos(40^\\circ)\\cos(80^\\circ) = 1$.`, gu: `સાબિત કરો કે $8\\cos(20^\\circ)\\cos(40^\\circ)\\cos(80^\\circ) = 1$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Multiply/divide by $\\sin(20^\\circ)$.` }),
+                () => ({ en: `Prove that $\\frac{\\sin(A-B)}{\\sin A \\sin B} + \\frac{\\sin(B-C)}{\\sin B \\sin C} + \\frac{\\sin(C-A)}{\\sin C \\sin A} = 0$.`, gu: `સાબિત કરો કે $\\frac{\\sin(A-B)}{\\sin A \\sin B} + \\frac{\\sin(B-C)}{\\sin B \\sin C} + \\frac{\\sin(C-A)}{\\sin C \\sin A} = 0$.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Expand and cancel terms.` })
+            ]
+        },
+        "vectors": {
+            "mcq": [
+                () => ({ en: `If $\\vec{a} = i - 4j$, then $|\\vec{a}| = $`, gu: `જો $\\vec{a} = i - 4j$ હોય તો $|\\vec{a}| = $`, correct: `$\\sqrt{17}$`, distractors: [`5`, `17`, `3`], sol: `$|\\vec{a}| = \\sqrt{1^2 + (-4)^2} = \\sqrt{17}$` }),
+                () => ({ en: `$(1,0,0) \\times (1,0,0) = $`, gu: `$(1,0,0) \\times (1,0,0) = $`, correct: `(0,0,0)`, distractors: [`(1,0,0)`, `(2,0,0)`, `(1,1,1)`], sol: `Cross product of any vector with itself is zero vector.` }),
+                () => ({ en: `If $\\vec{a} = (2,1,-1)$ and $\\vec{b} = (1,-3,2)$, then $|2\\vec{a} - 3\\vec{b}| = $`, gu: `જો $\\vec{a} = (2,1,-1)$ અને $\\vec{b} = (1,-3,2)$, તો $|2\\vec{a} - 3\\vec{b}| = $`, correct: `$\\sqrt{186}$`, distractors: [`$\\sqrt{196}$`, `$\\sqrt{83}$`, `21`], sol: `Vector is $(1, 11, -8)$, magnitude is $\\sqrt{1+121+64} = \\sqrt{186}$.` }),
+                () => ({ en: `If $(1,-2,3) \\cdot (4,5,m) = 0$, then $m = $`, gu: `જો $(1,-2,3) \\cdot (4,5,m) = 0$ તો $m = $`, correct: `2`, distractors: [`-2`, `3`, `0`], sol: `$4 - 10 + 3m = 0 \\implies 3m = 6 \\implies m = 2$.` }),
+                () => ({ en: `$|2i - 3j + 4k| = $`, gu: `$|2i - 3j + 4k| = $`, correct: `$\\sqrt{29}$`, distractors: [`$\\sqrt{20}$`, `29`, `20`], sol: `$\\sqrt{4 + 9 + 16} = \\sqrt{29}$` }),
+                () => ({ en: `For vector $\\vec{a}$, $\\vec{a} \\times \\vec{a} = $`, gu: `સદિશ માટે $\\vec{a} \\times \\vec{a} = $`, correct: `0`, distractors: [`$|\\vec{a}|^2$`, `1`, `$-1$`], sol: `Cross product with self is zero vector.` }),
+                () => ({ en: `If $\\vec{a} = (1,1,1)$ and $\\vec{b} = (2,2,2)$, then $\\vec{a} \\times \\vec{b} = $`, gu: `જો $\\vec{a} = (1,1,1)$ અને $\\vec{b} = (2,2,2)$ તો $\\vec{a} \\times \\vec{b} = $`, correct: `(0,0,0)`, distractors: [`(2,2,2)`, `(3,3,3)`, `(1,1,1)`], sol: `Parallel vectors have zero cross product.` }),
+                () => ({ en: `$\\vec{a} \\cdot \\vec{b} = 0$ indicates vectors are:`, gu: `$\\vec{a} \\cdot \\vec{b} = 0$ સૂચવે છે કે સદિશો છે:`, correct: `Perpendicular`, distractors: [`Parallel`, `Equal`, `Unit vectors`], sol: `Dot product is 0 for orthogonal vectors.` }),
+                () => ({ en: `$\\vec{a} \\times \\vec{b} = 0$ indicates vectors are:`, gu: `$\\vec{a} \\times \\vec{b} = 0$ સૂચવે છે કે સદિશો છે:`, correct: `Parallel`, distractors: [`Perpendicular`, `Equal`, `Unit vectors`], sol: `Cross product is 0 for collinear/parallel vectors.` }),
+                () => ({ en: `$i \\cdot j = $`, gu: `$i \\cdot j = $`, correct: `0`, distractors: [`1`, `k`, `-k`], sol: `Orthogonal unit vectors.` }),
+                () => ({ en: `$i \\times j = $`, gu: `$i \\times j = $`, correct: `k`, distractors: [`0`, `1`, `-k`], sol: `Right-hand rule for cross products.` }),
+                () => ({ en: `If $\\vec{a} = 2i - 3j$ and $\\vec{b} = 3i - 5j$, then $2\\vec{a} - \\vec{b} = $`, gu: `જો $\\vec{a} = 2i - 3j$ અને $\\vec{b} = 3i - 5j$ તો $2\\vec{a} - \\vec{b} = $`, correct: `(1,-1)`, distractors: [`(1,1)`, `(-1,1)`, `(5,-8)`], sol: `$(4i-6j) - (3i-5j) = i - j = (1,-1)$.` }),
+                () => ({ en: `Scalar product of two vectors is a:`, gu: `બે સદિશોનો અદિશ ગુણાકાર છે:`, correct: `Scalar (Number)`, distractors: [`Vector`, `Matrix`, `Complex number`], sol: `Dot product results in a single real number.` }),
+                () => ({ en: `Vector product of two vectors is a:`, gu: `બે સદિશોનો સદિશ ગુણાકાર છે:`, correct: `Vector`, distractors: [`Scalar`, `Matrix`, `Zero always`], sol: `Cross product results in a vector.` }),
+                () => ({ en: `$i \\cdot i = j \\cdot j = k \\cdot k = $`, gu: `$i \\cdot i = j \\cdot j = k \\cdot k = $`, correct: `1`, distractors: [`0`, `-1`, `3`], sol: `Dot product of a unit vector with itself is 1.` })
+            ],
+            "examples": [
+                () => ({ en: `If the vectors $\\vec{a} = i - j + 2k$ and $\\vec{b} = 2i + mj + k$ are perpendicular, find $m$.`, gu: `જો સદિશો $\\vec{a} = i - j + 2k$ અને $\\vec{b} = 2i + mj + k$ એકબીજાને લંબ હોય તો $m$ ની કિંમત શોધો.`, correct: `m = 4`, distractors: [`m = -4`, `m = 2`, `m = 0`], sol: `Dot product = 0. $(1)(2) + (-1)(m) + (2)(1) = 0 \\implies m = 4$.` }),
+                () => ({ en: `Find the unit vector perpendicular to both vectors $\\vec{a} = (1, -1, 1)$ and $\\vec{b} = (2, 3, -1)$.`, gu: `સદિશો $\\vec{a} = (1, -1, 1)$ અને $\\vec{b} = (2, 3, -1)$ બંનેને લંબ એકમ સદિશ મેળવો.`, correct: `\\frac{-2i + 3j + 5k}{\\sqrt{38}}`, distractors: [`\\frac{2i - 3j - 5k}{\\sqrt{38}}`, `\\frac{i+j+k}{\\sqrt{3}}`, `(0,0,0)`], sol: `Find $\\vec{a} \\times \\vec{b}$ and divide by its magnitude.` }),
+                () => ({ en: `A particle moves from $(-1,2,1)$ to $(2,3,-1)$ under the effect of constant forces $(1,2,1)$ and $(2,-1,0)$. Find the work done.`, gu: `એક કણ પર $(1,2,1)$ અને $(2,-1,0)$ બળો લાગે છે. આ બળની અસર હેઠળ કણ બિંદુ $(-1,2,1)$ થી $(2,3,-1)$ સુધી ખસે છે. તો થયેલું કાર્ય શોધો.`, correct: `8`, distractors: [`6`, `10`, `0`], sol: `Work $W = \\vec{F} \\cdot \\vec{d} = 8$.` }),
+                () => ({ en: `Prove that the angle between the vectors $(1,1,-1)$ and $(2,-2,1)$ is $\\sin^{-1} \\left(\\frac{\\sqrt{26}}{27}\\right)$.`, gu: `સાબિત કરો કે સદિશ $(1,1,-1)$ અને $(2,-2,1)$ વચ્ચેનો ખૂણો $\\sin^{-1} \\left(\\frac{\\sqrt{26}}{27}\\right)$ છે.`, correct: `Proof Verified`, distractors: [`Proof Incorrect`, `Not Possible`, `Data Missing`], sol: `Compute $\\cos\\theta$ and convert to $\\sin\\theta$.` }),
+                () => ({ en: `If $\\vec{a} = (1,1,1), \\vec{b} = (2,0,1)$ and $\\vec{c} = (-2,1,0)$, then find $\\vec{a} \\cdot (\\vec{b} \\times \\vec{c})$.`, gu: `જો $\\vec{a} = (1,1,1), \\vec{b} = (2,0,1)$ અને $\\vec{c} = (-2,1,0)$ હોય તો $\\vec{a} \\cdot (\\vec{b} \\times \\vec{c})$ મેળવો.`, correct: `-1`, distractors: [`1`, `0`, `5`], sol: `Scalar triple product evaluation.` }),
+                () => ({ en: `Find the direction cosines and direction angles of the vector $\\vec{a} = 5i - 12k$.`, gu: `સદિશ $\\vec{a} = 5i - 12k$ માટે દિશા કોસાઇન અને દિશા ખૂણાઓ શોધો.`, correct: `5/13, 0, -12/13`, distractors: [`1/3, 1/3, 1/3`, `0, 1, 0`, `1, 0, -1`], sol: `Magnitude is 13.` }),
+                () => ({ en: `Find $(10i+2j+3k) \\cdot [(i-2j+2k) \\times (3i-2j-2k)]$.`, gu: `શોધો: $(10i+2j+3k) \\cdot [(i-2j+2k) \\times (3i-2j-2k)]$.`, correct: `108`, distractors: [`0`, `54`, `-108`], sol: `Scalar triple product.` }),
+                () => ({ en: `If $\\vec{a} = 2i+j-k$, $\\vec{b} = i-j+2k$ and $\\vec{c} = i-2j+k$, find $|\\vec{a}+\\vec{b}-2\\vec{c}|$.`, gu: `જો સદિશો $\\vec{a} = 2i+j-k$, $\\vec{b} = i-j+2k$ અને $\\vec{c} = i-2j+k$ હોય તો $|\\vec{a}+\\vec{b}-2\\vec{c}|$ મેળવો.`, correct: `$\\sqrt{18}$`, distractors: [`$\\sqrt{10}$`, `4`, `$\\sqrt{6}$`], sol: `Magnitude of resultant vector.` }),
+                () => ({ en: `Find $(\\vec{x} + \\vec{y}) \\cdot (\\vec{x} - \\vec{y})$ if $\\vec{x} = (2,-1,3)$ and $\\vec{y} = (1,2,-2)$.`, gu: `જો $\\vec{x} = (2,-1,3)$ અને $\\vec{y} = (1,2,-2)$ હોય તો $(\\vec{x} + \\vec{y}) \\cdot (\\vec{x} - \\vec{y})$ શોધો.`, correct: `5`, distractors: [`-10`, `14`, `0`], sol: `Property $|\\vec{x}|^2 - |\\vec{y}|^2 = 14 - 9 = 5$.` }),
+                () => ({ en: `A particle moves from $(-1,2,1)$ to $(2,4,-1)$ under constant forces $(3,2,1), (-1,2,3)$ and $(2,1,1)$. Find total work done.`, gu: `એક પદાર્થનું સ્થાનાંતર બિંદુ $-i+2j+k$ થી બિંદુ $2i+4j-k$ સુધી થાય ત્યારે લાગુ પડતા બળો $(3,2,1), (-1,2,3)$ અને $(2,1,1)$ છે તો થયેલ કુલ કાર્ય શોધો.`, correct: `12`, distractors: [`28`, `20`, `0`], sol: `Total Force $\\vec{F} = (4,5,5)$, Displacement $\\vec{d} = (3,2,-2)$, $W = 12$.` })
+            ]
+        },
+        "coordinate_geometry": {
+            "mcq": [
+                () => ({ en: `Slope of the line $2x - 5y + 3 = 0$ is:`, gu: `રેખા $2x - 5y + 3 = 0$ નો ઢાળ = `, correct: `$2/5$`, distractors: [`$-2/5$`, `$5/2$`, `$-5/2$`], sol: `$m = -A/B = 2/5$.` }),
+                () => ({ en: `Centre of the circle $x^2 + y^2 - 2x + 4y + 1 = 0$ is:`, gu: `વર્તુળ $x^2 + y^2 - 2x + 4y + 1 = 0$ નું કેન્દ્ર =`, correct: `(1, -2)`, distractors: [`(-1, 2)`, `(1, 2)`, `(-1, -2)`], sol: `Center $(-g,-f) = (1, -2)$.` }),
+                () => ({ en: `Radius of the circle $3x^2 + 3y^2 = 300$ is:`, gu: `વર્તુળ $3x^2 + 3y^2 = 300$ ની ત્રિજ્યા =`, correct: `10`, distractors: [`5`, `9`, `3`], sol: `$x^2+y^2=100 \\implies r=10$.` }),
+                () => ({ en: `If two lines having slope $m_1$ and $m_2$ are perpendicular, then:`, gu: `જો બે રેખાઓના ઢાળ $m_1$ અને $m_2$ હોય અને તે પરસ્પર લંબ હોય તો:`, correct: `$m_1 \\cdot m_2 = -1$`, distractors: [`$m_1 \\cdot m_2 = 1$`, `$m_1 = m_2$`, `$m_1 + m_2 = 0$`], sol: `Perpendicular condition.` }),
+                () => ({ en: `If $x^2 + y^2 = 25$, then its radius is:`, gu: `જો $x^2 + y^2 = 25$ હોય તો તેની ત્રિજ્યા:`, correct: `5`, distractors: [`25`, `2`, `10`], sol: `$r = 5$.` }),
+                () => ({ en: `If a line makes an angle $45^\\circ$ with positive x-axis, its slope is:`, gu: `જો રેખા ધન x-અક્ષ સાથે $45^\\circ$ નો ખૂણો બનાવે તો તેનો ઢાળ =`, correct: `1`, distractors: [`0`, `-1`, `1/2`], sol: `$\\tan(45^\\circ) = 1$.` }),
+                () => ({ en: `Radius of the circle $x^2 + y^2 = 81$ is:`, gu: `વર્તુળ $x^2 + y^2 = 81$ ની ત્રિજ્યા છે:`, correct: `9`, distractors: [`3`, `81`, `0`], sol: `$r = 9$.` }),
+                () => ({ en: `Slope of the line $4x + 6y - 3 = 0$ is:`, gu: `રેખા $4x + 6y - 3 = 0$ નો ઢાળ =`, correct: `$-2/3$`, distractors: [`$-3/2$`, `$2/3$`, `$3/2$`], sol: `$m = -4/6 = -2/3$.` }),
+                () => ({ en: `If lines $5x - py = 3$ and $2x + 3y = 4$ are parallel, then $p = $`, gu: `જો રેખાઓ $5x - py = 3$ અને $2x + 3y = 4$ પરસ્પર સમાંતર હોય તો $p = $`, correct: `$-15/2$`, distractors: [`$15/2$`, `$3/2$`, `$-3/2$`], sol: `$5/p = -2/3 \\implies p = -15/2$.` }),
+                () => ({ en: `Radius of the circle $2x^2 + 2y^2 = 50$ is:`, gu: `વર્તુળ $2x^2 + 2y^2 = 50$ ની ત્રિજ્યા:`, correct: `5`, distractors: [`25`, `50`, `10`], sol: `$x^2+y^2=25 \\implies r=5$.` }),
+                () => ({ en: `If lines $l_1: 3x - 2y + 5 = 0$ and $l_2: 2x + 3y - 7 = 0$, they are:`, gu: `રેખાઓ $l_1: 3x - 2y + 5 = 0$ અને $l_2: 2x + 3y - 7 = 0$ છે:`, correct: `Perpendicular`, distractors: [`Parallel`, `Identical`, `None`], sol: `$m_1 m_2 = -1$.` }),
+                () => ({ en: `Points $(1,0), (-1,2), (0,1)$ are:`, gu: `બિંદુઓ $(1,0), (-1,2), (0,1)$ છે:`, correct: `Collinear`, distractors: [`Non-collinear`, `Concurrent`, `Vertices of triangle`], sol: `Collinear points.` }),
+                () => ({ en: `Y-intercept of the line $7x - 4y + 2 = 0$ is:`, gu: `રેખા $7x - 4y + 2 = 0$ માટે y-અંતઃખંડ =`, correct: `1/2`, distractors: [`2`, `$-2/7$`, `$4/7$`], sol: `$y = 1/2$.` }),
+                () => ({ en: `Center of the circle $x^2 + y^2 = 18$ is:`, gu: `વર્તુળ $x^2 + y^2 = 18$ નું કેન્દ્ર છે:`, correct: `(0,0)`, distractors: [`(1,1)`, `(3,3)`, `(0,18)`], sol: `Origin (0,0).` }),
+                () => ({ en: `If two lines having slopes $m_1$ and $m_2$ are parallel, then:`, gu: `જો બે રેખાઓ સમાંતર હોય તો:`, correct: `$m_1 = m_2$`, distractors: [`$m_1 m_2 = -1$`, `$m_1 m_2 = 1$`, `$m_1 + m_2 = 0$`], sol: `Parallel condition.` })
+            ],
+            "examples": [
+                () => ({ en: `Find the equation of the line passing through points $(1,2)$ and $(2,1)$.`, gu: `$(1,2)$ અને $(2,1)$ માંથી પસાર થતી રેખાનું સમીકરણ શોધો.`, correct: `x + y - 3 = 0`, distractors: [`x - y + 3 = 0`, `2x + y - 4 = 0`, `x + 2y - 5 = 0`], sol: `Slope $m = -1$. Eq: $x + y - 3 = 0$.` }),
+                () => ({ en: `Find the equation of a circle having centre $(3,-1)$ and passing through the point $(-1,2)$.`, gu: `$(3,-1)$ કેન્દ્ર ધરાવતા અને $(-1,2)$ બિંદુમાંથી પસાર થતા વર્તુળનું સમીકરણ શોધો.`, correct: `x^2 + y^2 - 6x + 2y - 15 = 0`, distractors: [`x^2 + y^2 + 6x - 2y - 15 = 0`, `x^2 + y^2 = 25`, `None`], sol: `Radius $r = 5$. Eq: $(x-3)^2+(y+1)^2=25$.` }),
+                () => ({ en: `Find the equation of normal and tangent for the circle $x^2 + y^2 - 6x + 10y + 21 = 0$ at the point $(1,-2)$.`, gu: `વર્તુળ $x^2 + y^2 - 6x + 10y + 21 = 0$ ના બિંદુ $(1,-2)$ પાસેના સ્પર્શક અને અભિલંબના સમીકરણો મેળવો.`, correct: `Tangent: 2x - 3y - 8 = 0, Normal: 3x + 2y + 1 = 0`, distractors: [`Tangent: 3x + 2y = 0`, `Tangent: x + y = 0`, `None`], sol: `Apply tangent and normal equations at point $(1,-2)$.` }),
+                () => ({ en: `Find the equation of a line passing through the intersection of lines $2x + y = 4$ and $x - y = 5$ and perpendicular to the line $3x + 4y = 0$.`, gu: `રેખાઓ $2x + y = 4$ અને $x - y = 5$ ના છેદબિંદુમાંથી પસાર થતી અને રેખા $3x + 4y = 0$ ને લંબ હોય તેવી રેખાનું સમીકરણ શોધો.`, correct: `4x - 3y - 18 = 0`, distractors: [`3x + 4y - 7 = 0`, `4x + 3y = 0`, `None`], sol: `Intersection $(3,-2)$, perpendicular line $4x-3y-18=0$.` }),
+                () => ({ en: `Find the equation of line passing through $(-6,2)$ and parallel to the line joining the points $(-3,1)$ and $(-5,2)$.`, gu: `$(-6,2)$ માંથી પસાર થતી તેમજ $(-3,1)$ અને $(-5,2)$ ને જોડતી રેખાને સમાંતર રેખાનું સમીકરણ શોધો.`, correct: `x + 2y + 2 = 0`, distractors: [`2x + y = 0`, `x - 2y = 0`, `None`], sol: `Slope $-1/2$, parallel line $x+2y+2=0$.` }),
+                () => ({ en: `Find the center and radius of the circle $x^2 + y^2 - 6x - 4y - 4 = 0$.`, gu: `વર્તુળ $x^2 + y^2 - 4x - 6y - 4 = 0$ ની ત્રિજ્યા તથા તેના કેન્દ્રના યામ શોધો.`, correct: `Center: (2, 3), Radius: 5`, distractors: [`Center: (-2, -3), Radius: 5`, `Center: (3, 2), Radius: 4`, `None`], sol: `Center $(2,3)$, radius $r=5$.` }),
+                () => ({ en: `Find the angle between two lines $x + y + 1 = 0$ and $2x + 3y + 7 = 0$.`, gu: `બે રેખાઓ $x + y + 1 = 0$ અને $2x + 3y + 7 = 0$ વચ્ચેનો ખૂણો શોધો.`, correct: `\\tan^{-1}(1/5)`, distractors: [`\\pi/4`, `0`, `\\tan^{-1}(1)`], sol: `Angle formula yields $\\tan^{-1}(1/5)$.` }),
+                () => ({ en: `Find the equation of Tangent and Normal to the circle $x^2 + y^2 - 2x - 9 = 0$ at the point $(2,3)$.`, gu: `વર્તુળ $x^2 + y^2 - 2x - 9 = 0$ પરના બિંદુ $(2,3)$ આગળ સ્પર્શક અને અભિલંબના સમીકરણ મેળવો.`, correct: `Tangent: x + 3y - 11 = 0, Normal: 3x - y - 3 = 0`, distractors: [`Tangent: 3x + y = 0`, `None`, `x - 3y = 0`], sol: `Tangent and normal calculations.` }),
+                () => ({ en: `Find the equation of lines passing through point $A(3\\sqrt{3}, 4)$ and making angle $\\pi/6$ with line $\\sqrt{3}x - 3y + 5 = 0$.`, gu: `$A(3\\sqrt{3}, 4)$ માંથી પસાર થતી અને રેખા $\\sqrt{3}x - 3y + 5 = 0$ સાથે $\\pi/6$ માપનો ખૂણો બનાવતી રેખાઓનાં સમીકરણ મેળવો.`, correct: `y - 4 = 0 and y - 4 = \\sqrt{3}(x - 3\\sqrt{3})`, distractors: [`x = 0`, `y = 0`, `None`], sol: `Use angle between lines formula.` }),
+                () => ({ en: `Find the equation of circle passing through origin and point $(1,2)$ and whose center lies on the X-axis.`, gu: `ઊગમબિંદુ અને $(1,2)$ માંથી પસાર થતા અને જેનું કેન્દ્ર X-અક્ષ પર હોય તેવા વર્તુળનું સમીકરણ મેળવો.`, correct: `x^2 + y^2 - 5x = 0`, distractors: [`x^2 + y^2 - 5y = 0`, `x^2 + y^2 = 5`, `None`], sol: `Center $(h,0) \\implies x^2+y^2-5x=0$.` })
+            ]
+        },
+        "limits": {
+            "mcq": [
+                () => ({ en: `$\\lim_{x \\to 0} \\frac{\\sin x}{x} = $`, gu: `$\\lim_{x \\to 0} \\frac{\\sin x}{x} = $`, correct: `1`, distractors: [`0`, `-1`, `$\\infty$`], sol: `Standard limit formula.` }),
+                () => ({ en: `Obtain the Limit of $\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n$`, gu: `$\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n$ નું લક્ષ મેળવો`, correct: `$e$`, distractors: [`0`, `1`, `$\\infty$`], sol: `Standard limit definition of $e$.` }),
+                () => ({ en: `$\\lim_{x \\to 0} \\frac{e^x - 1}{x} = $`, gu: `$\\lim_{x \\to 0} \\frac{e^x - 1}{x} = $`, correct: `1`, distractors: [`$e$`, `-1`, `0`], sol: `Standard exponential limit.` }),
+                () => ({ en: `$\\lim_{n \\to \\infty} \\frac{1}{n} = $`, gu: `$\\lim_{n \\to \\infty} \\frac{1}{n} = $`, correct: `0`, distractors: [`$\\infty$`, `-1`, `1`], sol: `Limit at infinity.` }),
+                () => ({ en: `$\\lim_{x \\to 1} \\frac{x^2 - 1}{x - 1} = $`, gu: `$\\lim_{x \\to 1} \\frac{x^2 - 1}{x - 1} = $`, correct: `2`, distractors: [`-2`, `1`, `-1`], sol: `Factorize $(x-1)(x+1)/(x-1) \\implies 1+1=2$.` }),
+                () => ({ en: `$\\lim_{x \\to 0} \\frac{\\tan x}{x} = $`, gu: `$\\lim_{x \\to 0} \\frac{\\tan x}{x} = $`, correct: `1`, distractors: [`0`, `2`, `-3`], sol: `Standard trigonometric limit.` }),
+                () => ({ en: `$\\lim_{n \\to \\infty} \\frac{5n+4}{n+5} = $`, gu: `$\\lim_{n \\to \\infty} \\frac{5n+4}{n+5} = $`, correct: `5`, distractors: [`1`, `4/5`, `0`], sol: `Coefficient ratio.` }),
+                () => ({ en: `$\\lim_{x \\to 2} (x^2 + 1) = $`, gu: `$\\lim_{x \\to 2} (x^2 + 1) = $`, correct: `5`, distractors: [`4`, `2`, `3`], sol: `Direct substitution.` }),
+                () => ({ en: `$\\lim_{\\theta \\to 0} \\frac{\\sin 3\\theta}{\\theta} = $`, gu: `$\\lim_{\\theta \\to 0} \\frac{\\sin 3\\theta}{\\theta} = $`, correct: `3`, distractors: [`1`, `1/3`, `0`], sol: `Coefficient multiplier.` }),
+                () => ({ en: `$\\lim_{h \\to 0} \\frac{a^h - 1}{h} = $`, gu: `$\\lim_{h \\to 0} \\frac{a^h - 1}{h} = $`, correct: `$\\log_e a$`, distractors: [`$e$`, `$a$`, `0`], sol: `Standard exponential limit formula.` }),
+                () => ({ en: `$\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3} = $`, gu: `$\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3} = $`, correct: `6`, distractors: [`3`, `0`, `9`], sol: `$3+3=6$.` }),
+                () => ({ en: `$\\lim_{n \\to \\infty} \\left(1 + \\frac{2}{n}\\right)^n = $`, gu: `$\\lim_{n \\to \\infty} \\left(1 + \\frac{2}{n}\\right)^n = $`, correct: `$e^2$`, distractors: [`$e$`, `$2e$`, `1`], sol: `Standard form $e^k$.` }),
+                () => ({ en: `$\\lim_{x \\to 0} \\frac{\\sin^2 x}{x^2} = $`, gu: `$\\lim_{x \\to 0} \\frac{\\sin^2 x}{x^2} = $`, correct: `1`, distractors: [`0`, `2`, `-1`], sol: `Squaring the limit of $\\sin x/x$.` }),
+                () => ({ en: `$\\lim_{x \\to -1} \\frac{x^3 + 2x^2 + x + 2}{x^2 + x - 2} = $`, gu: `$\\lim_{x \\to -1} \\frac{x^3 + 2x^2 + x + 2}{x^2 + x - 2} = $`, correct: `0`, distractors: [`1`, `-1`, `2`], sol: `Factorization and evaluation.` }),
+                () => ({ en: `$\\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = $`, gu: `$\\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = $`, correct: `1/2`, distractors: [`1`, `0`, `2`], sol: `Half angle formula.` })
+            ],
+            "examples": [
+                () => ({ en: `Evaluate: $\\lim_{n \\to \\infty} (\\sqrt{n^2 + n + 1} - n)$`, gu: `કિંમત મેળવો: $\\lim_{n \\to \\infty} (\\sqrt{n^2 + n + 1} - n)$`, correct: `1/2`, distractors: [`1`, `0`, `$\\infty$`], sol: `Multiply by conjugate and simplify.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to 0} \\frac{\\sqrt{25+x}-5}{x}$`, gu: `કિંમત મેળવો: $\\lim_{x \\to 0} \\frac{\\sqrt{25+x}-5}{x}$`, correct: `1/10`, distractors: [`1/5`, `0`, `1/25`], sol: `Rationalize numerator.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to 2} \\frac{x^5 - 32}{x - 2}$`, gu: `કિંમત મેળવો: $\\lim_{x \\to 2} \\frac{x^5 - 32}{x - 2}$`, correct: `80`, distractors: [`160`, `32`, `40`], sol: `Using standard rational limit $na^{n-1}$.` }),
+                () => ({ en: `Evaluate: $\\lim_{\\theta \\to 0} \\frac{\\tan^2(\\theta/2)}{\\theta^2}$`, gu: `કિંમત મેળવો: $\\lim_{\\theta \\to 0} \\frac{\\tan^2(\\theta/2)}{\\theta^2}$`, correct: `1/4`, distractors: [`1/2`, `2`, `4`], sol: `Adjust denominator.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to \\infty} \\left(\\frac{6n^2 - 3n + 5}{2n^2 + 4n - 2}\\right)$`, gu: `કિંમત મેળવો: $\\lim_{n \\to \\infty} \\left(\\frac{6n^2 - 3n + 5}{2n^2 + 4n - 2}\\right)$`, correct: `3`, distractors: [`6`, `2`, `1/3`], sol: `Divide by highest power $n^2$.` }),
+                () => ({ en: `Evaluate: $\\lim_{\\theta \\to 0} \\frac{\\tan 7\\theta}{\\sin 2\\theta}$`, gu: `કિંમત મેળવો: $\\lim_{\\theta \\to 0} \\frac{\\tan 7\\theta}{\\sin 2\\theta}$`, correct: `7/2`, distractors: [`2/7`, `1`, `14`], sol: `Adjust coefficients.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to 0} \\frac{4^x - 3^x}{x}$`, gu: `કિંમત મેળવો: $\\lim_{x \\to 0} \\frac{4^x - 3^x}{x}$`, correct: `\\log_e(4/3)`, distractors: [`\\log_e 12`, `\\log_e 7`, `1`], sol: `Split using standard exponential limit.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to 3} \\frac{x^3 - 27}{\\sqrt{x^3} - \\sqrt{3^3}}$`, gu: `કિંમત મેળવો: $\\lim_{x \\to 3} \\frac{x^3 - 27}{\\sqrt{x^3} - \\sqrt{3^3}}$`, correct: `$6\\sqrt{3}$`, distractors: [`$3\\sqrt{3}$`, `$9\\sqrt{3}$`, `27`], sol: `Use generalized power limit formula.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to 1} \\frac{\\sqrt{x+7}-\\sqrt{3x+5}}{\\sqrt{3x+5}-\\sqrt{5x+3}}$`, gu: `કિંમત મેળવો: $\\lim_{x \\to 1} \\frac{\\sqrt{x+7}-\\sqrt{3x+5}}{\\sqrt{3x+5}-\\sqrt{5x+3}}$`, correct: `1`, distractors: [`-1`, `0`, `2`], sol: `Rationalize numerator and denominator.` }),
+                () => ({ en: `Evaluate: $\\lim_{x \\to 0} \\frac{\\cos(ax) - \\cos(bx)}{x^2}$`, gu: `કિંમત મેળવો: $\\lim_{x \\to 0} \\frac{\\cos(ax) - \\cos(bx)}{x^2}$`, correct: `(b^2 - a^2)/2`, distractors: [`(a^2 - b^2)/2`, `(a-b)/2`, `0`], sol: `Factor formula or L'Hopital's Rule.` })
+            ]
+        }
+    };
+
+    let currentQuizData = [];
+
+    function generateQuiz() {
+        const topic = document.getElementById('topicSelect').value;
+        const type = document.getElementById('typeSelect').value;
+        const form = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const summaryCard = document.getElementById('summary-card');
+        const actionBtns = document.getElementById('action-buttons');
+        
+        form.innerHTML = '';
+        summaryCard.style.display = 'none';
+        currentQuizData = [];
+
+        startTimer();
+
+        let targetCount = type === 'mcq' ? 15 : 10;
+        
+        let availableGenerators = [...generators[topic][type]];
+        availableGenerators = shuffle(availableGenerators);
+
+        for(let i=0; i<targetCount; i++) {
+            if(i >= availableGenerators.length) break; 
+            
+            let qData = availableGenerators[i](); 
+            
+            let rawOptions = [{text: qData.correct, isCorrect: true}];
+            if (qData.distractors) { qData.distractors.forEach(d => rawOptions.push({text: d, isCorrect: false})); }
+            
+            let options = shuffle(rawOptions);
+            qData.shuffledOptions = options;
+            currentQuizData.push(qData);
+            
+            const qBlock = document.createElement('div');
+            qBlock.className = 'question-block';
+            
+            qBlock.innerHTML = `
+                <div class="question-text">
+                    <div class="bilingual-en">Q${i+1}. ${qData.en}</div>
+                    <div class="bilingual-gu">પ્રશ્ન ${i+1}. ${qData.gu}</div>
+                </div>
+            `;
+
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options';
+            
+            options.forEach((opt, idx) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <label for="q${i}_opt${idx}">
+                        <input type="radio" name="q${i}" value="${opt.isCorrect ? 'correct' : 'incorrect'}" id="q${i}_opt${idx}">
+                        <span>${opt.text}</span>
+                    </label>
+                `;
+                optionsList.appendChild(li);
+            });
+            qBlock.appendChild(optionsList);
+
+            const solutionDiv = document.createElement('div');
+            solutionDiv.id = `solution-${i}`;
+            solutionDiv.className = 'solution';
+            qBlock.appendChild(solutionDiv);
+
+            form.appendChild(qBlock);
+        }
+        
+        actionBtns.style.display = 'flex';
+        submitBtn.style.display = 'block'; submitBtn.disabled = false;
+        renderMath();
+    }
+
+    function gradeQuiz() {
+        const nameInput = document.getElementById('studentName');
+        const enrollInput = document.getElementById('enrollmentNo');
+        if (!/^[A-Za-z\s]+$/.test(nameInput.value.trim())) { alert("Please enter a valid Name (Alphabets only)."); nameInput.focus(); return; }
+        if (!/^\d{12}$/.test(enrollInput.value.trim())) { alert("Please enter exactly 12 digits for Enrollment No."); enrollInput.focus(); return; }
+
+        let score = 0, answeredAll = true;
+        currentQuizData.forEach((_, i) => { if (!document.querySelector(`input[name="q${i}"]:checked`)) answeredAll = false; });
+        if (!answeredAll) { alert("Please answer all questions before submitting."); return; }
+
+        const timeTaken = stopTimer();
+        document.getElementById('timer-display').style.display = 'none';
+        
+        currentQuizData.forEach((qData, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const solutionDiv = document.getElementById(`solution-${i}`);
+            const isCorrect = selected.value === 'correct';
+
+            if (isCorrect) {
+                score++;
+                solutionDiv.className = 'solution solution-correct';
+                solutionDiv.innerHTML = `<strong>✓ Correct!</strong><br><br><strong>Solution / Hint:</strong><br>${qData.sol}`;
+            } else {
+                solutionDiv.className = 'solution solution-incorrect';
+                solutionDiv.innerHTML = `<strong>✗ Incorrect.</strong><br>The correct answer is: <strong>${qData.correct}</strong>.<br><br><strong>Solution / Hint:</strong><br>${qData.sol}`;
+            }
+            solutionDiv.style.display = 'block';
+            document.querySelectorAll(`input[name="q${i}"]`).forEach(input => input.disabled = true);
+        });
+
+        document.getElementById('test-timestamp').innerText = new Date().toLocaleString('en-IN'); 
+        document.getElementById('timestamp-group').style.display = 'flex';
+        nameInput.disabled = true; enrollInput.disabled = true;
+
+        const percentage = Math.round((score / currentQuizData.length) * 100);
+        let feedbackMsg = percentage >= 80 ? "Excellent Preparation!" : percentage >= 50 ? "Good job, but keep practicing." : "Needs more focus and practice.";
+        let feedbackColor = percentage >= 80 ? "#059669" : percentage >= 50 ? "#d97706" : "#dc2626";
+
+        const summaryCard = document.getElementById('summary-card');
+        summaryCard.innerHTML = `<div class="summary-title">Test Completed!</div><div class="summary-stats">Score: <strong>${score} / ${currentQuizData.length}</strong> (${percentage}%)<br>Time Taken: <strong>${timeTaken}</strong></div><div class="summary-msg" style="background-color: ${feedbackColor}; color: white;">${feedbackMsg}</div>`;
+        summaryCard.style.display = 'block';
+
+        document.getElementById('submit-btn').style.display = 'none';
+        renderMath(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

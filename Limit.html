@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Study Guide | ગણિત અભ્યાસ માર્ગદર્શિકા - Limit</title>
+    
+    <!-- MathJax Configuration to enable inline and block math -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <!-- MathJax Library -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Violet */
+            --secondary: #ec4899; /* Pink */
+            --dark: #0f172a; /* Slate */
+            --light: #f8fafc;
+            --accent: #f59e0b; /* Amber */
+            --info: #0ea5e9; /* Sky Blue */
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Card Styles */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .border-pink { border-top-color: var(--secondary); }
+
+        /* Topic Header */
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .topic-title h2 {
+            color: var(--dark);
+            font-size: 1.6rem;
+        }
+
+        .topic-title .gujarati {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Animations & Icons */
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 50%;
+        }
+
+        @keyframes float-up-down { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes pulse-soft { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes arrow-move { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(15px); } }
+
+        .anim-float { animation: float-up-down 3s ease-in-out infinite; }
+        .anim-pulse { animation: pulse-soft 2s infinite; }
+        .anim-arrow { animation: arrow-move 2s ease-in-out infinite; }
+
+        /* Definition & Detailed Explanations Boxes */
+        .def-app-box {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .border-pink .def-app-box { border-left-color: var(--secondary); }
+
+        .def-app-box strong { color: var(--dark); font-size: 1.1rem; }
+        
+        .explanation-block {
+            background: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        .explanation-block p { margin-bottom: 0.75rem; }
+
+        .formula-box {
+            background: #f5f3ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd6fe;
+        }
+        
+        .border-pink .formula-box { background: #fdf2f8; border-color: #fbcfe8; }
+
+        .formula-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .formula-item {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+        }
+
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .example-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            font-size: 0.95rem;
+        }
+
+        .example-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        .border-pink .example-card h4 { color: var(--secondary); }
+
+        /* Hidden citations block to maintain pure UI */
+        .cite-hidden { display: none; }
+
+        /* Interactive Lab Styles */
+        .lab-section {
+            background: var(--dark);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .lab-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .lab-header h2 { color: var(--accent); font-size: 2rem; }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .input-group.alt1 { border-top-color: var(--secondary); }
+        .input-group.alt2 { border-top-color: var(--info); }
+        .input-group.alt3 { border-top-color: var(--accent); }
+
+        .input-group h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .inputs-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 0.5rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            text-align: center;
+            background: #fff;
+            color: var(--dark);
+        }
+
+        button.btn-calc {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        button.btn-calc:hover { background: #6d28d9; }
+        .btn-calc.alt1 { background: var(--secondary); }
+        .btn-calc.alt1:hover { background: #be185d; }
+        .btn-calc.alt2 { background: var(--info); }
+        .btn-calc.alt2:hover { background: #0369a1; }
+        .btn-calc.alt3 { background: var(--accent); }
+        .btn-calc.alt3:hover { background: #b45309; }
+
+        .lab-output {
+            background: #f8fafc;
+            color: var(--text-main);
+            padding: 2rem;
+            border-radius: 8px;
+            min-height: 250px;
+            border-left: 5px solid var(--accent);
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 1.5rem;
+            margin-top: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-left span { color: white; background: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; }
+        .footer-right { color: var(--accent); font-weight: bold;}
+
+        @media (max-width: 768px) {
+            .topic-header { flex-direction: column; text-align: center; }
+            .inputs-flex { flex-direction: column; }
+            input[type="number"] { width: 100%; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>5. Limit Study Guide</h1>
+        <p>લક્ષ અભ્યાસ માર્ગદર્શિકા</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 5.1 Limit of a Function -->
+        <section class="section-card">
+            <div class="topic-header">
+                <div class="icon-box anim-arrow">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--primary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="50" x2="80" y2="50"></line>
+                        <polyline points="60,30 80,50 60,70"></polyline>
+                        <circle cx="20" cy="50" r="4" fill="var(--primary)"></circle>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>5.1 Limit of a Function</h2>
+                    <div class="gujarati">૫.૧ વિધેયનું લક્ષ</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> A limit is the value that a function approaches as the input approaches some value. It describes the behavior of a mathematical function near a specific point or at infinity. / લક્ષ એ એક એવું મૂલ્ય છે, જેની તરફ કોઈ વિધેય આગળ વધે છે જ્યારે તેનો ઇનપુટ કોઈ ચોક્કસ કિંમતની અથવા અનંતની ખૂબ જ નજીક પહોંચે છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Used to determine instantaneous speed in a car's speedometer or predicting boundaries in structural engineering. / કારના સ્પીડોમીટરમાં ત્વરિત ઝડપ નક્કી કરવા માટે અથવા સ્ટ્રક્ચરલ એન્જિનિયરિંગમાં બાઉન્ડ્રીઝની આગાહી કરવા માટે ઉપયોગી છે.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>Evaluating limits involves several algebraic methods based on the form the function takes when substituting the limit value directly:<br>
+                    1. <strong>Direct Substitution (સીધી કિંમત મૂકવી):</strong> Works if the function is continuous.<br>
+                    2. <strong>Factorization (અવયવ પાડવા):</strong> Used when direct substitution yields a $0/0$ form.<br>
+                    3. <strong>Rationalization (સંમેયીકરણ / કરણી લેતા):</strong> Used when the function contains square roots ($\sqrt{x}$) leading to $0/0$. We multiply the numerator and denominator by the conjugate.<br>
+                    4. <strong>Infinite Limits (અનંત લક્ષ):</strong> When $n \to \infty$, we divide the numerator and denominator by the highest power of $n$ to solve the limit.</p>
+                    <p>લક્ષ શોધવાની વિવિધ બીજગણિતીય રીતો છે: સીધી કિંમત મૂકવી, અવયવ પાડવા, સંમેયીકરણ (કરણી લેતા - જ્યારે વર્ગમૂળ હોય), અને અનંત લક્ષ (જ્યારે $n \to \infty$ હોય, ત્યારે $n$ ની મહત્તમ ઘાત વડે ભાગવું).</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--primary);">📖 Fundamental Properties / મૂળભૂત ગુણધર્મો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Direct Substitution:</strong><br>
+                        If continuous at $x=a$,<br> $$ \lim_{x \to a} f(x) = f(a) $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Limits at Infinity:</strong><br>
+                        $$ \lim_{n \to \infty} \frac{1}{n} = 0, \quad \lim_{n \to \infty} \frac{1}{n^p} = 0 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <!-- Direct Substitution -->
+                <div class="example-card">
+                    <h4>Example 1 (Direct Substitution)</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to 2} \frac{x^2+6}{4x-3}$ <span class="cite-hidden">[cite: 6]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Check if denominator becomes zero. At $x=2$, denominator is $4(2)-3 = 5 \neq 0$. Direct substitution is possible.</p>
+                    <p>$$ = \frac{(2)^2 + 6}{4(2) - 3} $$</p>
+                    <p>$$ = \frac{4 + 6}{8 - 3} = \frac{10}{5} = 2 $$</p>
+                </div>
+                
+                <!-- Factorization -->
+                <div class="example-card">
+                    <h4>Example 2 (Factorization)</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to -2} \frac{x^3 + 2x^2 + x + 2}{x^2 + x - 2}$ <span class="cite-hidden">[cite: 3]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Direct substitution yields $0/0$. Factorize Numerator: $x^2(x+2) + 1(x+2) = (x^2+1)(x+2)$</p>
+                    <p>Factorize Denominator: $(x+2)(x-1)$</p>
+                    <p>$$ \lim_{x \to -2} \frac{(x^2+1)(x+2)}{(x+2)(x-1)} $$</p>
+                    <p>Cancel $(x+2)$ and substitute $x=-2$:</p>
+                    <p>$$ = \frac{(-2)^2 + 1}{-2 - 1} = \frac{4 + 1}{-3} = -\frac{5}{3} $$</p>
+                </div>
+
+                <!-- Rationalization (Conjugate) -->
+                <div class="example-card">
+                    <h4>Example 3 (Rationalization)</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to 0} \frac{\sqrt{25+x}-5}{x}$ <span class="cite-hidden">[cite: 2]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Multiply numerator and denominator by conjugate (કરણી લેતા) $\sqrt{25+x}+5$:</p>
+                    <p>$$ \lim_{x \to 0} \frac{\sqrt{25+x}-5}{x} \times \frac{\sqrt{25+x}+5}{\sqrt{25+x}+5} $$</p>
+                    <p>$$ = \lim_{x \to 0} \frac{(\sqrt{25+x})^2 - 5^2}{x(\sqrt{25+x}+5)} $$</p>
+                    <p>$$ = \lim_{x \to 0} \frac{25 + x - 25}{x(\sqrt{25+x}+5)} = \lim_{x \to 0} \frac{x}{x(\sqrt{25+x}+5)} $$</p>
+                    <p>Cancel $x$ and substitute $x=0$:</p>
+                    <p>$$ = \frac{1}{\sqrt{25+0}+5} = \frac{1}{5+5} = \frac{1}{10} $$</p>
+                </div>
+
+                <!-- Polynomial Limits at Infinity -->
+                <div class="example-card">
+                    <h4>Example 4 (Infinite Polynomials)</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{n \to \infty} \frac{6n^2-3n+5}{2n^2+4n-2}$ <span class="cite-hidden">[cite: 7]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Divide numerator and denominator by highest power $n^2$ / $n^2$ વડે ભાગતા:</p>
+                    <p>$$ \lim_{n \to \infty} \frac{\frac{6n^2}{n^2} - \frac{3n}{n^2} + \frac{5}{n^2}}{\frac{2n^2}{n^2} + \frac{4n}{n^2} - \frac{2}{n^2}} $$</p>
+                    <p>$$ = \lim_{n \to \infty} \frac{6 - \frac{3}{n} + \frac{5}{n^2}}{2 + \frac{4}{n} - \frac{2}{n^2}} $$</p>
+                    <p>As $n \to \infty$, terms with $1/n$ approach 0:</p>
+                    <p>$$ = \frac{6 - 0 + 0}{2 + 0 - 0} = \frac{6}{2} = 3 $$</p>
+                </div>
+
+                <!-- Radical Limits at Infinity -->
+                <div class="example-card">
+                    <h4>Example 5 (Infinite Radicals)</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{n \to \infty} (\sqrt{n^2+n+1} - n)$ <span class="cite-hidden">[cite: 2, 3, 7]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Multiply by conjugate / કરણી વડે ગુણતા:</p>
+                    <p>$$ \lim_{n \to \infty} \frac{(\sqrt{n^2+n+1}-n)(\sqrt{n^2+n+1}+n)}{\sqrt{n^2+n+1}+n} $$</p>
+                    <p>$$ = \lim_{n \to \infty} \frac{n^2+n+1 - n^2}{\sqrt{n^2+n+1}+n} = \lim_{n \to \infty} \frac{n+1}{\sqrt{n^2+n+1}+n} $$</p>
+                    <p>Divide by $n$ (inside root, divide by $n^2$):</p>
+                    <p>$$ = \lim_{n \to \infty} \frac{1 + \frac{1}{n}}{\sqrt{1+\frac{1}{n}+\frac{1}{n^2}} + 1} $$</p>
+                    <p>$$ = \frac{1 + 0}{\sqrt{1+0+0} + 1} = \frac{1}{1 + 1} = \frac{1}{2} $$</p>
+                </div>
+
+                <!-- Series Limit -->
+                <div class="example-card">
+                    <h4>Example 6 (Series Summation)</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{n \to \infty} \frac{\sum n}{n^2}$ <span class="cite-hidden">[cite: 7]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>We know sum of first $n$ natural numbers is / પ્રાકૃતિક સંખ્યાઓનો સરવાળો: $\sum n = \frac{n(n+1)}{2}$</p>
+                    <p>Substitute this into the limit:</p>
+                    <p>$$ \lim_{n \to \infty} \frac{n(n+1)}{2n^2} = \lim_{n \to \infty} \frac{n^2+n}{2n^2} $$</p>
+                    <p>Divide by $n^2$ / $n^2$ વડે ભાગતા:</p>
+                    <p>$$ = \lim_{n \to \infty} \frac{1 + \frac{1}{n}}{2} $$</p>
+                    <p>$$ = \frac{1 + 0}{2} = \frac{1}{2} $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5.2 Standard formulae of Limit -->
+        <section class="section-card border-pink">
+            <div class="topic-header">
+                <div class="icon-box anim-pulse">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--secondary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M 20 50 Q 50 10 80 50 Q 50 90 20 50"></path>
+                        <circle cx="50" cy="50" r="10"></circle>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>5.2 Standard formulae of Limit and related simple examples</h2>
+                    <div class="gujarati">૫.૨ લક્ષના પ્રમાણિત સૂત્રો અને સંબંધિત સાદા ઉદાહરણો</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Pre-derived mathematical identities and rules that allow for rapid evaluation of specific complex limits (rational, trigonometric, logarithmic, and exponential) without deep algebraic expansion. / પૂર્વ-તારવેલા ગાણિતિક સૂત્રો અને નિયમો જે બીજગણિતીય વિસ્તરણ વિના ચોક્કસ જટિલ લક્ષની (ત્રિકોણમિતિય, ઘાતાંકીય વગેરે) ઝડપી ગણતરી માટે પરવાનગી આપે છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Calculating continuous compound interest in finance using the limit definition of the exponential constant 'e'. / 'e' ના લક્ષ સૂત્રનો ઉપયોગ કરીને ફાઇનાન્સમાં સતત ચક્રવૃદ્ધિ વ્યાજની ગણતરી કરવી.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>When direct substitution results in an indeterminate form like $0/0$ or $\infty/\infty$, we use standard formulas to evaluate the limit. These formulas act as powerful shortcuts.</p>
+                    <p>જ્યારે સીધી કિંમત મૂકવાથી $0/0$ અથવા $\infty/\infty$ જેવું અનિશ્ચિત સ્વરૂપ મળે, ત્યારે લક્ષ શોધવા માટે આપણે પ્રમાણિત સૂત્રોનો ઉપયોગ કરીએ છીએ.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--secondary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Rational Formula:</strong><br>
+                        $$ \lim_{x \to a} \frac{x^n - a^n}{x - a} = n \cdot a^{n-1} $$
+                        $$ \lim_{x \to a} \frac{x^n - a^n}{x^m - a^m} = \frac{n}{m} \cdot a^{n-m} $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Trigonometric Formula:</strong><br>
+                        $$ \lim_{\theta \to 0} \frac{\sin \theta}{\theta} = 1, \quad \lim_{\theta \to 0} \frac{\tan \theta}{\theta} = 1 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Exponential Formula:</strong><br>
+                        $$ \lim_{x \to 0} \frac{a^x - 1}{x} = \log_e a $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>'e' Formula:</strong><br>
+                        $$ \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <!-- Modified Rational Formula -->
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to 3} \frac{x^3-27}{\sqrt{x^3}-\sqrt{3^3}}$ <span class="cite-hidden">[cite: 4, 6]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Rewrite using fractional powers / ઘાતાંકીય સ્વરૂપમાં લખતા:</p>
+                    <p>$$ \lim_{x \to 3} \frac{x^3 - 3^3}{x^{3/2} - 3^{3/2}} $$</p>
+                    <p>Using extended standard formula $\lim_{x \to a} \frac{x^n - a^n}{x^m - a^m} = \frac{n}{m} a^{n-m}$</p>
+                    <p>Here $n=3, m=3/2, a=3$:</p>
+                    <p>$$ = \frac{3}{3/2} \cdot 3^{3 - 3/2} = 2 \cdot 3^{3/2} $$</p>
+                    <p>$$ = 2 \cdot \sqrt{3^3} = 2 \cdot 3\sqrt{3} = 6\sqrt{3} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to 9} \frac{x^2 - 81}{x - 9}$ <span class="cite-hidden">[cite: 5]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Express 81 as $9^2$ / 81 ને $9^2$ તરીકે લખો:</p>
+                    <p>$$ \lim_{x \to 9} \frac{x^2 - 9^2}{x - 9} $$</p>
+                    <p>Apply rational formula ($n=2, a=9$):</p>
+                    <p>$$ = 2(9)^{2-1} = 2(9)^1 = 18 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{\theta \to 0} \frac{\tan 7\theta}{\sin 2\theta}$ <span class="cite-hidden">[cite: 7]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Divide numerator and denominator by $\theta$:</p>
+                    <p>$$ \lim_{\theta \to 0} \frac{ \frac{\tan 7\theta}{\theta} }{ \frac{\sin 2\theta}{\theta} } $$</p>
+                    <p>Adjust coefficients for standard formulas:</p>
+                    <p>$$ = \frac{ \lim_{\theta \to 0} \frac{\tan 7\theta}{7\theta} \times 7 }{ \lim_{\theta \to 0} \frac{\sin 2\theta}{2\theta} \times 2 } $$</p>
+                    <p>$$ = \frac{1 \times 7}{1 \times 2} = \frac{7}{2} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to 0} \frac{e^{3x} - 1}{x}$ <span class="cite-hidden">[cite: 7]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Multiply and divide by 3 to match the exponential limit standard form:</p>
+                    <p>$$ \lim_{x \to 0} \frac{e^{3x} - 1}{3x} \times 3 $$</p>
+                    <p>Using $\lim_{h \to 0} \frac{e^h - 1}{h} = 1$:</p>
+                    <p>$$ = 1 \times 3 = 3 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to 0} \frac{4^x - 3^x}{x}$ <span class="cite-hidden">[cite: 6]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Subtract and add 1 in the numerator / અંશમાં 1 બાદ કરી ઉમેરો:</p>
+                    <p>$$ \lim_{x \to 0} \frac{(4^x - 1) - (3^x - 1)}{x} $$</p>
+                    <p>Split into two limits:</p>
+                    <p>$$ \lim_{x \to 0} \frac{4^x - 1}{x} - \lim_{x \to 0} \frac{3^x - 1}{x} $$</p>
+                    <p>Apply formula $\lim_{x \to 0} \frac{a^x - 1}{x} = \log_e a$:</p>
+                    <p>$$ = \log_e 4 - \log_e 3 = \log_e\left(\frac{4}{3}\right) $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 6</h4>
+                    <p>Evaluate / કિંમત શોધો: $\lim_{x \to \infty} \left(1 + \frac{5}{x}\right)^{2x}$ <span class="cite-hidden">[cite: 3, 6]</span></p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Rearrange to match standard form $\lim_{x \to \infty} (1 + \frac{k}{x})^x = e^k$:</p>
+                    <p>$$ \lim_{x \to \infty} \left[ \left(1 + \frac{5}{x}\right)^x \right]^2 $$</p>
+                    <p>Inner limit evaluates to $e^5$:</p>
+                    <p>$$ = (e^5)^2 = e^{10} $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Lab -->
+        <section class="lab-section">
+            <div class="lab-header">
+                <h2>Interactive Limit Evaluator Tool</h2>
+                <p>ઇન્ટરેક્ટિવ લક્ષ ગણતરી ટૂલ</p>
+            </div>
+
+            <div class="calculator-grid">
+                
+                <!-- Calc 1: Rational Limit -->
+                <div class="input-group">
+                    <h3 style="color: var(--primary);">1. Rational Limit Formula</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">સંમેય લક્ષ સૂત્ર: $\lim_{x \to a} \frac{x^n - a^n}{x - a}$</p>
+                    
+                    <div class="inputs-flex">
+                        <label>Value of a:</label>
+                        <input type="number" id="rat-a" value="2">
+                    </div>
+                    <div class="inputs-flex">
+                        <label>Power (n):</label>
+                        <input type="number" id="rat-n" value="5">
+                    </div>
+                    
+                    <button class="btn-calc" onclick="calcRational()">Evaluate (ગણતરી કરો)</button>
+                </div>
+
+                <!-- Calc 2: Trigonometric Limit -->
+                <div class="input-group alt1">
+                    <h3 style="color: var(--secondary);">2. Trigonometric Limit</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">ત્રિકોણમિતિય લક્ષ: $\lim_{x \to 0} \frac{\sin(ax)}{\tan(bx)}$</p>
+                    
+                    <div class="inputs-flex">
+                        <label>Coefficient a:</label>
+                        <input type="number" id="trig-a" value="3">
+                    </div>
+                    <div class="inputs-flex">
+                        <label>Coefficient b:</label>
+                        <input type="number" id="trig-b" value="2">
+                    </div>
+
+                    <button class="btn-calc alt1" onclick="calcTrig()">Evaluate (ગણતરી કરો)</button>
+                </div>
+
+                <!-- Calc 3: Exponential Limit -->
+                <div class="input-group alt2">
+                    <h3 style="color: var(--info);">3. Exponential Limit</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">ઘાતાંકીય લક્ષ: $\lim_{x \to 0} \frac{a^x - b^x}{x}$</p>
+                    
+                    <div class="inputs-flex">
+                        <label>Base a:</label>
+                        <input type="number" id="exp-a" value="5" min="1">
+                    </div>
+                    <div class="inputs-flex">
+                        <label>Base b:</label>
+                        <input type="number" id="exp-b" value="2" min="1">
+                    </div>
+                    
+                    <button class="btn-calc alt2" onclick="calcExp()">Evaluate (ગણતરી કરો)</button>
+                </div>
+
+                <!-- Calc 4: Infinite Polynomial Limit -->
+                <div class="input-group alt3">
+                    <h3 style="color: var(--accent);">4. Infinite Polynomial Limit</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">અનંત લક્ષ: $\lim_{n \to \infty} \frac{An^2+Bn+C}{Dn^2+En+F}$</p>
+                    
+                    <div class="inputs-flex">
+                        <label>Num (અંશ) A:</label><input type="number" id="inf-num-a" value="6">
+                        <label>Denom (છેદ) D:</label><input type="number" id="inf-den-d" value="2">
+                    </div>
+                    
+                    <button class="btn-calc alt3" onclick="calcInfPoly()">Evaluate (ગણતરી કરો)</button>
+                </div>
+
+            </div>
+            
+            <!-- Universal Output Box -->
+            <div class="lab-output" id="solution-box">
+                <em>Enter values in any of the tools above and click 'Evaluate' to see step-by-step MathJax solutions here.</em><br>
+                <em style="color: #64748b; font-size:0.9rem;">અહીં સ્ટેપ-બાય-સ્ટેપ ઉકેલ જોવા માટે કોઈપણ ટૂલમાં કિંમતો દાખલ કરો અને ગણતરી કરો બટન દબાવો.</em>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            Page Visits / પેજની મુલાકાતો: <span id="visit-counter">0</span>
+        </div>
+        <div class="footer-right">
+            Prepared by Bhavin R Patel, Lecturer Mathematics
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Visit Counter Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            let visits = localStorage.getItem("limit_page_visits");
+            if (!visits) visits = 0;
+            visits = parseInt(visits) + 1;
+            localStorage.setItem("limit_page_visits", visits);
+            document.getElementById("visit-counter").innerText = visits;
+        });
+
+        // Dynamic MathJax Renderer
+        function renderMath(htmlContent) {
+            const outputBox = document.getElementById('solution-box');
+            outputBox.innerHTML = htmlContent;
+            if (window.MathJax) {
+                MathJax.typesetPromise([outputBox]).catch((err) => console.log('MathJax error: ', err.message));
+            }
+        }
+
+        // ============================================
+        // 1. Rational Limit Calculator
+        // ============================================
+        function calcRational() {
+            const a = parseFloat(document.getElementById('rat-a').value) || 0;
+            const n = parseFloat(document.getElementById('rat-n').value) || 0;
+            
+            const an = Math.pow(a, n);
+            const ans = n * Math.pow(a, n - 1);
+
+            let html = `<h3 style="color: var(--primary); margin-bottom: 1rem;">Step-by-Step Solution / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Given Limit problem (આપેલ લક્ષ):</strong></p>`;
+            html += `<p>\\( \\lim_{x \\to ${a}} \\frac{x^{${n}} - ${an}}{x - ${a}} \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>Step 1: Convert constant to power format / અચળ પદને ઘાતાંકીય સ્વરૂપમાં ફેરવો</strong></p>`;
+            html += `<p>Since \\( ${an} = ${a}^{${n}} \\), we can rewrite the limit as:</p>`;
+            html += `<p>\\( \\lim_{x \\to ${a}} \\frac{x^{${n}} - ${a}^{${n}}}{x - ${a}} \\)</p>`;
+            
+            html += `<p><strong>Step 2: Apply Standard Formula / પ્રમાણિત સૂત્રનો ઉપયોગ કરો</strong></p>`;
+            html += `<p>Using the identity \\( \\lim_{x \\to a} \\frac{x^n - a^n}{x - a} = n \\cdot a^{n-1} \\)</p>`;
+            html += `<p>Here \\( a = ${a} \\) and \\( n = ${n} \\).</p>`;
+            html += `<p>\\( = ${n} \\cdot (${a})^{${n}-1} \\)</p>`;
+            html += `<p>\\( = ${n} \\cdot (${a})^{${n-1}} \\)</p>`;
+            html += `<p>\\( = ${n} \\cdot ${Math.pow(a, n-1)} \\)</p>`;
+            
+            html += `<p><strong>Final Answer (અંતિમ જવાબ):</strong> \\( ${ans} \\)</p>`;
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 2. Trigonometric Limit Calculator
+        // ============================================
+        function calcTrig() {
+            const a = parseFloat(document.getElementById('trig-a').value) || 0;
+            const b = parseFloat(document.getElementById('trig-b').value) || 0;
+
+            if (b === 0) {
+                renderMath(`<p style="color:red;">Error: Coefficient 'b' cannot be zero! (છેદ શૂન્ય ન હોઈ શકે!)</p>`);
+                return;
+            }
+
+            const result = a / b;
+            const resFormatted = Number.isInteger(result) ? result : `${a}/${b}`;
+
+            let html = `<h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Given Limit problem (આપેલ લક્ષ):</strong></p>`;
+            html += `<p>\\( \\lim_{x \\to 0} \\frac{\\sin(${a}x)}{\\tan(${b}x)} \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            html += `<p><strong>Step 1: Divide Numerator and Denominator by x / અંશ અને છેદને x વડે ભાગો</strong></p>`;
+            html += `<p>\\( = \\lim_{x \\to 0} \\frac{ \\frac{\\sin(${a}x)}{x} }{ \\frac{\\tan(${b}x)}{x} } \\)</p>`;
+            
+            html += `<p><strong>Step 2: Adjust coefficients / સહગુણકો સરખા કરો</strong></p>`;
+            html += `<p>Multiply and divide by required constants to match the standard form.</p>`;
+            html += `<p>\\( = \\frac{ \\lim_{x \\to 0} \\frac{\\sin(${a}x)}{${a}x} \\times ${a} }{ \\lim_{x \\to 0} \\frac{\\tan(${b}x)}{${b}x} \\times ${b} } \\)</p>`;
+            
+            html += `<p><strong>Step 3: Apply Standard Formula / પ્રમાણિત સૂત્રનો ઉપયોગ કરો</strong></p>`;
+            html += `<p>Using \\( \\lim_{\\theta \\to 0} \\frac{\\sin\\theta}{\\theta} = 1 \\) and \\( \\lim_{\\theta \\to 0} \\frac{\\tan\\theta}{\\theta} = 1 \\)</p>`;
+            html += `<p>\\( = \\frac{ 1 \\times ${a} }{ 1 \\times ${b} } \\)</p>`;
+            
+            html += `<p><strong>Final Answer (અંતિમ જવાબ):</strong> \\( \\frac{${a}}{${b}} \\) ${Number.isInteger(result) ? ' = ' + result : ''}</p>`;
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 3. Exponential Limit Calculator
+        // ============================================
+        function calcExp() {
+            const a = parseFloat(document.getElementById('exp-a').value) || 0;
+            const b = parseFloat(document.getElementById('exp-b').value) || 0;
+
+            if (a <= 0 || b <= 0) {
+                renderMath(`<p style="color:red;">Error: Bases 'a' and 'b' must be greater than zero! (આધાર શૂન્યથી મોટો હોવો જોઈએ!)</p>`);
+                return;
+            }
+
+            let html = `<h3 style="color: var(--info); margin-bottom: 1rem;">Step-by-Step Solution / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Given Limit problem (આપેલ લક્ષ):</strong></p>`;
+            html += `<p>\\( \\lim_{x \\to 0} \\frac{${a}^x - ${b}^x}{x} \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            html += `<p><strong>Step 1: Subtract and add 1 in the numerator / અંશમાં 1 બાદ કરી ઉમેરો</strong></p>`;
+            html += `<p>\\( = \\lim_{x \\to 0} \\frac{(${a}^x - 1) - (${b}^x - 1)}{x} \\)</p>`;
+            
+            html += `<p><strong>Step 2: Split into two limits / બે લક્ષમાં વિભાજીત કરો</strong></p>`;
+            html += `<p>\\( = \\lim_{x \\to 0} \\frac{${a}^x - 1}{x} - \\lim_{x \\to 0} \\frac{${b}^x - 1}{x} \\)</p>`;
+            
+            html += `<p><strong>Step 3: Apply Standard Formula / પ્રમાણિત સૂત્રનો ઉપયોગ કરો</strong></p>`;
+            html += `<p>Using the exponential identity \\( \\lim_{x \\to 0} \\frac{k^x - 1}{x} = \\log_e k \\)</p>`;
+            html += `<p>\\( = \\log_e(${a}) - \\log_e(${b}) \\)</p>`;
+            
+            html += `<p><strong>Step 4: Use Logarithm property / લઘુગણકના નિયમનો ઉપયોગ કરો</strong></p>`;
+            html += `<p>Using \\( \\log m - \\log n = \\log(\\frac{m}{n}) \\)</p>`;
+            
+            html += `<p><strong>Final Answer (અંતિમ જવાબ):</strong> \\( \\log_e\\left(\\frac{${a}}{${b}}\\right) \\)</p>`;
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 4. Infinite Polynomial Limit Calculator
+        // ============================================
+        function calcInfPoly() {
+            const A = parseFloat(document.getElementById('inf-num-a').value) || 0;
+            const D = parseFloat(document.getElementById('inf-den-d').value) || 0;
+
+            if (D === 0) {
+                renderMath(`<p style="color:red;">Error: Denominator leading coefficient 'D' cannot be zero!</p>`);
+                return;
+            }
+
+            const result = A / D;
+
+            let html = `<h3 style="color: var(--accent); margin-bottom: 1rem;">Step-by-Step Solution / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Given Limit problem (આપેલ લક્ષ):</strong></p>`;
+            html += `<p>\\( \\lim_{n \\to \\infty} \\frac{${A}n^2 + Bn + C}{${D}n^2 + En + F} \\)</p>`;
+            html += `<p><em>Note: We only need the highest degree terms (A and D) for polynomials of equal degree at infinity.</em></p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            html += `<p><strong>Step 1: Divide by Highest Power / સૌથી મોટી ઘાત વડે ભાગો</strong></p>`;
+            html += `<p>Divide numerator and denominator by \\( n^2 \\):</p>`;
+            html += `<p>\\( = \\lim_{n \\to \\infty} \\frac{ \\frac{${A}n^2}{n^2} + \\frac{Bn}{n^2} + \\frac{C}{n^2} }{ \\frac{${D}n^2}{n^2} + \\frac{En}{n^2} + \\frac{F}{n^2} } \\)</p>`;
+            html += `<p>\\( = \\lim_{n \\to \\infty} \\frac{ ${A} + \\frac{B}{n} + \\frac{C}{n^2} }{ ${D} + \\frac{E}{n} + \\frac{F}{n^2} } \\)</p>`;
+
+            html += `<p><strong>Step 2: Apply Limit / લક્ષની કિંમત મૂકો</strong></p>`;
+            html += `<p>As \\( n \\to \\infty \\), all terms with \\( n \\) in the denominator become \\( 0 \\).</p>`;
+            html += `<p>\\( = \\frac{ ${A} + 0 + 0 }{ ${D} + 0 + 0 } \\)</p>`;
+
+            html += `<p><strong>Final Answer (અંતિમ જવાબ):</strong> \\( \\frac{${A}}{${D}} \\) ${Number.isInteger(result) ? ' = ' + result : ''}</p>`;
+
+            renderMath(html);
+        }
+    </script>
+</body>
+</html>

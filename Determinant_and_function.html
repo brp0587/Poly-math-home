@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Study Guide | ગણિત અભ્યાસ માર્ગદર્શિકા</title>
+    
+    <!-- MathJax Configuration to enable $ for inline math -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #2563eb; /* Blue */
+            --secondary: #10b981; /* Emerald */
+            --dark: #1e293b; /* Slate */
+            --light: #f8fafc; /* Light Slate */
+            --accent: #f59e0b; /* Amber */
+            --violet: #8b5cf6;
+            --rose: #e11d48;
+            --teal: #0d9488;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border: #e2e8f0;
+            --formula-bg: #eef2ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-card.border-secondary { border-top-color: var(--secondary); }
+        .section-card.border-accent { border-top-color: var(--accent); }
+        .section-card.border-violet { border-top-color: var(--violet); }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .topic-title h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+        }
+
+        .topic-title .gujarati {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+        .anim-pulse { animation: pulse 3s infinite; }
+        .anim-float { animation: float 4s infinite; }
+        .anim-spin { animation: spin-slow 15s linear infinite; }
+
+        .def-app-box {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        .border-secondary .def-app-box { border-left-color: var(--secondary); }
+        .border-accent .def-app-box { border-left-color: var(--accent); }
+        .border-violet .def-app-box { border-left-color: var(--violet); }
+
+        .def-app-box strong { color: var(--dark); }
+
+        .explanation-block {
+            background: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        .explanation-block p { margin-bottom: 0.75rem; }
+
+        .formula-box {
+            background: var(--formula-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #c7d2fe;
+        }
+        
+        .border-secondary .formula-box { background: #ecfdf5; border-color: #a7f3d0; }
+        .border-accent .formula-box { background: #fffbeb; border-color: #fde68a; }
+        .border-violet .formula-box { background: #f5f3ff; border-color: #ddd6fe; }
+        
+        .formula-box h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .border-secondary .formula-box h3 { color: var(--secondary); }
+        .border-accent .formula-box h3 { color: var(--accent); }
+        .border-violet .formula-box h3 { color: var(--violet); }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .formula-item {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .example-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .example-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 0.5rem;
+        }
+        .border-secondary .example-card h4 { color: var(--secondary); }
+        .border-accent .example-card h4 { color: var(--accent); }
+        .border-violet .example-card h4 { color: var(--violet); }
+
+        /* Interactive Lab Styles */
+        .lab-section {
+            background: var(--dark);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .lab-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .lab-header h2 { color: var(--accent); font-size: 2rem;}
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+            .topic-header { flex-direction: column; text-align: center; }
+        }
+
+        .input-group { 
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--primary);
+            text-align: center;
+        }
+        
+        .input-group h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Lab Colors */
+        .c-primary { border-top-color: var(--primary); }
+        .c-primary h3 { color: var(--primary); }
+        
+        .c-secondary { border-top-color: var(--secondary); }
+        .c-secondary h3 { color: var(--secondary); }
+        
+        .c-accent { border-top-color: var(--accent); }
+        .c-accent h3 { color: var(--accent); }
+        
+        .c-violet { border-top-color: var(--violet); }
+        .c-violet h3 { color: var(--violet); }
+        
+        .c-rose { border-top-color: var(--rose); }
+        .c-rose h3 { color: var(--rose); }
+        
+        .c-teal { border-top-color: var(--teal); }
+        .c-teal h3 { color: var(--teal); }
+
+        .matrix-input {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            width: fit-content;
+            margin: 0 auto 1rem auto;
+        }
+
+        .matrix-input-3x3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            width: fit-content;
+            margin: 0 auto 1rem auto;
+        }
+
+        .flex-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 0.5rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: #fff;
+            color: var(--dark);
+        }
+
+        button.btn-calc {
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.1s;
+            width: 100%;
+        }
+        button.btn-calc:active { transform: scale(0.98); }
+
+        .btn-primary { background: var(--primary); }
+        .btn-primary:hover { background: #1d4ed8; }
+        
+        .btn-secondary { background: var(--secondary); }
+        .btn-secondary:hover { background: #047857; }
+        
+        .btn-accent { background: var(--accent); }
+        .btn-accent:hover { background: #b45309; }
+        
+        .btn-violet { background: var(--violet); }
+        .btn-violet:hover { background: #6d28d9; }
+        
+        .btn-rose { background: var(--rose); }
+        .btn-rose:hover { background: #be123c; }
+        
+        .btn-teal { background: var(--teal); }
+        .btn-teal:hover { background: #0f766e; }
+
+        .lab-output {
+            background: #f8fafc;
+            color: var(--text-main);
+            padding: 2rem;
+            border-radius: 8px;
+            min-height: 250px;
+            font-size: 1.1rem;
+            border-left: 5px solid var(--accent);
+            grid-column: 1 / -1;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 1.5rem;
+            margin-top: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-left { font-weight: bold; }
+        .footer-right { color: var(--accent); font-weight: bold;}
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>1. Determinants & Functions Study Guide</h1>
+        <p>નિશ્ચાયક અને વિધેય અભ્યાસ માર્ગદર્શિકા</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 1.1 Determinant -->
+        <section class="section-card">
+            <div class="topic-header">
+                <div class="icon-box anim-pulse">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="var(--primary)" stroke-width="4">
+                        <rect x="10" y="10" width="80" height="80" rx="8"></rect>
+                        <line x1="10" y1="50" x2="90" y2="50"></line>
+                        <line x1="50" y1="10" x2="50" y2="90"></line>
+                        <circle cx="30" cy="30" r="4" fill="var(--primary)"></circle>
+                        <circle cx="70" cy="70" r="4" fill="var(--primary)"></circle>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>1.1 Determinant and its value up to 3rd order (Without properties)</h2>
+                    <div class="gujarati">૧.૧ નિશ્ચાયક અને તેનું 3જી કક્ષા સુધીનું મૂલ્ય (ગુણધર્મો વિના)</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> A scalar value that can be computed from the elements of a square matrix. / ચોરસ શ્રેણિકના ઘટકો પરથી મેળવી શકાતું અદિશ મૂલ્ય.</p>
+                <br>
+                <p><strong>Real-life Application (વાસ્તવિક ઉપયોગ):</strong> Used in engineering to solve complex systems of linear equations (like circuit analysis). / એન્જિનિયરિંગમાં સુરેખ સમીકરણોની જટિલ સિસ્ટમ્સ (જેમ કે સર્કિટ એનાલિસિસ) ઉકેલવા માટે.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>A $2 \times 2$ determinant is solved by cross-multiplying the primary diagonal and subtracting the secondary diagonal product. A $3 \times 3$ determinant requires expanding by minors along any row or column. / $2 \times 2$ નિશ્ચાયક મુખ્ય વિકર્ણના ગુણાકારમાંથી ગૌણ વિકર્ણનો ગુણાકાર બાદ કરીને ઉકેલાય છે. $3 \times 3$ નિશ્ચાયકને કોઈપણ હાર અથવા સ્તંભ દ્વારા વિસ્તૃત કરીને ઉકેલી શકાય છે.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3>📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>$2 \times 2$ Determinant:</strong><br>
+                        $$ \begin{vmatrix} a & b \\ c & d \end{vmatrix} = ad - bc $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>$3 \times 3$ Expansion:</strong><br>
+                        $$ a(ei - fh) - b(di - fg) + c(dh - eg) $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Evaluate / કિંમત શોધો: $$ \begin{vmatrix} -1 & 3 \\ -4 & 6 \end{vmatrix} $$</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ = (-1)(6) - (3)(-4) $$</p>
+                    <p>$$ = -6 - (-12) $$</p>
+                    <p>$$ = -6 + 12 = 6 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Solve for x / x શોધો: $$ \begin{vmatrix} x & -3 \\ -1 & x \end{vmatrix} = 33 $$</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ (x)(x) - (-3)(-1) = 33 $$</p>
+                    <p>$$ x^2 - 3 = 33 $$</p>
+                    <p>$$ x^2 = 36 \implies x = \pm 6 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Evaluate / કિંમત શોધો: $$ \begin{vmatrix} -1 & 6 & -2 \\ 5 & 0 & 7 \\ 4 & 1 & -3 \end{vmatrix} $$</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ = -1(0 - 7) - 6(-15 - 28) - 2(5 - 0) $$</p>
+                    <p>$$ = -1(-7) - 6(-43) - 2(5) $$</p>
+                    <p>$$ = 7 + 258 - 10 = 255 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Solve for x / x શોધો: $$ \begin{vmatrix} x & 2 & 3 \\ 5 & 0 & 7 \\ 3 & 1 & 2 \end{vmatrix} = 30 $$</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ x(0 - 7) - 2(10 - 21) + 3(5 - 0) = 30 $$</p>
+                    <p>$$ -7x - 2(-11) + 15 = 30 $$</p>
+                    <p>$$ -7x + 22 + 15 = 30 \implies -7x + 37 = 30 $$</p>
+                    <p>$$ -7x = -7 \implies x = 1 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Solve for x / x શોધો: $$ \begin{vmatrix} 4 & 2 & x \\ 1 & 5 & -1 \\ 3 & 2 & 3 \end{vmatrix} = 4 $$</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ 4(15 - (-2)) - 2(3 - (-3)) + x(2 - 15) = 4 $$</p>
+                    <p>$$ 4(17) - 2(6) + x(-13) = 4 $$</p>
+                    <p>$$ 68 - 12 - 13x = 4 \implies 56 - 13x = 4 $$</p>
+                    <p>$$ -13x = -52 \implies x = 4 $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.2 Function -->
+        <section class="section-card border-secondary">
+            <div class="topic-header">
+                <div class="icon-box anim-spin">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="var(--secondary)" stroke-width="4">
+                        <circle cx="50" cy="50" r="40" stroke-dasharray="20 10"></circle>
+                        <path d="M 30 50 Q 50 20 70 50 T 110 50" stroke="var(--secondary)"></path>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>1.2 Function and simple examples</h2>
+                    <div class="gujarati">૧.૨ વિધેય અને સાદા ઉદાહરણો</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> A mathematical relation that uniquely associates elements of one set (inputs) with elements of another set (outputs). / એક ગણના સભ્યોને (ઇનપુટ) બીજા ગણના સભ્યો (આઉટપુટ) સાથે અનન્ય રીતે સાંકળતો ગાણિતિક સંબંધ.</p>
+                <br>
+                <p><strong>Real-life Application (વાસ્તવિક ઉપયોગ):</strong> Modeling physical phenomena, like calculating the distance a vehicle travels over a specific function of time. / સમયના વિધેય તરીકે વાહને કાપેલું અંતર માપવા જેવી ભૌતિક ઘટનાઓનું મોડેલિંગ.</p>
+
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>A function $f(x)$ maps an input $x$ to a unique output. To find the value of a function at a specific point, substitute the given value wherever $x$ appears in the equation. / વિધેય $f(x)$ એ ઇનપુટ $x$ ને અનન્ય આઉટપુટ સાથે સાંકળે છે. કોઈ ચોક્કસ બિંદુ પર વિધેયની કિંમત શોધવા માટે, જ્યાં સમીકરણમાં $x$ દેખાય ત્યાં આપેલી કિંમત મૂકો.</p>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>If $f(x) = x^2 - 3x + 1$, find $f(2) + f(3)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Find $f(2)$: $f(2) = (2)^2 - 3(2) + 1 = 4 - 6 + 1 = -1$</p>
+                    <p>Find $f(3)$: $f(3) = (3)^2 - 3(3) + 1 = 9 - 9 + 1 = 1$</p>
+                    <p>Add them: $f(2) + f(3) = -1 + 1 = 0$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>If $f(x) = 5^x$, find $f(-2)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Substitute $x = -2$ / $x = -2$ મૂકો:</p>
+                    <p>$$ f(-2) = 5^{-2} $$</p>
+                    <p>Using negative exponent rule:</p>
+                    <p>$$ = \frac{1}{5^2} = \frac{1}{25} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>If $f(x) = \frac{1-x}{1+x}$, prove $f(x) + f(1/x) = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Calculate $f(1/x)$:</p>
+                    <p>$$ f(1/x) = \frac{1 - 1/x}{1 + 1/x} = \frac{\frac{x-1}{x}}{\frac{x+1}{x}} = \frac{x-1}{x+1} $$</p>
+                    <p>Notice that $\frac{x-1}{x+1} = - \left(\frac{1-x}{1+x}\right) = -f(x)$</p>
+                    <p>Therefore, $f(x) + f(1/x) = f(x) - f(x) = 0$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>If $f(x) = e^x$, prove $f(x+y) = f(x) \cdot f(y)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>LHS: Substitute $(x+y)$ into the function:</p>
+                    <p>$$ f(x+y) = e^{x+y} $$</p>
+                    <p>Using exponent rules $a^{m+n} = a^m \cdot a^n$:</p>
+                    <p>$$ e^{x+y} = e^x \cdot e^y = f(x) \cdot f(y) $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>If $f(x) = \frac{1-x}{1+x}$, prove $f(f(x)) = x$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Substitute $f(x)$ inside $f(x)$:</p>
+                    <p>$$ f(f(x)) = \frac{1 - f(x)}{1 + f(x)} = \frac{1 - (\frac{1-x}{1+x})}{1 + (\frac{1-x}{1+x})} $$</p>
+                    <p>Find common denominator:</p>
+                    <p>$$ = \frac{\frac{1+x - (1-x)}{1+x}}{\frac{1+x + 1-x}{1+x}} = \frac{2x}{2} = x $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.3 Logarithm -->
+        <section class="section-card border-accent">
+            <div class="topic-header">
+                <div class="icon-box anim-float">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="4">
+                        <path d="M 10 90 Q 50 90 90 10" stroke-linecap="round"></path>
+                        <line x1="10" y1="10" x2="10" y2="90"></line>
+                        <line x1="10" y1="90" x2="90" y2="90"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>1.3 Logarithm as a function</h2>
+                    <div class="gujarati">૧.૩ લઘુગણક વિધેય તરીકે</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> The inverse function to exponentiation. It represents the power to which a base must be raised to produce a given number. / ઘાતાંકનું વ્યસ્ત વિધેય. આપેલી સંખ્યા મેળવવા માટે આધારની કેટલી ઘાત કરવી પડે તે દર્શાવે છે.</p>
+                <br>
+                <p><strong>Real-life Application (વાસ્તવિક ઉપયોગ):</strong> Measuring earthquake magnitude on the Richter scale, where each whole number step represents a tenfold increase in measured amplitude. / રિક્ટર સ્કેલ પર ભૂકંપની તીવ્રતા માપવા, જ્યાં દરેક અંકનો વધારો દસ ગણો વધારો દર્શાવે છે.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>If $a^y = x$, then the base-$a$ logarithm of $x$ is $y$, written as $\log_a x = y$. The base $a$ must be positive and not equal to 1. / જો $a^y = x$ હોય, તો $x$ નો $a$ આધારનો લઘુગણક $y$ થાય છે, જેને $\log_a x = y$ લખાય છે. આધાર હંમેશા ધન અને 1 સિવાયનો હોવો જોઈએ.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3>📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Identity:</strong><br>
+                        $$ y = \log_a x \iff a^y = x $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Power Rule:</strong><br>
+                        $$ a^{\log_a x} = x $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find value / કિંમત શોધો: $\log_3 1$</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Let $\log_3 1 = x$. In exponential form:</p>
+                    <p>$$ 3^x = 1 $$</p>
+                    <p>Since any non-zero number to the power of 0 is 1 ($3^0 = 1$):</p>
+                    <p>$$ x = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>If $\log_x (9/16) = -2$, find $x$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Convert to exponential form / ઘાતાંકીય સ્વરૂપમાં ફેરવતાં:</p>
+                    <p>$$ x^{-2} = \frac{9}{16} $$</p>
+                    <p>$$ \frac{1}{x^2} = \frac{9}{16} \implies x^2 = \frac{16}{9} $$</p>
+                    <p>Since the base of a logarithm must be positive:</p>
+                    <p>$$ x = \frac{4}{3} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Find value / કિંમત શોધો: $4^{\log_4 16}$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Using the identity (નિત્યસમનો ઉપયોગ કરતા): $a^{\log_a N} = N$</p>
+                    <p>Here, $a = 4$ and $N = 16$.</p>
+                    <p>$$ 4^{\log_4 16} = 16 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>If $\sqrt{\log_3 x} = 2$, find $x$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Square both sides / બંને બાજુ વર્ગ કરતા:</p>
+                    <p>$$ \log_3 x = 2^2 = 4 $$</p>
+                    <p>Convert to exponential form:</p>
+                    <p>$$ x = 3^4 \implies x = 81 $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.4 Laws of Logarithm -->
+        <section class="section-card border-violet">
+            <div class="topic-header">
+                <div class="icon-box anim-pulse">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="var(--violet)" stroke-width="4">
+                        <rect x="20" y="20" width="25" height="25" rx="4"></rect>
+                        <rect x="55" y="20" width="25" height="25" rx="4"></rect>
+                        <rect x="20" y="55" width="60" height="25" rx="4"></rect>
+                        <path d="M 45 32 L 55 32 M 50 27 L 50 37" stroke="var(--violet)"></path>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>1.4 Laws of Logarithm and related Simple examples</h2>
+                    <div class="gujarati">૧.૪ લઘુગણકના નિયમો અને સંબંધિત સાદા ઉદાહરણો</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Mathematical rules (Product, Quotient, Power, and Base Change laws) that allow the simplification of complex logarithmic expressions. / ગાણિતિક નિયમો (ગુણાકાર, ભાગાકાર, ઘાત અને આધાર પરિવર્તન) જે લઘુગણક સમીકરણોને સરળ બનાવે છે.</p>
+                <br>
+                <p><strong>Real-life Application (વાસ્તવિક ઉપયોગ):</strong> Simplifying complex multiplication and division in sound engineering when working with decibels (dB). / સાઉન્ડ એન્જિનિયરિંગમાં ડેસિબલ્સ (dB) સાથે કામ કરતી વખતે જટિલ ગણતરીઓ સરળ કરવા.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>The laws of logarithms transform multiplication into addition ($\log(xy) = \log x + \log y$), division into subtraction ($\log(x/y) = \log x - \log y$), and exponentiation into multiplication ($\log(x^y) = y \log x$). The base change formula allows us to swap bases: $\log_a b = \frac{\log_c b}{\log_c a}$. / લઘુગણકના નિયમો ગુણાકારને સરવાળામાં, ભાગાકારને બાદબાકીમાં અને ઘાતાંકને ગુણાકારમાં ફેરવે છે. આધાર પરિવર્તન સૂત્ર આધાર બદલવામાં મદદ કરે છે.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3>📖 Laws of Logarithms / લઘુગણકના નિયમો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Product Rule:</strong><br>
+                        $$ \log_a(xy) = \log_a x + \log_a y $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Quotient Rule:</strong><br>
+                        $$ \log_a\left(\frac{x}{y}\right) = \log_a x - \log_a y $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Power & Base Change:</strong><br>
+                        $$ \log_a(x^n) = n\log_a x $$
+                        $$ \log_a b = \frac{1}{\log_b a} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find value: $\log 1 \cdot \log 2 \cdot \log 3 \cdot \log 4$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>We know that $\log 1 = 0$.</p>
+                    <p>$$ = 0 \cdot \log 2 \cdot \log 3 \cdot \log 4 $$</p>
+                    <p>$$ = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Prove: $\frac{1}{\log_{24} 12} + \frac{1}{\log_{8} 12} + \frac{1}{\log_{9} 12} = 3$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Using Base Change Rule (આધાર પરિવર્તન નિયમ): $\frac{1}{\log_a b} = \log_b a$</p>
+                    <p>LHS: $\log_{12} 24 + \log_{12} 8 + \log_{12} 9$</p>
+                    <p>$$ = \log_{12} (24 \times 8 \times 9) = \log_{12} (1728) $$</p>
+                    <p>$$ = \log_{12} (12^3) = 3 \log_{12} 12 = 3 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>If $\log \left(\frac{x+y}{2}\right) = \frac{1}{2}(\log x + \log y)$, prove $x = y$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ \log \left(\frac{x+y}{2}\right) = \frac{1}{2}\log(xy) = \log(xy)^{1/2} $$</p>
+                    <p>Remove log: $\frac{x+y}{2} = \sqrt{xy}$</p>
+                    <p>Square both sides: $(x+y)^2 = 4xy$</p>
+                    <p>$$ x^2 + 2xy + y^2 - 4xy = 0 \implies (x-y)^2 = 0 \implies x = y $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Solve: $\frac{\log x \times \log 16}{\log 32} = \log 256$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Express values as powers of 2:</p>
+                    <p>$$ \frac{\log x \times \log(2^4)}{\log(2^5)} = \log(2^8) $$</p>
+                    <p>$$ \frac{\log x \times 4\log 2}{5\log 2} = 8\log 2 \implies \frac{4}{5}\log x = 8\log 2 $$</p>
+                    <p>$$ \log x = 10\log 2 = \log(2^{10}) \implies x = 1024 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Prove: $7\log(16/15) + 5\log(25/24) - 3\log(80/81) = \log 2$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Convert to prime factors $2, 3, 5$:</p>
+                    <p>$$ 7(\log 2^4 - \log(3 \cdot 5)) + 5(\log 5^2 - \log(2^3 \cdot 3)) - 3(\log(2^4 \cdot 5) - \log 3^4) $$</p>
+                    <p>Collect terms for $\log 2$: $(7 \times 4) + (5 \times -3) - (3 \times 4) = 28 - 15 - 12 = 1$</p>
+                    <p>Collect for $\log 3$: $(7 \times -1) + (5 \times -1) - (3 \times -4) = -7 - 5 + 12 = 0$</p>
+                    <p>Collect for $\log 5$: $(7 \times -1) + (5 \times 2) - (3 \times 1) = -7 + 10 - 3 = 0$</p>
+                    <p>Result: $1\log 2 = \log 2$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 6</h4>
+                    <p>Prove: $\frac{1}{\log_{xy} xyz} + \frac{1}{\log_{yz} xyz} + \frac{1}{\log_{zx} xyz} = 2$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Base change: $\log_{xyz} (xy) + \log_{xyz} (yz) + \log_{xyz} (zx)$</p>
+                    <p>Using Product Rule (ગુણાકાર નિયમ):</p>
+                    <p>$$ = \log_{xyz} (xy \cdot yz \cdot zx) $$</p>
+                    <p>$$ = \log_{xyz} (x^2 y^2 z^2) = \log_{xyz} (xyz)^2 = 2 $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Mega Lab -->
+        <section class="lab-section">
+            <div class="lab-header">
+                <h2>Interactive Lab: Mega Math Toolkit</h2>
+                <p>ઇન્ટરેક્ટિવ પ્રયોગશાળા: ગણિત ટૂલકિટ</p>
+            </div>
+
+            <div class="calculator-grid">
+                
+                <!-- Tool 1: 2x2 Det -->
+                <div class="input-group c-primary">
+                    <h3>1. $2 \times 2$ Determinant</h3>
+                    <div class="matrix-input">
+                        <input type="number" id="det2-a" value="5" aria-label="Top Left">
+                        <input type="number" id="det2-b" value="2" aria-label="Top Right">
+                        <input type="number" id="det2-c" value="-3" aria-label="Bottom Left">
+                        <input type="number" id="det2-d" value="4" aria-label="Bottom Right">
+                    </div>
+                    <button class="btn-calc btn-primary" onclick="solveDet2x2()">Evaluate (ઉકેલો)</button>
+                </div>
+
+                <!-- Tool 2: 3x3 Det -->
+                <div class="input-group c-secondary">
+                    <h3>2. $3 \times 3$ Determinant</h3>
+                    <div class="matrix-input-3x3">
+                        <input type="number" id="d11" value="1">
+                        <input type="number" id="d12" value="2">
+                        <input type="number" id="d13" value="3">
+                        <input type="number" id="d21" value="0">
+                        <input type="number" id="d22" value="1">
+                        <input type="number" id="d23" value="4">
+                        <input type="number" id="d31" value="5">
+                        <input type="number" id="d32" value="6">
+                        <input type="number" id="d33" value="0">
+                    </div>
+                    <button class="btn-calc btn-secondary" onclick="solveDet3x3()">Evaluate (ઉકેલો)</button>
+                </div>
+
+                <!-- Tool 3: Polynomial Function Evaluator -->
+                <div class="input-group c-accent">
+                    <h3>3. Function Evaluator: $f(x) = ax^2+bx+c$</h3>
+                    <div class="flex-input">
+                        <label>a: <input type="number" id="func-a" value="1"></label>
+                        <label>b: <input type="number" id="func-b" value="-3"></label>
+                        <label>c: <input type="number" id="func-c" value="1"></label>
+                    </div>
+                    <div class="flex-input">
+                        <label>Evaluate at x = <input type="number" id="func-x" value="2"></label>
+                    </div>
+                    <button class="btn-calc btn-accent" onclick="calcFunc()">Calculate $f(x)$</button>
+                </div>
+
+                <!-- Tool 4: Exponential Function -->
+                <div class="input-group c-violet">
+                    <h3>4. Exponential Function: $f(x) = a^x$</h3>
+                    <div class="flex-input">
+                        <label>Base (a): <input type="number" id="exp-base" value="5" min="1"></label>
+                        <label>Power (x): <input type="number" id="exp-x" value="-2"></label>
+                    </div>
+                    <button class="btn-calc btn-violet" onclick="calcExpFunc()">Calculate $a^x$</button>
+                </div>
+
+                <!-- Tool 5: Log Base Converter -->
+                <div class="input-group c-rose">
+                    <h3>5. Logarithm Evaluator: $\log_a x$</h3>
+                    <div class="flex-input">
+                        <label>Base (a): <input type="number" id="log-base" value="2" min="1"></label>
+                        <label>Value (x): <input type="number" id="log-val" value="16" min="0"></label>
+                    </div>
+                    <button class="btn-calc btn-rose" onclick="solveLogarithm()">Evaluate $\log_a x$</button>
+                </div>
+
+                <!-- Tool 6: Log Equation Solver -->
+                <div class="input-group c-teal">
+                    <h3>6. Log Equation Solver: $\log_a x = y$</h3>
+                    <div class="flex-input">
+                        <label>Base (a): <input type="number" id="logeq-a" value="3" min="1"></label>
+                        <label>Equal to (y): <input type="number" id="logeq-y" value="4"></label>
+                    </div>
+                    <button class="btn-calc btn-teal" onclick="solveLogEq()">Find x (x શોધો)</button>
+                </div>
+
+                <!-- Unified Output Box -->
+                <div class="lab-output" id="solution-box">
+                    <em>Enter values in any of the calculators above and click the button to see step-by-step MathJax solutions here.</em><br>
+                    <em style="color:#64748b; font-size: 0.9rem;">અહીં સ્ટેપ-બાય-સ્ટેપ ઉકેલ જોવા માટે કોઈપણ કેલ્ક્યુલેટરમાં કિંમતો દાખલ કરો અને ગણતરી કરો બટન દબાવો.</em>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            Page Visits / પેજની મુલાકાતો: <span id="visit-counter" style="color: white; background: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px;">0</span>
+        </div>
+        <div class="footer-right">
+            Prepared by Bhavin R Patel, Lecturer Mathematics
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Visit Counter Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            let visits = localStorage.getItem("det_mega_visits");
+            if (!visits) visits = 0;
+            visits = parseInt(visits) + 1;
+            localStorage.setItem("det_mega_visits", visits);
+            document.getElementById("visit-counter").innerText = visits;
+        });
+
+        function renderMath(htmlContent) {
+            const outputBox = document.getElementById('solution-box');
+            outputBox.innerHTML = htmlContent;
+            if (window.MathJax) {
+                MathJax.typesetPromise([outputBox]).catch((err) => console.log('MathJax error: ', err.message));
+            }
+        }
+
+        // 1. 2x2 Determinant
+        function solveDet2x2() {
+            const a = parseFloat(document.getElementById('det2-a').value) || 0;
+            const b = parseFloat(document.getElementById('det2-b').value) || 0;
+            const c = parseFloat(document.getElementById('det2-c').value) || 0;
+            const d = parseFloat(document.getElementById('det2-d').value) || 0;
+
+            const term1 = a * d;
+            const term2 = b * c;
+            const result = term1 - term2;
+
+            const solutionHTML = `
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Step-by-Step Solution: 2x2 Determinant / સંપૂર્ણ ઉકેલ:</h3>
+                <p><strong>Step 1:</strong> Write the determinant. / નિશ્ચાયક સ્વરૂપમાં લખો.</p>
+                <p>$$ \\Delta = \\begin{vmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{vmatrix} $$</p>
+                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">
+                <p><strong>Step 2:</strong> Apply the formula: \\( (a \\times d) - (b \\times c) \\)</p>
+                <p>$$ \\Delta = (${a})(${d}) - (${b})(${c}) $$</p>
+                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">
+                <p><strong>Step 3:</strong> Calculate the products. / ગુણાકાર કરો.</p>
+                <p>$$ \\Delta = (${term1}) - (${term2}) $$</p>
+                <p><strong>Final Answer / અંતિમ જવાબ:</strong></p>
+                <p>$$ \\Delta = ${result} $$</p>
+            `;
+            renderMath(solutionHTML);
+        }
+
+        // 2. 3x3 Determinant
+        function solveDet3x3() {
+            const m = [
+                [parseFloat(document.getElementById('d11').value)||0, parseFloat(document.getElementById('d12').value)||0, parseFloat(document.getElementById('d13').value)||0],
+                [parseFloat(document.getElementById('d21').value)||0, parseFloat(document.getElementById('d22').value)||0, parseFloat(document.getElementById('d23').value)||0],
+                [parseFloat(document.getElementById('d31').value)||0, parseFloat(document.getElementById('d32').value)||0, parseFloat(document.getElementById('d33').value)||0]
+            ];
+
+            const minor1 = (m[1][1]*m[2][2]) - (m[1][2]*m[2][1]);
+            const minor2 = (m[1][0]*m[2][2]) - (m[1][2]*m[2][0]);
+            const minor3 = (m[1][0]*m[2][1]) - (m[1][1]*m[2][0]);
+            const result = (m[0][0]*minor1) - (m[0][1]*minor2) + (m[0][2]*minor3);
+
+            const solutionHTML = `
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution: 3x3 Determinant / સંપૂર્ણ ઉકેલ:</h3>
+                <p><strong>Step 1:</strong> Expand along the first row. / પ્રથમ હાર દ્વારા વિસ્તરણ કરો.</p>
+                <p>$$ \\Delta = \\begin{vmatrix} ${m[0][0]} & ${m[0][1]} & ${m[0][2]} \\\\ ${m[1][0]} & ${m[1][1]} & ${m[1][2]} \\\\ ${m[2][0]} & ${m[2][1]} & ${m[2][2]} \\end{vmatrix} $$</p>
+                <p>$$ = ${m[0][0]}\\begin{vmatrix} ${m[1][1]} & ${m[1][2]} \\\\ ${m[2][1]} & ${m[2][2]} \\end{vmatrix} - ${m[0][1]}\\begin{vmatrix} ${m[1][0]} & ${m[1][2]} \\\\ ${m[2][0]} & ${m[2][2]} \\end{vmatrix} + ${m[0][2]}\\begin{vmatrix} ${m[1][0]} & ${m[1][1]} \\\\ ${m[2][0]} & ${m[2][1]} \\end{vmatrix} $$</p>
+                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">
+                <p><strong>Step 2:</strong> Solve the 2x2 minors. / 2x2 નિશ્ચાયક ઉકેલો.</p>
+                <p>$$ = ${m[0][0]}((${m[1][1]}\\times${m[2][2]}) - (${m[1][2]}\\times${m[2][1]})) - ${m[0][1]}((${m[1][0]}\\times${m[2][2]}) - (${m[1][2]}\\times${m[2][0]})) + ${m[0][2]}((${m[1][0]}\\times${m[2][1]}) - (${m[1][1]}\\times${m[2][0]})) $$</p>
+                <p>$$ = ${m[0][0]}(${minor1}) - ${m[0][1]}(${minor2}) + ${m[0][2]}(${minor3}) $$</p>
+                <p><strong>Final Answer / અંતિમ જવાબ:</strong></p>
+                <p>$$ \\Delta = ${m[0][0]*minor1} - ${m[0][1]*minor2} + ${m[0][2]*minor3} = ${result} $$</p>
+            `;
+            renderMath(solutionHTML);
+        }
+
+        // 3. Polynomial Function Evaluator
+        function calcFunc() {
+            const a = parseFloat(document.getElementById('func-a').value) || 0;
+            const b = parseFloat(document.getElementById('func-b').value) || 0;
+            const c = parseFloat(document.getElementById('func-c').value) || 0;
+            const x = parseFloat(document.getElementById('func-x').value) || 0;
+
+            const res = a*x*x + b*x + c;
+
+            let html = `<h3 style="color: var(--accent); margin-bottom: 1rem;">Step-by-Step Solution: Function Evaluator / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p>Given Function (આપેલ વિધેય): \\( f(x) = ${a}x^2 + ${b}x + ${c} \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">`;
+            html += `<p>Substitute \\( x = ${x} \\) (x ની કિંમત મૂકો):</p>`;
+            html += `<p>\\( f(${x}) = ${a}(${x})^2 + ${b}(${x}) + ${c} \\)</p>`;
+            html += `<p>\\( f(${x}) = ${a}(${x*x}) + (${b*x}) + ${c} \\)</p>`;
+            html += `<p>\\( f(${x}) = ${a*x*x} + (${b*x}) + ${c} \\)</p>`;
+            html += `<p><strong>Final Answer / અંતિમ જવાબ:</strong> \\( f(${x}) = ${res} \\)</p>`;
+            renderMath(html);
+        }
+
+        // 4. Exponential Function
+        function calcExpFunc() {
+            const a = parseFloat(document.getElementById('exp-base').value) || 5;
+            const x = parseFloat(document.getElementById('exp-x').value) || -2;
+
+            if (a === 0 && x < 0) {
+                renderMath(`<p style="color:red;">Error: Division by zero!</p>`);
+                return;
+            }
+
+            const res = Math.pow(a, x);
+
+            let html = `<h3 style="color: var(--violet); margin-bottom: 1rem;">Step-by-Step Solution: Exponential Function / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p>Given Function (આપેલ વિધેય): \\( f(x) = ${a}^x \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">`;
+            html += `<p>Substitute \\( x = ${x} \\) (x ની કિંમત મૂકો):</p>`;
+            html += `<p>\\( f(${x}) = ${a}^{${x}} \\)</p>`;
+            
+            if(x < 0) {
+                html += `<p>Using negative exponent rule / ઋણ ઘાતાંકનો નિયમ: \\( a^{-n} = \\frac{1}{a^n} \\)</p>`;
+                html += `<p>\\( = \\frac{1}{${a}^{${-x}}} = \\frac{1}{${Math.pow(a, -x)}} \\)</p>`;
+            }
+            
+            html += `<p><strong>Final Answer / અંતિમ જવાબ:</strong> \\( f(${x}) = ${res} \\)</p>`;
+            renderMath(html);
+        }
+
+        // 5. Logarithm Evaluator
+        function solveLogarithm() {
+            const base = parseFloat(document.getElementById('log-base').value) || 10;
+            const val = parseFloat(document.getElementById('log-val').value) || 1;
+
+            if (base <= 0 || base === 1 || val <= 0) {
+                renderMath(`<p style="color: red;"><strong>Error:</strong> Base must be > 0 and ≠ 1. Value must be > 0.</p>`);
+                return;
+            }
+
+            const result = Math.log(val) / Math.log(base);
+            const formattedResult = Number.isInteger(result) ? result : result.toFixed(4);
+
+            const solutionHTML = `
+                <h3 style="color: var(--rose); margin-bottom: 1rem;">Step-by-Step Solution: Logarithm Evaluator / સંપૂર્ણ ઉકેલ:</h3>
+                <p><strong>Step 1:</strong> Identify the expression. / લઘુગણક સમીકરણ ઓળખો.</p>
+                <p>$$ y = \\log_{${base}} ${val} $$</p>
+                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">
+                <p><strong>Step 2:</strong> Use the Change of Base Formula: \\( \\log_a x = \\frac{\\ln x}{\\ln a} \\)</p>
+                <p>$$ y = \\frac{\\ln ${val}}{\\ln ${base}} $$</p>
+                <p>$$ y = \\frac{${Math.log(val).toFixed(4)}}{${Math.log(base).toFixed(4)}} $$</p>
+                <p><strong>Final Answer / અંતિમ જવાબ:</strong></p>
+                <p>$$ y = ${formattedResult} $$</p>
+            `;
+            renderMath(solutionHTML);
+        }
+
+        // 6. Log Equation Solver
+        function solveLogEq() {
+            const a = parseFloat(document.getElementById('logeq-a').value) || 10;
+            const y = parseFloat(document.getElementById('logeq-y').value) || 2;
+
+            if (a <= 0 || a === 1) {
+                renderMath(`<p style="color: red;"><strong>Error:</strong> Base must be > 0 and ≠ 1.</p>`);
+                return;
+            }
+
+            const res = Math.pow(a, y);
+
+            let html = `<h3 style="color: var(--teal); margin-bottom: 1rem;">Step-by-Step Solution: Log Equation / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p>Given Equation (આપેલ સમીકરણ): \\( \\log_{${a}} x = ${y} \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 10px 0;">`;
+            html += `<p>Convert to exponential form (ઘાતાંકીય સ્વરૂપમાં ફેરવતાં):</p>`;
+            html += `<p>Using identity \\( \\log_a x = y \\iff x = a^y \\)</p>`;
+            html += `<p>\\( x = ${a}^{${y}} \\)</p>`;
+            html += `<p><strong>Final Answer / અંતિમ જવાબ:</strong> \\( x = ${res} \\)</p>`;
+            renderMath(html);
+        }
+    </script>
+</body>
+</html>

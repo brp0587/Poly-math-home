@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Study Guide | ગણિત અભ્યાસ માર્ગદર્શિકા - Coordinate Geometry</title>
+    
+    <!-- MathJax Configuration to enable inline and block math -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <!-- MathJax Library -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #0284c7; /* Ocean Blue */
+            --secondary: #0d9488; /* Teal */
+            --dark: #1e293b; /* Slate */
+            --light: #f8fafc;
+            --accent: #e11d48; /* Rose */
+            --info: #8b5cf6; /* Violet */
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Card Styles */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .border-teal { border-top-color: var(--secondary); }
+        .border-violet { border-top-color: var(--info); }
+        .border-rose { border-top-color: var(--accent); }
+
+        /* Topic Header */
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .topic-title h2 {
+            color: var(--dark);
+            font-size: 1.6rem;
+        }
+
+        .topic-title .gujarati {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Animations & Icons */
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 50%;
+        }
+
+        @keyframes float-up-down { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes pulse-soft { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes slide-right { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+        .anim-float { animation: float-up-down 3s ease-in-out infinite; }
+        .anim-pulse { animation: pulse-soft 2s infinite; }
+        .anim-slide { animation: slide-right 2s ease-in-out infinite; }
+        .anim-spin { animation: spin-slow 12s linear infinite; }
+
+        /* Definition & Detailed Explanations Boxes */
+        .def-app-box {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .border-teal .def-app-box { border-left-color: var(--secondary); }
+        .border-violet .def-app-box { border-left-color: var(--info); }
+        .border-rose .def-app-box { border-left-color: var(--accent); }
+
+        .def-app-box strong { color: var(--dark); font-size: 1.1rem; }
+        
+        .explanation-block {
+            background: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        .explanation-block p { margin-bottom: 0.75rem; }
+
+        .formula-box {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #bae6fd;
+        }
+        
+        .border-teal .formula-box { background: #f0fdf4; border-color: #a7f3d0; }
+        .border-violet .formula-box { background: #f5f3ff; border-color: #ddd6fe; }
+        .border-rose .formula-box { background: #fff1f2; border-color: #fecdd3; }
+
+        .formula-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .formula-item {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+        }
+
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .example-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            font-size: 0.95rem;
+        }
+
+        .example-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        .border-teal .example-card h4 { color: var(--secondary); }
+        .border-violet .example-card h4 { color: var(--info); }
+        .border-rose .example-card h4 { color: var(--accent); }
+
+        /* Interactive Lab Styles */
+        .lab-section {
+            background: var(--dark);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .lab-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .lab-header h2 { color: var(--primary); font-size: 2rem; }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .input-group.alt1 { border-top-color: var(--info); }
+        .input-group.alt2 { border-top-color: var(--secondary); }
+
+        .input-group h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .coord-inputs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 0.5rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            text-align: center;
+            background: #fff;
+            color: var(--dark);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        button.btn-calc {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        button.btn-calc:hover { background: #0269a1; }
+        .btn-calc.alt1 { background: var(--info); }
+        .btn-calc.alt1:hover { background: #6d28d9; }
+        .btn-calc.alt2 { background: var(--secondary); }
+        .btn-calc.alt2:hover { background: #047857; }
+
+        .lab-output {
+            background: #f8fafc;
+            color: var(--text-main);
+            padding: 2rem;
+            border-radius: 8px;
+            min-height: 250px;
+            border-left: 5px solid var(--primary);
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 1.5rem;
+            margin-top: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-left span { color: white; background: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; }
+        .footer-right { color: var(--secondary); font-weight: bold;}
+
+        @media (max-width: 768px) {
+            .topic-header { flex-direction: column; text-align: center; }
+            .coord-inputs { flex-direction: column; }
+            input[type="number"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>4. Coordinate Geometry Study Guide</h1>
+        <p>યામ ભૂમિતિ અભ્યાસ માર્ગદર્શિકા</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 4.1 Straight line & slope -->
+        <section class="section-card">
+            <div class="topic-header">
+                <div class="icon-box anim-slide">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--primary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="80" x2="80" y2="20"></line>
+                        <circle cx="20" cy="80" r="4" fill="var(--primary)"></circle>
+                        <circle cx="80" cy="20" r="4" fill="var(--primary)"></circle>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.1 Straight line (Two-point form) and slope of straight line</h2>
+                    <div class="gujarati">૪.૧ સીધી રેખા (દ્વિ-બિંદુ સ્વરૂપ) અને રેખાનો ઢાળ</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> The slope (gradient) of a line represents its steepness. The two-point form gives the equation of a line passing through any two distinct points on a 2D plane. / ઢાળ એ રેખાની ઢોળાવની તીવ્રતા દર્શાવે છે. દ્વિ-બિંદુ સ્વરૂપ એ 2D સમતલ પરના કોઈપણ બે ભિન્ન બિંદુઓમાંથી પસાર થતી રેખાનું સમીકરણ આપે છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Used in Civil Engineering to determine the correct slope (gradient) of roads and drainage systems for water flow. / રોડ અને ગટર વ્યવસ્થામાં પાણીના પ્રવાહ માટે યોગ્ય ઢાળ નક્કી કરવા માટે સિવિલ એન્જિનિયરિંગમાં ઉપયોગ થાય છે.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>The slope, usually denoted by $m$, defines how much $y$ changes for a unit change in $x$. If a line passes through points $(x_1, y_1)$ and $(x_2, y_2)$, the slope is the "rise over run".</p>
+                    <p>ઢાળને સામાન્ય રીતે $m$ વડે દર્શાવવામાં આવે છે, જે $x$ માં થતા એક એકમ ફેરફાર સામે $y$ માં થતો ફેરફાર દર્શાવે છે. જો રેખા $(x_1, y_1)$ અને $(x_2, y_2)$ બિંદુઓમાંથી પસાર થતી હોય, તો તેનો ઢાળ શોધી શકાય છે.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--primary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Slope (ઢાળ):</strong><br>
+                        $$ m = \frac{y_2 - y_1}{x_2 - x_1} \quad \text{or} \quad m = \tan \theta $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Two-Point Form (દ્વિ-બિંદુ સ્વરૂપ):</strong><br>
+                        $$ y - y_1 = \frac{y_2 - y_1}{x_2 - x_1} (x - x_1) $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find the equation of the line passing through points $(1,2)$ and $(2,1)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Given points are $A(1,2)$ and $B(2,1)$.</p>
+                    <p>Slope / ઢાળ $m = \frac{y_2 - y_1}{x_2 - x_1} = \frac{1 - 2}{2 - 1} = \frac{-1}{1} = -1$</p>
+                    <p>Equation of line / રેખાનું સમીકરણ:</p>
+                    <p>$$ y - y_1 = m(x - x_1) $$</p>
+                    <p>$$ y - 2 = -1(x - 1) $$</p>
+                    <p>$$ y - 2 = -x + 1 \implies x + y - 3 = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find the equation of the line passing through the points $(1, 6)$ and $(-2, 5)$. Also find the slope of the line.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope $m = \frac{5 - 6}{-2 - 1} = \frac{-1}{-3} = \frac{1}{3}$</p>
+                    <p>Equation / સમીકરણ:</p>
+                    <p>$$ y - y_1 = m(x - x_1) $$</p>
+                    <p>$$ y - 6 = \frac{1}{3}(x - 1) $$</p>
+                    <p>$$ 3y - 18 = x - 1 \implies x - 3y + 17 = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>If a line makes an angle $45^\circ$ with positive x-axis then find slope of the line.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope formula based on angle / ખૂણા પરથી ઢાળનું સૂત્ર: $m = \tan \theta$</p>
+                    <p>$$ m = \tan(45^\circ) $$</p>
+                    <p>$$ m = 1 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Find the equation of a line passing through $(-6,2)$ and parallel to the line joining the points $(-3,1)$ and $(-5,2)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope of points $(-3,1)$ and $(-5,2)$ / આપેલ બિંદુઓનો ઢાળ:</p>
+                    <p>$$ m_1 = \frac{2 - 1}{-5 - (-3)} = \frac{1}{-2} = -\frac{1}{2} $$</p>
+                    <p>Since line is parallel, $m_2 = m_1 = -1/2$.</p>
+                    <p>Equation through $(-6,2)$ / સમીકરણ: $y - 2 = -\frac{1}{2}(x - (-6))$</p>
+                    <p>$$ 2(y - 2) = -1(x + 6) \implies 2y - 4 = -x - 6 $$</p>
+                    <p>$$ x + 2y + 2 = 0 $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.2 Slope point, intercept, general -->
+        <section class="section-card border-teal">
+            <div class="topic-header">
+                <div class="icon-box anim-pulse">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--secondary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="10" y1="90" x2="90" y2="90"></line>
+                        <line x1="10" y1="90" x2="10" y2="10"></line>
+                        <line x1="10" y1="70" x2="70" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.2 Slope point form, Intercept form, General form of line</h2>
+                    <div class="gujarati">૪.૨ ઢાળ-બિંદુ સ્વરૂપ, અંત:ખંડ સ્વરૂપ, રેખાનું સામાન્ય સ્વરૂપ</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Different algebraic forms to represent the same straight line depending on the known properties like intercepts (where line crosses axes) or general coefficients. / રેખાને રજૂ કરવાના વિવિધ સ્વરૂપો, જે અંત:ખંડો અથવા સામાન્ય સહગુણકો જેવી જાણીતી કિંમતો પર આધારિત છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Intercept form is used in economics and logistics to map resource constraints where resources cross zero-boundaries. / અર્થશાસ્ત્ર અને લોજિસ્ટિક્સમાં સંસાધનોની મર્યાદાઓ દર્શાવવા માટે અંત:ખંડ સ્વરૂપનો ઉપયોગ થાય છે.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--secondary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Slope-Point (ઢાળ-બિંદુ):</strong><br>
+                        $$ y - y_1 = m(x - x_1) $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Intercept (અંત:ખંડ):</strong><br>
+                        $$ \frac{x}{a} + \frac{y}{b} = 1 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>General (સામાન્ય સ્વરૂપ):</strong><br>
+                        $$ Ax + By + C = 0 $$
+                        $$ m = -\frac{A}{B} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find out equation of the line whose X-intercept is 3 and Y-intercept is 2.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Using intercept form / અંત:ખંડ સ્વરૂપ: $a = 3, b = 2$</p>
+                    <p>$$ \frac{x}{a} + \frac{y}{b} = 1 $$</p>
+                    <p>$$ \frac{x}{3} + \frac{y}{2} = 1 $$</p>
+                    <p>Multiply by LCM (6):</p>
+                    <p>$$ 2x + 3y = 6 \implies 2x + 3y - 6 = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find slope of the line $2x - 5y + 3 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>From General Form $Ax + By + C = 0$, $A = 2, B = -5, C = 3$.</p>
+                    <p>Slope / ઢાળ $m = -\frac{A}{B}$</p>
+                    <p>$$ m = -\left(\frac{2}{-5}\right) = \frac{2}{5} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Find the equation of line passing through the point $(2, -3)$ and having slope 4.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Use slope-point form / ઢાળ-બિંદુ સ્વરૂપ: $m = 4$, $(x_1, y_1) = (2, -3)$</p>
+                    <p>$$ y - y_1 = m(x - x_1) $$</p>
+                    <p>$$ y - (-3) = 4(x - 2) $$</p>
+                    <p>$$ y + 3 = 4x - 8 $$</p>
+                    <p>$$ 4x - y - 11 = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Find intercepts of a given line $4x + 7y = 0$ on axes.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>The equation has no constant term ($C=0$).</p>
+                    <p>Put $y=0$ for X-intercept / x-અંત:ખંડ માટે $y=0$ મુકો:</p>
+                    <p>$$ 4x = 0 \implies x = 0 $$</p>
+                    <p>Put $x=0$ for Y-intercept / y-અંત:ખંડ માટે $x=0$ મુકો:</p>
+                    <p>$$ 7y = 0 \implies y = 0 $$</p>
+                    <p>Intercepts are $(0,0)$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Find the equation of lines passing through point $A(-8, -10)$ and product of its intercepts on both axis is $-40$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Let intercepts be $a$ and $b$. Given $a \cdot b = -40 \implies b = \frac{-40}{a}$</p>
+                    <p>Equation is $\frac{x}{a} + \frac{y}{b} = 1$. Passing through $(-8, -10)$:</p>
+                    <p>$$ \frac{-8}{a} + \frac{-10}{-40/a} = 1 \implies \frac{-8}{a} + \frac{10a}{40} = 1 $$</p>
+                    <p>$$ \frac{-8}{a} + \frac{a}{4} = 1 \implies -32 + a^2 = 4a \implies a^2 - 4a - 32 = 0 $$</p>
+                    <p>$(a-8)(a+4) = 0 \implies a = 8 \text{ or } a = -4$. Substitute back to find equations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.3 Condition of parallel and perpendicular -->
+        <section class="section-card border-violet">
+            <div class="topic-header">
+                <div class="icon-box anim-float">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--info)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="30" x2="80" y2="30"></line>
+                        <line x1="20" y1="70" x2="80" y2="70"></line>
+                        <line x1="50" y1="10" x2="50" y2="90"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.3 Condition of parallel and perpendicular lines</h2>
+                    <div class="gujarati">૪.૩ સમાંતર અને લંબ રેખાઓની શરત</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Two lines are parallel if their slopes are exactly equal. They are perpendicular if the product of their slopes is -1. / જો બે રેખાઓના ઢાળ સમાન હોય, તો તે સમાંતર છે. જો તેમના ઢાળનો ગુણાકાર -1 હોય, તો તે એકબીજાને લંબ છે.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--info);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Parallel (સમાંતર):</strong><br>
+                        $$ m_1 = m_2 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Perpendicular (લંબ):</strong><br>
+                        $$ m_1 \times m_2 = -1 \implies m_2 = -\frac{1}{m_1} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Prove that lines $3x - 2y + 5 = 0$ and $2x + 3y - 7 = 0$ are perpendicular to each other.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope of Line 1 / રેખા 1 નો ઢાળ: $m_1 = -\frac{3}{-2} = \frac{3}{2}$</p>
+                    <p>Slope of Line 2 / રેખા 2 નો ઢાળ: $m_2 = -\frac{2}{3}$</p>
+                    <p>Product / ગુણાકાર: $m_1 \times m_2 = \left(\frac{3}{2}\right)\left(-\frac{2}{3}\right) = -1$</p>
+                    <p>Hence, lines are perpendicular.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Show that lines $2x - 3y + 5 = 0$ and $8x - 12y + 3 = 0$ are parallel lines.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope of Line 1: $m_1 = -\frac{2}{-3} = \frac{2}{3}$</p>
+                    <p>Slope of Line 2: $m_2 = -\frac{8}{-12} = \frac{2}{3}$</p>
+                    <p>Since $m_1 = m_2$, the lines are parallel. / ઢાળ સમાન હોવાથી, રેખાઓ સમાંતર છે.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>For what value of m, lines $7x + y - 1 = 0$ and $3x - my + 2 = 0$ are perpendicular to each other.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope $m_1 = -\frac{7}{1} = -7$</p>
+                    <p>Slope $m_2 = -\frac{3}{-m} = \frac{3}{m}$</p>
+                    <p>Condition / શરત: $m_1 m_2 = -1$</p>
+                    <p>$$ (-7)\left(\frac{3}{m}\right) = -1 \implies \frac{-21}{m} = -1 \implies m = 21 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>If lines $5x - py = 3$ and $2x + 3y = 4$ are parallel, find $p$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope $m_1 = \frac{-5}{-p} = \frac{5}{p}$</p>
+                    <p>Slope $m_2 = \frac{-2}{3}$</p>
+                    <p>Condition / શરત: $m_1 = m_2$</p>
+                    <p>$$ \frac{5}{p} = -\frac{2}{3} \implies p = -\frac{15}{2} $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.4 Equations of Parallel/Perpendicular Lines -->
+        <section class="section-card border-rose">
+            <div class="topic-header">
+                <div class="icon-box anim-slide">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--accent)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="20" x2="80" y2="80"></line>
+                        <line x1="20" y1="50" x2="80" y2="50"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.4 Equations of Parallel and Perpendicular lines to given lines</h2>
+                    <div class="gujarati">૪.૪ આપેલ રેખાઓને સમાંતર અને લંબ રેખાઓના સમીકરણો</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Methods to quickly write the equation of a line that relates specifically (parallel or perpendicular) to another known line, often requiring a point to find the final constant. / બીજી કોઈ રેખાના સંદર્ભમાં સમાંતર કે લંબ રેખાનું સમીકરણ ઝડપથી શોધવાની રીત.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--accent);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Line Parallel to $Ax + By + C = 0$:</strong><br>
+                        $$ Ax + By + K = 0 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Line Perpendicular to $Ax + By + C = 0$:</strong><br>
+                        $$ Bx - Ay + K = 0 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find the equation of the line passing through $(2, 4)$ and perpendicular to the line $5x - 7y + 11 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Equation of perpendicular line form / લંબ રેખાનું સ્વરૂપ:</p>
+                    <p>$$ 7x + 5y + K = 0 $$</p>
+                    <p>Passes through $(2,4)$ / બિંદુ $(2,4)$ મૂકતા:</p>
+                    <p>$$ 7(2) + 5(4) + K = 0 \implies 14 + 20 + K = 0 \implies K = -34 $$</p>
+                    <p>Equation is $7x + 5y - 34 = 0$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find equation of line that passes through $(-3, 2)$ and parallel to line $x - y + 2 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Equation of parallel line form / સમાંતર રેખાનું સ્વરૂપ:</p>
+                    <p>$$ x - y + K = 0 $$</p>
+                    <p>Passes through $(-3,2)$ / બિંદુ $(-3,2)$ મૂકતા:</p>
+                    <p>$$ -3 - 2 + K = 0 \implies -5 + K = 0 \implies K = 5 $$</p>
+                    <p>Equation is $x - y + 5 = 0$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Find the equation of line passing through intersection of lines $2x+y=4$ and $x-y=5$ and perpendicular to $3x+4y=0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Solve $2x+y=4$ and $x-y=5$: Adding yields $3x=9 \implies x=3$. Thus $y=-2$. Intersection: $(3,-2)$.</p>
+                    <p>Line perpendicular to $3x+4y=0$ is $4x-3y+K=0$.</p>
+                    <p>Substitute $(3,-2)$: $4(3)-3(-2)+K=0 \implies 12+6+K=0 \implies K=-18$.</p>
+                    <p>Equation: $4x-3y-18=0$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Find equation of line passing through $(-2,3)$ and perpendicular to line joining $(-5,2)$ and $(1,-2)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope of points: $m = \frac{-2-2}{1-(-5)} = \frac{-4}{6} = -\frac{2}{3}$.</p>
+                    <p>Perpendicular slope $m_{\perp} = \frac{3}{2}$.</p>
+                    <p>Eq: $y - 3 = \frac{3}{2}(x - (-2)) \implies 2y - 6 = 3x + 6 \implies 3x - 2y + 12 = 0$.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.5 Angle between two lines -->
+        <section class="section-card border-teal">
+            <div class="topic-header">
+                <div class="icon-box anim-spin">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--secondary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="80" x2="80" y2="20"></line>
+                        <line x1="20" y1="20" x2="80" y2="80"></line>
+                        <path d="M 50 35 A 15 15 0 0 0 65 50" stroke="var(--accent)"></path>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.5 Angle between two lines</h2>
+                    <div class="gujarati">૪.૫ બે રેખાઓ વચ્ચેનો ખૂણો</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> The acute or obtuse angle formed at the intersection of two lines, calculated using their respective slopes. / બે રેખાઓના છેદબિંદુ પર રચાતો લઘુકોણ કે ગુરુકોણ, જે તેમના ઢાળની મદદથી શોધવામાં આવે છે.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--secondary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Angle $\theta$ (ખૂણો):</strong><br>
+                        $$ \tan \theta = \left| \frac{m_1 - m_2}{1 + m_1 m_2} \right| $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find the angle between two lines $x + y + 1 = 0$ and $2x + 3y + 7 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$m_1 = -1$, $m_2 = -2/3$</p>
+                    <p>$$ \tan \theta = \left| \frac{-1 - (-2/3)}{1 + (-1)(-2/3)} \right| = \left| \frac{-1/3}{1 + 2/3} \right| = \left| \frac{-1/3}{5/3} \right| = \frac{1}{5} $$</p>
+                    <p>$$ \theta = \tan^{-1}\left(\frac{1}{5}\right) $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find the angle between $5x + 6y + 3 = 0$ and $x - 11y + 7 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$m_1 = -5/6$, $m_2 = 1/11$</p>
+                    <p>$$ \tan \theta = \left| \frac{-5/6 - 1/11}{1 + (-5/6)(1/11)} \right| = \left| \frac{-55/66 - 6/66}{1 - 5/66} \right| $$</p>
+                    <p>$$ = \left| \frac{-61/66}{61/66} \right| = |-1| = 1 $$</p>
+                    <p>$$ \theta = \tan^{-1}(1) = 45^\circ \text{ or } \frac{\pi}{4} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Find equations of lines passing through $A(3\sqrt{3}, 4)$ and making angle $\frac{\pi}{6}$ with line $\sqrt{3}x - 3y + 5 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Slope of given line $m_1 = \frac{\sqrt{3}}{3} = \frac{1}{\sqrt{3}}$. Let unknown slope be $m$.</p>
+                    <p>$\tan(30^\circ) = \frac{1}{\sqrt{3}} = \left|\frac{m - 1/\sqrt{3}}{1 + m/\sqrt{3}}\right|$</p>
+                    <p>Solving this gives $m = \sqrt{3}$ or $m = 0$. Using point $A(3\sqrt{3}, 4)$ to find lines.</p>
+                    <p>$y - 4 = \sqrt{3}(x - 3\sqrt{3})$ and $y - 4 = 0$.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.6 Circle (Center-Radius form) -->
+        <section class="section-card border-violet">
+            <div class="topic-header">
+                <div class="icon-box anim-pulse">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--info)" fill="none" stroke-width="6">
+                        <circle cx="50" cy="50" r="30"></circle>
+                        <circle cx="50" cy="50" r="4" fill="var(--info)"></circle>
+                        <line x1="50" y1="50" x2="70" y2="70"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.6 Equation of circle with center and Radius</h2>
+                    <div class="gujarati">૪.૬ કેન્દ્ર અને ત્રિજ્યા ધરાવતા વર્તુળનું સમીકરણ</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> The locus of points at a fixed distance (radius) from a central point. / કેન્દ્રબિંદુથી સમાન અંતરે (ત્રિજ્યા) આવેલા બિંદુઓનો ગણ.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Used in GPS and navigation to determine location zones within a specific radius of a cell tower. / ચોક્કસ સેલ ટાવરની ત્રિજ્યામાં સ્થાન નક્કી કરવા માટે GPS માં ઉપયોગ થાય છે.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--info);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Standard Form (પ્રમાણિત સ્વરૂપ):</strong><br>
+                        $$ (x - h)^2 + (y - k)^2 = r^2 $$
+                        where $(h,k)$ is center, $r$ is radius.
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Radius of the circle $x^2 + y^2 = 4$ is:</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>The equation is in form $(x-0)^2 + (y-0)^2 = r^2$.</p>
+                    <p>$$ r^2 = 4 \implies r = 2 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find out equation of the circle having center at $(2, -3)$ and radius 3.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Using $(x - h)^2 + (y - k)^2 = r^2$:</p>
+                    <p>$$ (x - 2)^2 + (y - (-3))^2 = 3^2 $$</p>
+                    <p>$$ (x - 2)^2 + (y + 3)^2 = 9 $$</p>
+                    <p>Expand: $x^2 - 4x + 4 + y^2 + 6y + 9 = 9$</p>
+                    <p>$$ x^2 + y^2 - 4x + 6y + 4 = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Find the equation of the circle having center $(3, -1)$ and passing through $(-1, 2)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Find radius using distance formula / ત્રિજ્યા માટે અંતર સૂત્ર વાપરો:</p>
+                    <p>$$ r = \sqrt{(3 - (-1))^2 + (-1 - 2)^2} = \sqrt{4^2 + (-3)^2} = \sqrt{16+9} = 5 $$</p>
+                    <p>Equation: $(x - 3)^2 + (y + 1)^2 = 5^2$</p>
+                    <p>$$ x^2 - 6x + 9 + y^2 + 2y + 1 = 25 \implies x^2 + y^2 - 6x + 2y - 15 = 0 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Find the equation of a circle whose centre is $(2,3)$ and circumference is $4\pi$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Circumference / પરિઘ = $2\pi r = 4\pi \implies r = 2$.</p>
+                    <p>Equation: $(x - 2)^2 + (y - 3)^2 = 2^2$</p>
+                    <p>$$ x^2 - 4x + 4 + y^2 - 6y + 9 = 4 \implies x^2 + y^2 - 4x - 6y + 9 = 0 $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.7 General equation of circle -->
+        <section class="section-card border-rose">
+            <div class="topic-header">
+                <div class="icon-box anim-float">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--accent)" fill="none" stroke-width="6">
+                        <circle cx="50" cy="50" r="35"></circle>
+                        <line x1="15" y1="50" x2="85" y2="50" stroke-dasharray="4 4"></line>
+                        <line x1="50" y1="15" x2="50" y2="85" stroke-dasharray="4 4"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.7 General equation of circle</h2>
+                    <div class="gujarati">૪.૭ વર્તુળનું સામાન્ય સમીકરણ</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> The expanded polynomial form of a circle equation from which center coordinates and radius can be extracted using specific coefficients. / વર્તુળના સમીકરણનું વિસ્તૃત સ્વરૂપ, જેમાંથી સહગુણકોની મદદથી કેન્દ્ર અને ત્રિજ્યા શોધી શકાય છે.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--accent);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>General Form (સામાન્ય સ્વરૂપ):</strong><br>
+                        $$ x^2 + y^2 + 2gx + 2fy + c = 0 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Center & Radius (કેન્દ્ર અને ત્રિજ્યા):</strong><br>
+                        Center: $(-g, -f)$<br>
+                        Radius: $r = \sqrt{g^2 + f^2 - c}$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find centre of the circle $x^2 + y^2 - 2x + 4y + 1 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Compare with $x^2+y^2+2gx+2fy+c=0$.</p>
+                    <p>$2g = -2 \implies g = -1$</p>
+                    <p>$2f = 4 \implies f = 2$</p>
+                    <p>Center $(-g, -f) = (1, -2)$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find the center and radius of $x^2 + y^2 + 6x - 4y - 3 = 0$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$2g = 6 \implies g = 3$, $2f = -4 \implies f = -2$, $c = -3$.</p>
+                    <p>Center $(-g, -f) = (-3, 2)$.</p>
+                    <p>Radius $r = \sqrt{3^2 + (-2)^2 - (-3)} = \sqrt{9 + 4 + 3} = \sqrt{16} = 4$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>If the radius of the circle $4x^2 + 4y^2 - 16x - 12y + a = 0$ is 2, then find the value of a.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Divide by 4: $x^2 + y^2 - 4x - 3y + a/4 = 0$.</p>
+                    <p>$g = -2$, $f = -1.5$, $c = a/4$. Given $r=2$.</p>
+                    <p>$$ \sqrt{(-2)^2 + (-1.5)^2 - a/4} = 2 $$</p>
+                    <p>$$ 4 + 2.25 - a/4 = 4 \implies 2.25 = a/4 \implies a = 9 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Find the equation of circle passing through origin and $(1,2)$ and whose center lies on X-axis.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Center on X-axis means $k=0$. Let center be $(h,0)$. Eq: $(x-h)^2 + (y-0)^2 = r^2$.</p>
+                    <p>Passes through $(0,0)$: $h^2 = r^2$.</p>
+                    <p>Passes through $(1,2)$: $(1-h)^2 + 4 = r^2$. Substitute $r^2 = h^2$:</p>
+                    <p>$$ 1 - 2h + h^2 + 4 = h^2 \implies 5 - 2h = 0 \implies h = 5/2, r^2 = 25/4 $$</p>
+                    <p>Equation: $(x - 5/2)^2 + y^2 = 25/4 \implies x^2 + y^2 - 5x = 0$.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.8 Tangent and normal to a circle -->
+        <section class="section-card border-teal">
+            <div class="topic-header">
+                <div class="icon-box anim-slide">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--secondary)" fill="none" stroke-width="6">
+                        <circle cx="50" cy="60" r="25"></circle>
+                        <line x1="10" y1="35" x2="90" y2="35"></line>
+                        <line x1="50" y1="60" x2="50" y2="35" stroke-dasharray="3 3"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>4.8 Tangent and normal to a circle</h2>
+                    <div class="gujarati">૪.૮ વર્તુળનો સ્પર્શક અને અભિલંબ</div>
+                </div>
+            </div>
+
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> A tangent is a line that touches the circle at exactly one point. A normal is a line perpendicular to the tangent at the point of contact, always passing through the center. / સ્પર્શક એ એવી રેખા છે જે વર્તુળને માત્ર એક જ બિંદુએ સ્પર્શે છે. અભિલંબ એ સ્પર્શબિંદુ પર સ્પર્શકને લંબ રેખા છે, જે હંમેશા કેન્દ્રમાંથી પસાર થાય છે.</p>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--secondary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item" style="grid-column: span 2;">
+                        For Circle $x^2 + y^2 + 2gx + 2fy + c = 0$ at point $(x_1, y_1)$:
+                    </div>
+                    <div class="formula-item">
+                        <strong>Tangent Equation (સ્પર્શક):</strong><br>
+                        $$ xx_1 + yy_1 + g(x+x_1) + f(y+y_1) + c = 0 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Normal Equation (અભિલંબ):</strong><br>
+                        $$ \frac{y - y_1}{y_1 + f} = \frac{x - x_1}{x_1 + g} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Find the equation of Tangent and Normal to the circle $x^2 + y^2 - 2x - 9 = 0$ at the point $(2,3)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$g = -1, f = 0, c = -9$. Point $(x_1, y_1) = (2, 3)$.</p>
+                    <p><strong>Tangent:</strong> $x(2) + y(3) - 1(x + 2) + 0(y + 3) - 9 = 0$</p>
+                    <p>$$ 2x + 3y - x - 2 - 9 = 0 \implies x + 3y - 11 = 0 $$</p>
+                    <p><strong>Normal:</strong> Slope of tangent = $-1/3$, so normal slope = $3$.</p>
+                    <p>Eq: $y - 3 = 3(x - 2) \implies y - 3 = 3x - 6 \implies 3x - y - 3 = 0$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find the equation of tangent and normal of the circle $x^2 + y^2 - 2x + 4y - 20 = 0$ at the point $(-2, 2)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$g = -1, f = 2, c = -20$. $(x_1, y_1) = (-2, 2)$.</p>
+                    <p><strong>Tangent:</strong> $x(-2) + y(2) - 1(x - 2) + 2(y + 2) - 20 = 0$</p>
+                    <p>$$ -2x + 2y - x + 2 + 2y + 4 - 20 = 0 \implies -3x + 4y - 14 = 0 \implies 3x - 4y + 14 = 0 $$</p>
+                    <p><strong>Normal:</strong> Passes through center $(1, -2)$ and point $(-2, 2)$.</p>
+                    <p>Slope $m = \frac{2 - (-2)}{-2 - 1} = \frac{4}{-3}$.</p>
+                    <p>Eq: $y - 2 = -\frac{4}{3}(x + 2) \implies 3y - 6 = -4x - 8 \implies 4x + 3y + 2 = 0$.</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>Find the equation of tangent and normal to the circle $x^2 + y^2 - 4x + 2y + 3 = 0$ at the point $(-1,2)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$g = -2, f = 1, c = 3$. $(x_1, y_1) = (-1, 2)$.</p>
+                    <p><strong>Tangent:</strong> $x(-1) + y(2) - 2(x - 1) + 1(y + 2) + 3 = 0$</p>
+                    <p>$$ -x + 2y - 2x + 2 + y + 2 + 3 = 0 \implies -3x + 3y + 7 = 0 \implies 3x - 3y - 7 = 0 $$</p>
+                    <p><strong>Normal:</strong> Center is $(2, -1)$.</p>
+                    <p>Slope $m = \frac{2 - (-1)}{-1 - 2} = \frac{3}{-3} = -1$.</p>
+                    <p>Eq: $y - 2 = -1(x + 1) \implies y - 2 = -x - 1 \implies x + y - 1 = 0$.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Lab -->
+        <section class="lab-section">
+            <div class="lab-header">
+                <h2>Interactive Lab: Mega Coordinate Geometry Tool</h2>
+                <p>ઇન્ટરેક્ટિવ પ્રયોગશાળા: યામાક્ષ ભૂમિતિ ટૂલ</p>
+            </div>
+
+            <div class="calculator-grid">
+                
+                <!-- Calc 1: Line Builder -->
+                <div class="input-group">
+                    <h3 style="color: var(--primary);">1. Line Builder (બે બિંદુ)</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">Find Eq, Slope & Distance</p>
+                    
+                    <div style="text-align: left; margin: 10px 0;">
+                        <label>Point $A (x_1, y_1)$:</label>
+                        <div class="coord-inputs">
+                            <input type="number" id="p1-x" value="1">
+                            <input type="number" id="p1-y" value="2">
+                        </div>
+                        <label>Point $B (x_2, y_2)$:</label>
+                        <div class="coord-inputs">
+                            <input type="number" id="p2-x" value="3">
+                            <input type="number" id="p2-y" value="4">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn-calc" onclick="calcLine()">Build Line (ગણતરી કરો)</button>
+                    </div>
+                </div>
+
+                <!-- Calc 2: Angle Between Lines -->
+                <div class="input-group alt1">
+                    <h3 style="color: var(--info);">2. Angle Between Lines</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">બે રેખાઓ વચ્ચેનો ખૂણો</p>
+                    
+                    <div style="text-align: left; margin: 10px 0;">
+                        <label>Line 1: $A_1x + B_1y + C_1 = 0$</label>
+                        <div class="coord-inputs">
+                            <input type="number" id="l1-a" value="1" placeholder="A1">
+                            <input type="number" id="l1-b" value="1" placeholder="B1">
+                        </div>
+                        <label>Line 2: $A_2x + B_2y + C_2 = 0$</label>
+                        <div class="coord-inputs">
+                            <input type="number" id="l2-a" value="2" placeholder="A2">
+                            <input type="number" id="l2-b" value="-3" placeholder="B2">
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn-calc alt1" onclick="calcAngle()">Find Angle (ખૂણો શોધો)</button>
+                    </div>
+                </div>
+
+                <!-- Calc 3: Circle Analyzer -->
+                <div class="input-group alt2">
+                    <h3 style="color: var(--secondary);">3. Circle Analyzer</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">Find Center & Radius</p>
+                    
+                    <div style="text-align: left; margin: 10px 0;">
+                        <label>$x^2 + y^2 + 2gx + 2fy + c = 0$</label>
+                        <div class="coord-inputs">
+                            <input type="number" id="circ-g" value="-2" placeholder="2g">
+                            <input type="number" id="circ-f" value="4" placeholder="2f">
+                            <input type="number" id="circ-c" value="-4" placeholder="c">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn-calc alt2" onclick="calcCircle()">Analyze Circle</button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Universal Output Box -->
+            <div class="lab-output" id="solution-box">
+                <em>Enter values in any of the calculators above and click an action button to see step-by-step MathJax solutions here.</em><br>
+                <em style="color: #64748b; font-size:0.9rem;">અહીં સ્ટેપ-બાય-સ્ટેપ ઉકેલ જોવા માટે કોઈપણ કેલ્ક્યુલેટરમાં કિંમતો દાખલ કરો અને ગણતરી કરો બટન દબાવો.</em>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            Page Visits / પેજની મુલાકાતો: <span id="visit-counter">0</span>
+        </div>
+        <div class="footer-right">
+            Prepared by Bhavin R Patel, Lecturer Mathematics
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Visit Counter Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            let visits = localStorage.getItem("coord_page_visits");
+            if (!visits) visits = 0;
+            visits = parseInt(visits) + 1;
+            localStorage.setItem("coord_page_visits", visits);
+            document.getElementById("visit-counter").innerText = visits;
+        });
+
+        // Helper func to render Math
+        function renderMath(htmlContent) {
+            const outputBox = document.getElementById('solution-box');
+            outputBox.innerHTML = htmlContent;
+            if (window.MathJax) {
+                MathJax.typesetPromise([outputBox]).catch((err) => console.log('MathJax error: ', err.message));
+            }
+        }
+
+        // ============================================
+        // 1. Line Builder Calculator
+        // ============================================
+        function calcLine() {
+            const x1 = parseFloat(document.getElementById('p1-x').value) || 0;
+            const y1 = parseFloat(document.getElementById('p1-y').value) || 0;
+            const x2 = parseFloat(document.getElementById('p2-x').value) || 0;
+            const y2 = parseFloat(document.getElementById('p2-y').value) || 0;
+
+            let html = `<h3 style="color: var(--primary); margin-bottom: 1rem;">Step-by-Step Solution: Line Builder / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Given Points (આપેલ બિંદુઓ):</strong> \\( A(${x1}, ${y1}) \\) and \\( B(${x2}, ${y2}) \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            // Distance
+            const dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            html += `<p><strong>1. Distance (અંતર):</strong></p>`;
+            html += `<p>\\( d = \\sqrt{(${x2} - ${x1})^2 + (${y2} - ${y1})^2} \\)</p>`;
+            html += `<p>\\( d = \\sqrt{(${x2 - x1})^2 + (${y2 - y1})^2} = \\sqrt{${Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)}} \\approx ${dist.toFixed(4)} \\)</p>`;
+
+            html += `<br><p><strong>2. Slope (ઢાળ):</strong></p>`;
+            if (x2 === x1) {
+                html += `<p>\\( m = \\frac{${y2} - ${y1}}{${x2} - ${x1}} = \\frac{${y2 - y1}}{0} \\)</p>`;
+                html += `<p>Slope is undefined (Vertical Line). / ઢાળ અવ્યાખ્યાયિત છે (ઊભી રેખા).</p>`;
+                html += `<br><p><strong>3. Equation (સમીકરણ):</strong> \\( x = ${x1} \\)</p>`;
+            } else {
+                const slope = (y2 - y1) / (x2 - x1);
+                html += `<p>\\( m = \\frac{${y2} - ${y1}}{${x2} - ${x1}} = \\frac{${y2 - y1}}{${x2 - x1}} = ${slope.toFixed(4)} \\)</p>`;
+                
+                html += `<br><p><strong>3. Equation (સમીકરણ):</strong></p>`;
+                html += `<p>\\( y - y_1 = m(x - x_1) \\)</p>`;
+                html += `<p>\\( y - ${y1} = ${slope.toFixed(4)}(x - ${x1}) \\)</p>`;
+                
+                // Rearrange to Ax + By + C = 0
+                const A = (y1 - y2);
+                const B = (x2 - x1);
+                const C = (x1 * y2 - x2 * y1);
+                
+                html += `<p><strong>General Form (સામાન્ય સ્વરૂપ):</strong> \\( ${A}x + ${B}y + ${C} = 0 \\)</p>`;
+            }
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 2. Angle Between Lines
+        // ============================================
+        function calcAngle() {
+            const a1 = parseFloat(document.getElementById('l1-a').value) || 0;
+            const b1 = parseFloat(document.getElementById('l1-b').value) || 0;
+            const a2 = parseFloat(document.getElementById('l2-a').value) || 0;
+            const b2 = parseFloat(document.getElementById('l2-b').value) || 0;
+
+            let html = `<h3 style="color: var(--info); margin-bottom: 1rem;">Step-by-Step Solution: Angle / સંપૂર્ણ ઉકેલ:</h3>`;
+            
+            if (b1 === 0 || b2 === 0) {
+                html += `<p style="color:red;">Cannot calculate for vertical lines using this specific slope formula. Please use non-zero B values.</p>`;
+                renderMath(html);
+                return;
+            }
+
+            const m1 = -a1 / b1;
+            const m2 = -a2 / b2;
+
+            html += `<p><strong>1. Find Slopes (ઢાળ શોધો):</strong></p>`;
+            html += `<p>Line 1: \\( m_1 = -\\frac{A_1}{B_1} = -\\frac{${a1}}{${b1}} = ${m1.toFixed(4)} \\)</p>`;
+            html += `<p>Line 2: \\( m_2 = -\\frac{A_2}{B_2} = -\\frac{${a2}}{${b2}} = ${m2.toFixed(4)} \\)</p>`;
+
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            if (m1 * m2 === -1) {
+                html += `<p>Since \\( m_1 \\times m_2 = -1 \\), lines are <strong>Perpendicular (લંબ)</strong>.</p>`;
+                html += `<p>\\( \\theta = 90^\\circ \\)</p>`;
+            } else if (m1 === m2) {
+                html += `<p>Since \\( m_1 = m_2 \\), lines are <strong>Parallel (સમાંતર)</strong>.</p>`;
+                html += `<p>\\( \\theta = 0^\\circ \\)</p>`;
+            } else {
+                const tanVal = Math.abs((m1 - m2) / (1 + (m1 * m2)));
+                const angleRad = Math.atan(tanVal);
+                const angleDeg = angleRad * (180 / Math.PI);
+
+                html += `<p><strong>2. Use Angle Formula (સૂત્ર વાપરો):</strong></p>`;
+                html += `<p>\\( \\tan \\theta = \\left| \\frac{m_1 - m_2}{1 + m_1 m_2} \\right| \\)</p>`;
+                html += `<p>\\( \\tan \\theta = \\left| \\frac{${m1.toFixed(4)} - (${m2.toFixed(4)})}{1 + (${m1.toFixed(4)})(${m2.toFixed(4)})} \\right| \\)</p>`;
+                html += `<p>\\( \\tan \\theta = ${tanVal.toFixed(4)} \\)</p>`;
+                html += `<p><strong>Result (પરિણામ):</strong> \\( \\theta = \\tan^{-1}(${tanVal.toFixed(4)}) \\approx ${angleDeg.toFixed(2)}^\\circ \\)</p>`;
+            }
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 3. Circle Analyzer Calculator
+        // ============================================
+        function calcCircle() {
+            const g2 = parseFloat(document.getElementById('circ-g').value) || 0;
+            const f2 = parseFloat(document.getElementById('circ-f').value) || 0;
+            const c = parseFloat(document.getElementById('circ-c').value) || 0;
+
+            const g = g2 / 2;
+            const f = f2 / 2;
+            const radSq = (g * g) + (f * f) - c;
+
+            let html = `<h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution: Circle / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Given Equation (આપેલ સમીકરણ):</strong></p>`;
+            html += `<p>\\( x^2 + y^2 + (${g2})x + (${f2})y + (${c}) = 0 \\)</p>`;
+            
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>1. Find Center (કેન્દ્ર શોધો):</strong></p>`;
+            html += `<p>Comparing with \\( x^2 + y^2 + 2gx + 2fy + c = 0 \\):</p>`;
+            html += `<p>\\( 2g = ${g2} \\implies g = ${g} \\)</p>`;
+            html += `<p>\\( 2f = ${f2} \\implies f = ${f} \\)</p>`;
+            html += `<p>Center \\( (-g, -f) = (${-g}, ${-f}) \\)</p>`;
+            
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>2. Find Radius (ત્રિજ્યા શોધો):</strong></p>`;
+            if (radSq < 0) {
+                html += `<p>\\( g^2 + f^2 - c = (${g})^2 + (${f})^2 - (${c}) = ${radSq} \\)</p>`;
+                html += `<p style="color:red;">Radius is imaginary (imaginary circle).</p>`;
+            } else if (radSq === 0) {
+                html += `<p>\\( r = \\sqrt{${radSq}} = 0 \\)</p>`;
+                html += `<p>It is a point circle.</p>`;
+            } else {
+                html += `<p>\\( r = \\sqrt{g^2 + f^2 - c} \\)</p>`;
+                html += `<p>\\( r = \\sqrt{(${g})^2 + (${f})^2 - (${c})} \\)</p>`;
+                html += `<p>\\( r = \\sqrt{${g*g} + ${f*f} - (${c})} = \\sqrt{${radSq}} \\approx ${Math.sqrt(radSq).toFixed(4)} \\)</p>`;
+            }
+
+            renderMath(html);
+        }
+    </script>
+</body>
+</html>

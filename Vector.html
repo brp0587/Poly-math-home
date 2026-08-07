@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Study Guide | ગણિત અભ્યાસ માર્ગદર્શિકા - Vectors</title>
+    
+    <!-- MathJax Configuration to enable inline and block math -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <!-- MathJax Library -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #6d28d9; /* Deep Purple */
+            --secondary: #059669; /* Emerald */
+            --dark: #0f172a; /* Slate */
+            --light: #f8fafc;
+            --accent: #ea580c; /* Orange */
+            --info: #0284c7; /* Light Blue */
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Card Styles */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .border-green { border-top-color: var(--secondary); }
+        .border-blue { border-top-color: var(--info); }
+        .border-orange { border-top-color: var(--accent); }
+
+        /* Topic Header */
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .topic-title h2 {
+            color: var(--dark);
+            font-size: 1.6rem;
+        }
+
+        .topic-title .gujarati {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Animations & Icons */
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 50%;
+        }
+
+        @keyframes float-up-down { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes pulse-soft { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes slide-right { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+        .anim-float { animation: float-up-down 3s ease-in-out infinite; }
+        .anim-pulse { animation: pulse-soft 2s infinite; }
+        .anim-slide { animation: slide-right 2s ease-in-out infinite; }
+        .anim-spin { animation: spin-slow 12s linear infinite; }
+
+        /* Definition & Detailed Explanations Boxes */
+        .def-app-box {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .border-green .def-app-box { border-left-color: var(--secondary); }
+        .border-blue .def-app-box { border-left-color: var(--info); }
+        .border-orange .def-app-box { border-left-color: var(--accent); }
+
+        .def-app-box strong { color: var(--dark); font-size: 1.1rem; }
+        
+        .explanation-block {
+            background: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        .explanation-block p { margin-bottom: 0.75rem; }
+
+        .formula-box {
+            background: #f5f3ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd6fe;
+        }
+        
+        .border-green .formula-box { background: #ecfdf5; border-color: #a7f3d0; }
+        .border-blue .formula-box { background: #f0f9ff; border-color: #bae6fd; }
+        .border-orange .formula-box { background: #fff7ed; border-color: #fed7aa; }
+
+        .formula-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .formula-item {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+        }
+
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .example-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            font-size: 0.95rem;
+        }
+
+        .example-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        .border-green .example-card h4 { color: var(--secondary); }
+        .border-blue .example-card h4 { color: var(--info); }
+        .border-orange .example-card h4 { color: var(--accent); }
+
+        /* Interactive Lab Styles */
+        .lab-section {
+            background: var(--dark);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .lab-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .lab-header h2 { color: var(--accent); font-size: 2rem; }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .input-group.alt1 { border-top-color: var(--info); }
+        .input-group.alt2 { border-top-color: var(--secondary); }
+
+        .input-group h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .vector-inputs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 0.5rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            text-align: center;
+            background: #fff;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        button.btn-calc {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        button.btn-calc:hover { background: #5b21b6; }
+        .btn-calc.alt1 { background: var(--info); }
+        .btn-calc.alt1:hover { background: #0369a1; }
+        .btn-calc.alt2 { background: var(--secondary); }
+        .btn-calc.alt2:hover { background: #047857; }
+
+        .lab-output {
+            background: #f8fafc;
+            color: var(--text-main);
+            padding: 2rem;
+            border-radius: 8px;
+            min-height: 250px;
+            border-left: 5px solid var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 1.5rem;
+            margin-top: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-left span { color: white; background: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: bold; }
+        .footer-right { color: var(--accent); font-weight: bold;}
+
+        @media (max-width: 768px) {
+            .topic-header { flex-direction: column; text-align: center; }
+            .vector-inputs { flex-direction: column; }
+            input[type="number"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>3. Vectors Study Guide</h1>
+        <p>સદિશ અભ્યાસ માર્ગદર્શિકા</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 3.1 Vector, Addition, Subtraction, Magnitude and direction -->
+        <section class="section-card">
+            <div class="topic-header">
+                <div class="icon-box anim-slide">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--primary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="80" x2="80" y2="20"></line>
+                        <polyline points="50,20 80,20 80,50"></polyline>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>3.1 Vector, Addition, Subtraction, Magnitude and Direction</h2>
+                    <div class="gujarati">૩.૧ સદિશ, સરવાળો, બાદબાકી, મૂલ્ય અને દિશા</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> A vector is a mathematical entity that has both magnitude (length) and direction. / સદિશ એ એક ગાણિતિક એકમ છે જેને મૂલ્ય (લંબાઈ) અને દિશા બંને હોય છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Representing the velocity of an airplane while factoring in wind speed to find the actual flight path. / પવનની ગતિને ધ્યાનમાં રાખીને વિમાનના વાસ્તવિક માર્ગ અને વેગને દર્શાવવા.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>A vector in 3D space is often represented by components along the X, Y, and Z axes using basis vectors $i, j, k$. Thus, $\vec{a} = a_1 i + a_2 j + a_3 k$ or simply $(a_1, a_2, a_3)$.</p>
+                    <p>ત્રિ-પરિમાણીય (3D) અવકાશમાં સદિશને X, Y અને Z અક્ષો પરના ઘટકો $i, j, k$ નો ઉપયોગ કરીને દર્શાવવામાં આવે છે. તેથી, $\vec{a} = a_1 i + a_2 j + a_3 k$ અથવા ટૂંકમાં $(a_1, a_2, a_3)$.</p>
+                    
+                    <p><strong>Operations (પ્રક્રિયાઓ):</strong> 
+                    <br>• <strong>Addition/Subtraction (સરવાળો/બાદબાકી):</strong> You add or subtract the respective components (x with x, y with y, z with z). 
+                    <br>અનુરૂપ ઘટકોનો (x સાથે x, y સાથે y, z સાથે z) સરવાળો કે બાદબાકી કરવામાં આવે છે.
+                    <br>• <strong>Magnitude (મૂલ્ય):</strong> The total length of the vector, calculated using the 3D distance formula.
+                    <br>સદિશની કુલ લંબાઈ, જે 3D અંતરના સૂત્રનો ઉપયોગ કરીને ગણવામાં આવે છે.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--primary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Addition (સરવાળો):</strong><br>
+                        $$ \vec{a} \pm \vec{b} = (a_1 \pm b_1)i + (a_2 \pm b_2)j + (a_3 \pm b_3)k $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Magnitude (મૂલ્ય):</strong><br>
+                        $$ |\vec{a}| = \sqrt{a_1^2 + a_2^2 + a_3^2} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>If $\vec{a} = (1,2,3)$, $\vec{b} = (4,0,0)$ and $\vec{c}=(2,0,1)$ find $2\vec{a} + 3\vec{b} - 5\vec{c}$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Substitute vectors / સદિશોની કિંમત મુકો:</p>
+                    <p>$$ 2(1,2,3) + 3(4,0,0) - 5(2,0,1) $$</p>
+                    <p>$$ = (2,4,6) + (12,0,0) - (10,0,5) $$</p>
+                    <p>Add and subtract corresponding components:</p>
+                    <p>$$ = (2+12-10, 4+0-0, 6+0-5) = (4, 4, 1) $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Find the magnitude of $|2i - 3j + 4k|$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Use the magnitude formula / મૂલ્ય શોધવાનું સૂત્ર વાપરો:</p>
+                    <p>$$ |\vec{v}| = \sqrt{x^2 + y^2 + z^2} $$</p>
+                    <p>$$ |\vec{v}| = \sqrt{(2)^2 + (-3)^2 + (4)^2} $$</p>
+                    <p>$$ = \sqrt{4 + 9 + 16} = \sqrt{29} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>If $\vec{a} = i + 2j + k$, $\vec{b} = 2i - 3j + k$, $\vec{c} = -2i - j + 5k$ find $|2\vec{a} + 3\vec{b} - \vec{c}|$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>First find $2\vec{a} + 3\vec{b} - \vec{c}$:</p>
+                    <p>$$ = (2,4,2) + (6,-9,3) - (-2,-1,5) $$</p>
+                    <p>$$ = (2+6+2, 4-9+1, 2+3-5) = (10, -4, 0) $$</p>
+                    <p>Now find magnitude:</p>
+                    <p>$$ \sqrt{10^2 + (-4)^2 + 0^2} = \sqrt{100 + 16} = \sqrt{116} = 2\sqrt{29} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>If $\vec{a} = 2i - 3j$ and $\vec{b} = 3i - 5j$ then find $(2\vec{a} - \vec{b})$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Multiply $\vec{a}$ by 2 / સદિશ $\vec{a}$ ને 2 વડે ગુણો:</p>
+                    <p>$$ 2\vec{a} = (4, -6) $$</p>
+                    <p>Subtract $\vec{b}$ / બાદબાકી કરો:</p>
+                    <p>$$ (4, -6) - (3, -5) = (4-3, -6-(-5)) $$</p>
+                    <p>$$ = (1, -1) \text{ or } i - j $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Find the direction cosines and direction angles of the vector $\vec{a} = 5i - 12k$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Magnitude / મૂલ્ય: $|\vec{a}| = \sqrt{5^2 + 0^2 + (-12)^2} = \sqrt{169} = 13$</p>
+                    <p>Direction Cosines / દિશા કોસાઇન:</p>
+                    <p>$$ l = \frac{5}{13}, \quad m = 0, \quad n = \frac{-12}{13} $$</p>
+                    <p>Direction Angles / દિશા ખૂણાઓ:</p>
+                    <p>$$ \alpha = \cos^{-1}(5/13), \quad \beta = 90^\circ, \quad \gamma = \cos^{-1}(-12/13) $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 6</h4>
+                    <p>Prove that the points $A(1,0), B(-1,2), C(0,1)$ are collinear.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Find vectors / સદિશો શોધો: $\vec{AB} = B - A = (-2, 2)$</p>
+                    <p>$\vec{BC} = C - B = (1, -1)$</p>
+                    <p>Notice the relationship / સંબંધ જુઓ:</p>
+                    <p>$$ \vec{AB} = -2(1, -1) = -2\vec{BC} $$</p>
+                    <p>Since $\vec{AB}$ is a scalar multiple of $\vec{BC}$ and they share point B, they are collinear. / બંને સમરેખ છે.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.2 Scalar and Vector Product -->
+        <section class="section-card border-green">
+            <div class="topic-header">
+                <div class="icon-box anim-pulse">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--secondary)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="50" x2="80" y2="50"></line>
+                        <line x1="50" y1="20" x2="50" y2="80"></line>
+                        <circle cx="50" cy="50" r="5" fill="var(--secondary)"></circle>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>3.2 Scalar and Vector Product and it's properties</h2>
+                    <div class="gujarati">૩.૨ અદિશ અને સદિશ ગુણાકાર અને તેના ગુણધર્મો</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Scalar product (Dot product) yields a single number. Vector product (Cross product) yields a new vector perpendicular to both original vectors. / અદિશ ગુણાકાર એક સંખ્યા આપે છે, જ્યારે સદિશ ગુણાકાર એક નવો સદિશ આપે છે જે બંને મૂળ સદિશોને લંબ હોય છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Calculating magnetic force on a moving charge uses the vector product (cross product) of velocity and magnetic field vectors. / ફરતા વિદ્યુતભાર પર ચુંબકીય બળની ગણતરી વેગ અને ચુંબકીય ક્ષેત્રના સદિશ ગુણાકારનો ઉપયોગ કરે છે.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p><strong>1. Scalar Product (અદિશ ગુણાકાર / Dot Product):</strong> 
+                    When two vectors are multiplied to yield a scalar (a simple number without direction). It is calculated by multiplying matching components and summing them up.
+                    <br>જ્યારે બે સદિશોનો ગુણાકાર કરવાથી પરિણામ અદિશ (દિશા વગરની સંખ્યા) મળે છે. સમાન ઘટકોનો ગુણાકાર કરી તેમનો સરવાળો કરવાથી આ મળે છે.</p>
+                    <p><em>Properties (ગુણધર્મો):</em> It is commutative ($\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}$). If two non-zero vectors are perpendicular, their dot product is zero.</p>
+                    
+                    <p><strong>2. Vector Product (સદિશ ગુણાકાર / Cross Product):</strong> 
+                    When two vectors are multiplied to yield a third vector that is perpendicular (at exactly $90^\circ$) to the plane containing the original two. It is solved using a determinant matrix.
+                    <br>જ્યારે બે સદિશોનો ગુણાકાર કરવાથી મળતું પરિણામ એક નવો સદિશ હોય છે, જે મૂળ બંને સદિશોને સંપૂર્ણપણે લંબ ($90^\circ$) હોય. આને નિશ્ચાયક (determinant) ની મદદથી ઉકેલવામાં આવે છે.</p>
+                    <p><em>Properties (ગુણધર્મો):</em> It is NOT commutative ($\vec{a} \times \vec{b} = -(\vec{b} \times \vec{a})$). The cross product of parallel vectors is zero.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--secondary);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Dot Product (અદિશ ગુણાકાર):</strong><br>
+                        $$ \vec{a} \cdot \vec{b} = a_1b_1 + a_2b_2 + a_3b_3 $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Cross Product (સદિશ ગુણાકાર):</strong><br>
+                        $$ \vec{a} \times \vec{b} = \begin{vmatrix} i & j & k \\ a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \end{vmatrix} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>If $\vec{a} = 2i - j + k$ and $\vec{b} = i + j + k$ then find $\vec{a} \cdot \vec{b}$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Multiply corresponding components and add / સંબંધિત ઘટકોનો ગુણાકાર કરી સરવાળો કરો:</p>
+                    <p>$$ = (2)(1) + (-1)(1) + (1)(1) $$</p>
+                    <p>$$ = 2 - 1 + 1 = 2 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>If $\vec{a} = i+j+k$ and $\vec{b} = 2i+2j+2k$ then find $\vec{a} \times \vec{b}$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Use the determinant method (નિશ્ચાયક પદ્ધતિ):</p>
+                    <p>$$ \begin{vmatrix} i & j & k \\ 1 & 1 & 1 \\ 2 & 2 & 2 \end{vmatrix} $$</p>
+                    <p>$$ = i(2-2) - j(2-2) + k(2-2) $$</p>
+                    <p>$$ = 0i - 0j + 0k = (0, 0, 0) $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>If $(1, -2, 3) \cdot (4, 5, m) = 0$, find $m$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Apply dot product logic / અદિશ ગુણાકાર કરો:</p>
+                    <p>$$ (1)(4) + (-2)(5) + (3)(m) = 0 $$</p>
+                    <p>$$ 4 - 10 + 3m = 0 $$</p>
+                    <p>$$ -6 + 3m = 0 \implies 3m = 6 \implies m = 2 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Find $(10i+2j+3k) \cdot [(i-2j+2k) \times (3i-2j-2k)]$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>First find Cross Product $\vec{b} \times \vec{c}$:</p>
+                    <p>$$ \begin{vmatrix} i & j & k \\ 1 & -2 & 2 \\ 3 & -2 & -2 \end{vmatrix} = i(4+4) - j(-2-6) + k(-2+6) = 8i + 8j + 4k $$</p>
+                    <p>Now apply Dot Product $\vec{a} \cdot (\vec{b} \times \vec{c})$:</p>
+                    <p>$$ (10, 2, 3) \cdot (8, 8, 4) = 80 + 16 + 12 = 108 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>If $\vec{x} = 3i - 8j$ and $\vec{y} = 5j - 4k$, find $|(\vec{x} + \vec{y}) \times (\vec{x} - \vec{y})|$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Property: $(\vec{x} + \vec{y}) \times (\vec{x} - \vec{y}) = -2(\vec{x} \times \vec{y})$</p>
+                    <p>$$ \vec{x} \times \vec{y} = \begin{vmatrix} i & j & k \\ 3 & -8 & 0 \\ 0 & 5 & -4 \end{vmatrix} = 32i + 12j + 15k $$</p>
+                    <p>$$ -2(\vec{x} \times \vec{y}) = -64i - 24j - 30k $$</p>
+                    <p>Magnitude: $\sqrt{(-64)^2 + (-24)^2 + (-30)^2} = \sqrt{5572} = 2\sqrt{1393}$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 6</h4>
+                    <p>Find the unit vector perpendicular to $\vec{a} = (1, -1, 1)$ and $\vec{b} = (2, 3, -1)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Find Cross Product for perpendicular vector / લંબ સદિશ માટે:</p>
+                    <p>$$ \vec{a} \times \vec{b} = \begin{vmatrix} i & j & k \\ 1 & -1 & 1 \\ 2 & 3 & -1 \end{vmatrix} = -2i + 3j + 5k $$</p>
+                    <p>Magnitude / મૂલ્ય: $\sqrt{(-2)^2 + 3^2 + 5^2} = \sqrt{38}$</p>
+                    <p>Unit Vector = $\frac{\vec{a} \times \vec{b}}{|\vec{a} \times \vec{b}|} = \frac{-2i + 3j + 5k}{\sqrt{38}}$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.3 Angle between two Vectors -->
+        <section class="section-card border-blue">
+            <div class="topic-header">
+                <div class="icon-box anim-spin">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--info)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="20" y1="80" x2="80" y2="80"></line>
+                        <line x1="20" y1="80" x2="70" y2="30"></line>
+                        <path d="M 45 80 A 25 25 0 0 0 38 62" stroke="var(--accent)"></path>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>3.3 Angle between two Vectors</h2>
+                    <div class="gujarati">૩.૩ બે સદિશો વચ્ચેનો ખૂણો</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> The shortest angle formed between two vectors when they are placed tail-to-tail. / બે સદિશોના ઉગમબિંદુને સાથે રાખવાથી તેમની વચ્ચે બનતો નાનામાં નાનો ખૂણો.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Determining the angle of incidence of light rays bouncing off surfaces in 3D computer graphics (Raytracing). / 3D કમ્પ્યુટર ગ્રાફિક્સમાં સપાટી પરથી પાછા ફરતા પ્રકાશના કિરણોનો આપાતકોણ નક્કી કરવા.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p>To find the angle $\theta$ between any two vectors, we rearrange the geometric definition of the dot product: $\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos\theta$. By isolating $\cos\theta$, we can calculate the exact angle using inverse cosine.</p>
+                    <p>કોઈપણ બે સદિશો વચ્ચેનો ખૂણો $\theta$ શોધવા માટે, આપણે અદિશ ગુણાકારની ભૌમિતિક વ્યાખ્યા $\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos\theta$ નો ઉપયોગ કરીએ છીએ. જેમાં $\cos\theta$ ને સૂત્રનો કર્તા બનાવીને પ્રતિવિધેય (inverse cosine) દ્વારા ચોક્કસ ખૂણો મેળવી શકાય છે.</p>
+                    
+                    <p><strong>Perpendicularity (લંબની શરત):</strong> If the angle between vectors is exactly $90^\circ$, then $\cos(90^\circ) = 0$. Therefore, the dot product of two perpendicular vectors is always strictly 0. 
+                    <br>જો સદિશો વચ્ચેનો ખૂણો બરાબર $90^\circ$ હોય, તો $\cos(90^\circ) = 0$ થાય છે. પરિણામે, બે લંબ સદિશોનો અદિશ ગુણાકાર હંમેશા 0 જ હોય છે.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--info);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Angle Formula (ખૂણો શોધવાનું સૂત્ર):</strong><br>
+                        $$ \cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|} $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Perpendicular Condition (લંબ શરત):</strong><br>
+                        $$ \vec{a} \perp \vec{b} \iff \vec{a} \cdot \vec{b} = 0 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>Show that the angle between vectors $i-j$ and $2i+j-k$ is $\cos^{-1}\left(\frac{1}{2\sqrt{3}}\right)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Find Dot Product / અદિશ ગુણાકાર શોધો:</p>
+                    <p>$$ \vec{a} \cdot \vec{b} = (1)(2) + (-1)(1) + (0)(-1) = 2 - 1 = 1 $$</p>
+                    <p>Find Magnitudes / મૂલ્યો શોધો:</p>
+                    <p>$$ |\vec{a}| = \sqrt{1^2 + (-1)^2} = \sqrt{2} $$</p>
+                    <p>$$ |\vec{b}| = \sqrt{2^2 + 1^2 + (-1)^2} = \sqrt{6} $$</p>
+                    <p>$$ \cos \theta = \frac{1}{\sqrt{2}\sqrt{6}} = \frac{1}{\sqrt{12}} = \frac{1}{2\sqrt{3}} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>For what value of $p$, the vectors $2i + 3j - 5k$ and $pi + j + 3k$ are perpendicular?</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>For perpendicular vectors, $\vec{a} \cdot \vec{b} = 0$.</p>
+                    <p>$$ (2)(p) + (3)(1) + (-5)(3) = 0 $$</p>
+                    <p>$$ 2p + 3 - 15 = 0 $$</p>
+                    <p>$$ 2p - 12 = 0 \implies 2p = 12 \implies p = 6 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>For what value of $m$, the vectors $2i - 3j + 5k$ and $mi - 6j - 8k$ are perpendicular?</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>For perpendicular vectors, $\vec{a} \cdot \vec{b} = 0$.</p>
+                    <p>$$ (2)(m) + (-3)(-6) + (5)(-8) = 0 $$</p>
+                    <p>$$ 2m + 18 - 40 = 0 $$</p>
+                    <p>$$ 2m - 22 = 0 \implies 2m = 22 \implies m = 11 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>Show that the angle between vectors $i+2j$ and $i+j+3k$ is $\sin^{-1}\left(\sqrt{\frac{46}{55}}\right)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ \vec{a} \cdot \vec{b} = (1)(1) + (2)(1) + (0)(3) = 3 $$</p>
+                    <p>$$ |\vec{a}| = \sqrt{1+4} = \sqrt{5}, \quad |\vec{b}| = \sqrt{1+1+9} = \sqrt{11} $$</p>
+                    <p>$$ \cos \theta = \frac{3}{\sqrt{55}} $$</p>
+                    <p>Using $\sin^2\theta + \cos^2\theta = 1$:</p>
+                    <p>$$ \sin \theta = \sqrt{1 - \left(\frac{3}{\sqrt{55}}\right)^2} = \sqrt{1 - \frac{9}{55}} = \sqrt{\frac{46}{55}} $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Prove that angle between vectors $3i + j + 2k$ and $2i - 2j + 4k$ is $\sin^{-1}\left(\frac{2}{\sqrt{7}}\right)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>$$ \vec{a} \cdot \vec{b} = (3)(2) + (1)(-2) + (2)(4) = 6 - 2 + 8 = 12 $$</p>
+                    <p>$$ |\vec{a}| = \sqrt{9+1+4} = \sqrt{14}, \quad |\vec{b}| = \sqrt{4+4+16} = \sqrt{24} $$</p>
+                    <p>$$ \cos\theta = \frac{12}{\sqrt{14}\sqrt{24}} = \frac{12}{\sqrt{336}} = \frac{12}{4\sqrt{21}} = \frac{3}{\sqrt{21}} = \sqrt{\frac{9}{21}} = \sqrt{\frac{3}{7}} $$</p>
+                    <p>$$ \sin\theta = \sqrt{1 - \cos^2\theta} = \sqrt{1 - \frac{3}{7}} = \sqrt{\frac{4}{7}} = \frac{2}{\sqrt{7}} $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.4 Applications -->
+        <section class="section-card border-orange">
+            <div class="topic-header">
+                <div class="icon-box anim-float">
+                    <svg viewBox="0 0 100 100" width="40" height="40" stroke="var(--accent)" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M 20 50 Q 50 10 80 50 Q 50 90 20 50"></path>
+                        <line x1="50" y1="10" x2="50" y2="90"></line>
+                    </svg>
+                </div>
+                <div class="topic-title">
+                    <h2>3.4 Applications of Scalar and Vector Product</h2>
+                    <div class="gujarati">૩.૪ અદિશ અને સદિશ ગુણાકારના ઉપયોગો (થયેલ કાર્ય અને બળની ચાકમાત્રા)</div>
+                </div>
+            </div>
+            
+            <div class="def-app-box">
+                <p><strong>Definition (વ્યાખ્યા):</strong> Work Done is the scalar product of applied Force and displacement. Moment of force (torque) is the vector product of position vector and force. / થયેલ કાર્ય એ લાગુ કરેલ બળ અને સ્થાનાંતરનો અદિશ ગુણાકાર છે. બળની ચાકમાત્રા એ સ્થાન સદિશ અને બળનો સદિશ ગુણાકાર છે.</p>
+                <br>
+                <p><strong>Application (વાસ્તવિક ઉપયોગ):</strong> Using a wrench to tighten a bolt involves calculating the Moment of Force based on lever length and applied angle. / બોલ્ટને કડક કરવા માટે પાના (wrench) નો ઉપયોગ કરતી વખતે બળની ચાકમાત્રાની ગણતરી થાય છે.</p>
+                
+                <div class="explanation-block">
+                    <p><strong>Detailed Explanation / વિસ્તૃત સમજૂતી:</strong></p>
+                    <p><strong>1. Work Done (કાર્ય - W):</strong> In physics, work is only done when a force causes a displacement. Because work is a scalar quantity (just an amount of energy, like Joules), we use the dot product. If multiple forces act on a body, you must first find the Resultant Force by adding all individual forces together before applying the dot product.
+                    <br>ભૌતિકશાસ્ત્રમાં, જ્યારે બળ દ્વારા સ્થાનાંતર થાય ત્યારે જ કાર્ય થયેલું ગણાય છે. કાર્ય એ અદિશ રાશિ છે (જેમ કે જુલ), તેથી આપણે અદિશ ગુણાકારનો ઉપયોગ કરીએ છીએ. જો પદાર્થ પર બહુવિધ બળો લાગતા હોય, તો પહેલા તમામ બળોનો સરવાળો કરીને પરિણામી બળ (Resultant Force) શોધવું પડે છે.</p>
+
+                    <p><strong>2. Moment of Force / Torque (ચાકમાત્રા - M):</strong> Torque measures the rotational effect of a force. It depends on both the force applied and the distance from the pivot point (Position Vector $\vec{r}$). Because torque has a specific direction (axis of rotation), we use the cross product.
+                    <br>ચાકમાત્રા બળની પરિભ્રમણ (રોટેશનલ) અસરને માપે છે. તે લાગુ પડેલા બળ અને કેન્દ્રબિંદુથી અંતર (સ્થાન સદિશ $\vec{r}$) બંને પર આધારિત છે. ચાકમાત્રાને ચોક્કસ દિશા (પરિભ્રમણની ધરી) હોવાથી આપણે સદિશ ગુણાકાર (Cross Product) નો ઉપયોગ કરીએ છીએ.</p>
+                </div>
+            </div>
+
+            <div class="formula-box">
+                <h3 style="color: var(--accent);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Work Done (થયેલ કાર્ય):</strong><br>
+                        $$ W = \vec{F}_{total} \cdot \vec{d} $$
+                        Where $ \vec{d} = \text{End Point} - \text{Start Point} $
+                    </div>
+                    <div class="formula-item">
+                        <strong>Moment of Force (બળની ચાકમાત્રા):</strong><br>
+                        $$ \vec{M} = \vec{r} \times \vec{F} $$
+                        Where $ \vec{r} = \text{Point of Action} - \text{Pivot Point} $
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4>Example 1</h4>
+                    <p>A particle moves from point $(1,2,-3)$ to $(5,3,7)$ under the effect of forces $2i+j+k$ and $i+j-3k$. Find work done.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Total Force / કુલ બળ $\vec{F} = \vec{F}_1 + \vec{F}_2$:</p>
+                    <p>$$ \vec{F} = (2,1,1) + (1,1,-3) = (3, 2, -2) $$</p>
+                    <p>Displacement / સ્થાનાંતર $\vec{d} = B - A$:</p>
+                    <p>$$ \vec{d} = (5,3,7) - (1,2,-3) = (4, 1, 10) $$</p>
+                    <p>Work / કાર્ય $W = \vec{F} \cdot \vec{d}$:</p>
+                    <p>$$ W = (3)(4) + (2)(1) + (-2)(10) = 12 + 2 - 20 = -6 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 2</h4>
+                    <p>Forces $(3, -2, 1)$ and $(-1, -1, 2)$ act on a particle and it moves from $(2, 2, -3)$ to $(-1, 2, 4)$. Find the work done.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Total Force / કુલ બળ $\vec{F}$:</p>
+                    <p>$$ \vec{F} = (3,-2,1) + (-1,-1,2) = (2, -3, 3) $$</p>
+                    <p>Displacement / સ્થાનાંતર $\vec{d}$:</p>
+                    <p>$$ \vec{d} = (-1,2,4) - (2,2,-3) = (-3, 0, 7) $$</p>
+                    <p>Work / કાર્ય $W = \vec{F} \cdot \vec{d}$:</p>
+                    <p>$$ W = -6 + 0 + 21 = 15 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 3</h4>
+                    <p>A particle under constant forces $(1, 2, 3)$ and $(3, 1, 1)$ is displaced from $(0, 1, -2)$ to $(5, 1, 2)$. Calculate total work done.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Total Force / કુલ બળ $\vec{F}$:</p>
+                    <p>$$ \vec{F} = (1,2,3) + (3,1,1) = (4, 3, 4) $$</p>
+                    <p>Displacement / સ્થાનાંતર $\vec{d}$:</p>
+                    <p>$$ \vec{d} = (5,1,2) - (0,1,-2) = (5, 0, 4) $$</p>
+                    <p>Work / કાર્ય $W = \vec{F} \cdot \vec{d}$:</p>
+                    <p>$$ W = (4)(5) + (3)(0) + (4)(4) = 20 + 0 + 16 = 36 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 4</h4>
+                    <p>A particle moves from $(-1,2,1)$ to $(2,3,-1)$ under the effect of forces $(1,2,1)$ and $(2,-1,0)$. Find work done.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Total Force / કુલ બળ $\vec{F}$:</p>
+                    <p>$$ \vec{F} = (1,2,1) + (2,-1,0) = (3, 1, 1) $$</p>
+                    <p>Displacement / સ્થાનાંતર $\vec{d}$:</p>
+                    <p>$$ \vec{d} = (2,3,-1) - (-1,2,1) = (3, 1, -2) $$</p>
+                    <p>Work / કાર્ય $W = \vec{F} \cdot \vec{d}$:</p>
+                    <p>$$ W = (3)(3) + (1)(1) + (1)(-2) = 9 + 1 - 2 = 8 $$</p>
+                </div>
+                <div class="example-card">
+                    <h4>Example 5</h4>
+                    <p>Find the moment of force $\vec{F} = 3i + 2j - 4k$ acting at point $P(1, -1, 2)$ about the point $Q(2, -1, 3)$.</p>
+                    <p><strong>Step-by-step:</strong></p>
+                    <p>Position vector / સ્થાન સદિશ $\vec{r} = P - Q$:</p>
+                    <p>$$ \vec{r} = (1-2)i + (-1 - (-1))j + (2-3)k = -i + 0j - k $$</p>
+                    <p>Moment of force / બળની ચાકમાત્રા $\vec{M} = \vec{r} \times \vec{F}$:</p>
+                    <p>$$ \vec{M} = \begin{vmatrix} i & j & k \\ -1 & 0 & -1 \\ 3 & 2 & -4 \end{vmatrix} $$</p>
+                    <p>$$ = i(0 - (-2)) - j(4 - (-3)) + k(-2 - 0) $$</p>
+                    <p>$$ = 2i - 7j - 2k $$</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Lab -->
+        <section class="lab-section">
+            <div class="lab-header">
+                <h2>Interactive Lab: Ultimate Vector Calculator</h2>
+                <p>ઇન્ટરેક્ટિવ પ્રયોગશાળા: સદિશ કેલ્ક્યુલેટર</p>
+            </div>
+
+            <div class="calculator-grid">
+                
+                <!-- Calc 1: Basic Vector Ops -->
+                <div class="input-group">
+                    <h3 style="color: var(--primary);">1. Vector Operations</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">સદિશ પ્રક્રિયાઓ</p>
+                    
+                    <div style="text-align: left; margin: 10px 0;">
+                        <label>Vector $\vec{A}$ (x, y, z):</label>
+                        <div class="vector-inputs">
+                            <input type="number" id="v1-x" value="2">
+                            <input type="number" id="v1-y" value="-3">
+                            <input type="number" id="v1-z" value="4">
+                        </div>
+                        
+                        <label>Vector $\vec{B}$ (x, y, z):</label>
+                        <div class="vector-inputs">
+                            <input type="number" id="v2-x" value="1">
+                            <input type="number" id="v2-y" value="2">
+                            <input type="number" id="v2-z" value="-1">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn-calc" onclick="calcVectorOps('add')">$\vec{A} + \vec{B}$</button>
+                        <button class="btn-calc" onclick="calcVectorOps('sub')">$\vec{A} - \vec{B}$</button>
+                        <button class="btn-calc" onclick="calcVectorOps('mag')">$|\vec{A}|$ & $|\vec{B}|$</button>
+                    </div>
+                </div>
+
+                <!-- Calc 2: Products and Angle -->
+                <div class="input-group alt1">
+                    <h3 style="color: var(--info);">2. Products & Angle</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">ગુણાકાર અને ખૂણો (Uses Vectors A & B above)</p>
+                    
+                    <div class="button-group" style="margin-top: 2.5rem;">
+                        <button class="btn-calc alt1" onclick="calcProducts('dot')">Dot Product ($\cdot$)</button>
+                        <button class="btn-calc alt1" onclick="calcProducts('cross')">Cross Product ($\times$)</button>
+                        <button class="btn-calc alt1" onclick="calcProducts('angle')">Angle ($\theta$)</button>
+                    </div>
+                </div>
+
+                <!-- Calc 3: Applications -->
+                <div class="input-group alt2">
+                    <h3 style="color: var(--secondary);">3. Work & Moment</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">કાર્ય અને બળની ચાકમાત્રા</p>
+                    
+                    <div style="text-align: left; margin: 10px 0;">
+                        <label>Force $\vec{F}$ (x, y, z):</label>
+                        <div class="vector-inputs">
+                            <input type="number" id="fw-x" value="3">
+                            <input type="number" id="fw-y" value="2">
+                            <input type="number" id="fw-z" value="-2">
+                        </div>
+                        
+                        <label>Point $P_1$ or Pivot Point:</label>
+                        <div class="vector-inputs">
+                            <input type="number" id="p1-x" value="1">
+                            <input type="number" id="p1-y" value="2">
+                            <input type="number" id="p1-z" value="-3">
+                        </div>
+                        <label>Point $P_2$ or Point of Action:</label>
+                        <div class="vector-inputs">
+                            <input type="number" id="p2-x" value="5">
+                            <input type="number" id="p2-y" value="3">
+                            <input type="number" id="p2-z" value="7">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn-calc alt2" onclick="calcWork()">Work Done ($W$)</button>
+                        <button class="btn-calc alt2" onclick="calcMoment()">Moment ($\vec{M}$)</button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Universal Output Box -->
+            <div class="lab-output" id="solution-box">
+                <em>Enter values in any of the calculators above and click an action button to see step-by-step MathJax solutions here.</em><br>
+                <em style="color: #64748b; font-size:0.9rem;">અહીં સ્ટેપ-બાય-સ્ટેપ ઉકેલ જોવા માટે કોઈપણ કેલ્ક્યુલેટરમાં કિંમતો દાખલ કરો અને ગણતરી કરો બટન દબાવો.</em>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            Page Visits / પેજની મુલાકાતો: <span id="visit-counter">0</span>
+        </div>
+        <div class="footer-right">
+            Prepared by Bhavin R Patel, Lecturer Mathematics
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Visit Counter Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            let visits = localStorage.getItem("vector_page_visits");
+            if (!visits) visits = 0;
+            visits = parseInt(visits) + 1;
+            localStorage.setItem("vector_page_visits", visits);
+            document.getElementById("visit-counter").innerText = visits;
+        });
+
+        // ============================================
+        // 1. Vector Operations
+        // ============================================
+        function calcVectorOps(operation) {
+            const aX = parseFloat(document.getElementById('v1-x').value) || 0;
+            const aY = parseFloat(document.getElementById('v1-y').value) || 0;
+            const aZ = parseFloat(document.getElementById('v1-z').value) || 0;
+            
+            const bX = parseFloat(document.getElementById('v2-x').value) || 0;
+            const bY = parseFloat(document.getElementById('v2-y').value) || 0;
+            const bZ = parseFloat(document.getElementById('v2-z').value) || 0;
+
+            let html = `<h3 style="color: var(--primary); margin-bottom: 1rem;">Step-by-Step Solution / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p>Given Vectors / આપેલ સદિશો:</p>`;
+            html += `<p>\\( \\vec{A} = ${aX}i + ${aY}j + ${aZ}k \\)</p>`;
+            html += `<p>\\( \\vec{B} = ${bX}i + ${bY}j + ${bZ}k \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            if (operation === 'add') {
+                html += `<p><strong>Vector Addition / સદિશોનો સરવાળો:</strong></p>`;
+                html += `<p>\\( \\vec{A} + \\vec{B} = (${aX} + ${bX})i + (${aY} + ${bY})j + (${aZ} + ${bZ})k \\)</p>`;
+                html += `<p><strong>Result:</strong> \\( \\vec{A} + \\vec{B} = ${aX+bX}i + ${aY+bY}j + ${aZ+bZ}k \\)</p>`;
+            } 
+            else if (operation === 'sub') {
+                html += `<p><strong>Vector Subtraction / સદિશોની બાદબાકી:</strong></p>`;
+                html += `<p>\\( \\vec{A} - \\vec{B} = (${aX} - ${bX})i + (${aY} - ${bY})j + (${aZ} - ${bZ})k \\)</p>`;
+                html += `<p><strong>Result:</strong> \\( \\vec{A} - \\vec{B} = ${aX-bX}i + ${aY-bY}j + ${aZ-bZ}k \\)</p>`;
+            }
+            else if (operation === 'mag') {
+                const magA = Math.sqrt(aX*aX + aY*aY + aZ*aZ);
+                const magB = Math.sqrt(bX*bX + bY*bY + bZ*bZ);
+                
+                html += `<p><strong>Magnitude of A / A નું મૂલ્ય:</strong></p>`;
+                html += `<p>\\( |\\vec{A}| = \\sqrt{(${aX})^2 + (${aY})^2 + (${aZ})^2} \\)</p>`;
+                html += `<p>\\( |\\vec{A}| = \\sqrt{${aX*aX} + ${aY*aY} + ${aZ*aZ}} = \\sqrt{${aX*aX + aY*aY + aZ*aZ}} \\approx ${magA.toFixed(4)} \\)</p>`;
+                
+                html += `<br><p><strong>Magnitude of B / B નું મૂલ્ય:</strong></p>`;
+                html += `<p>\\( |\\vec{B}| = \\sqrt{(${bX})^2 + (${bY})^2 + (${bZ})^2} \\)</p>`;
+                html += `<p>\\( |\\vec{B}| = \\sqrt{${bX*bX} + ${bY*bY} + ${bZ*bZ}} = \\sqrt{${bX*bX + bY*bY + bZ*bZ}} \\approx ${magB.toFixed(4)} \\)</p>`;
+            }
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 2. Products & Angle
+        // ============================================
+        function calcProducts(operation) {
+            const aX = parseFloat(document.getElementById('v1-x').value) || 0;
+            const aY = parseFloat(document.getElementById('v1-y').value) || 0;
+            const aZ = parseFloat(document.getElementById('v1-z').value) || 0;
+            
+            const bX = parseFloat(document.getElementById('v2-x').value) || 0;
+            const bY = parseFloat(document.getElementById('v2-y').value) || 0;
+            const bZ = parseFloat(document.getElementById('v2-z').value) || 0;
+
+            let html = `<h3 style="color: var(--info); margin-bottom: 1rem;">Step-by-Step Solution / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p>Given / આપેલ:</p>`;
+            html += `<p>\\( \\vec{A} = ${aX}i + ${aY}j + ${aZ}k \\)</p>`;
+            html += `<p>\\( \\vec{B} = ${bX}i + ${bY}j + ${bZ}k \\)</p>`;
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            const dotProd = (aX * bX) + (aY * bY) + (aZ * bZ);
+
+            if (operation === 'dot') {
+                html += `<p><strong>Scalar (Dot) Product / અદિશ ગુણાકાર:</strong></p>`;
+                html += `<p>Formula: \\( \\vec{A} \\cdot \\vec{B} = A_x B_x + A_y B_y + A_z B_z \\)</p>`;
+                html += `<p>\\( = (${aX})(${bX}) + (${aY})(${bY}) + (${aZ})(${bZ}) \\)</p>`;
+                html += `<p>\\( = ${aX*bX} + ${aY*bY} + ${aZ*bZ} \\)</p>`;
+                html += `<p><strong>Result:</strong> \\( \\vec{A} \\cdot \\vec{B} = ${dotProd} \\)</p>`;
+            } 
+            else if (operation === 'cross') {
+                const cX = (aY * bZ) - (aZ * bY);
+                const cY = (aZ * bX) - (aX * bZ); // Corrected middle term logic
+                const cZ = (aX * bY) - (aY * bX);
+
+                html += `<p><strong>Vector (Cross) Product / સદિશ ગુણાકાર:</strong></p>`;
+                html += `<p>Formula: \\( \\vec{A} \\times \\vec{B} = \\begin{vmatrix} i & j & k \\\\ ${aX} & ${aY} & ${aZ} \\\\ ${bX} & ${bY} & ${bZ} \\end{vmatrix} \\)</p>`;
+                html += `<p>\\( = i((${aY})(${bZ}) - (${aZ})(${bY})) - j((${aX})(${bZ}) - (${aZ})(${bX})) + k((${aX})(${bY}) - (${aY})(${bX})) \\)</p>`;
+                html += `<p>\\( = i(${aY*bZ} - ${aZ*bY}) - j(${aX*bZ} - ${aZ*bX}) + k(${aX*bY} - ${aY*bX}) \\)</p>`;
+                html += `<p><strong>Result:</strong> \\( \\vec{A} \\times \\vec{B} = ${cX}i ${cY >= 0 ? '+' : ''}${cY}j ${cZ >= 0 ? '+' : ''}${cZ}k \\)</p>`;
+            }
+            else if (operation === 'angle') {
+                const magA = Math.sqrt(aX*aX + aY*aY + aZ*aZ);
+                const magB = Math.sqrt(bX*bX + bY*bY + bZ*bZ);
+                
+                if(magA === 0 || magB === 0) {
+                    html += `<p style="color:red;">Cannot calculate angle for a zero vector!</p>`;
+                } else {
+                    const cosTheta = dotProd / (magA * magB);
+                    const angleRad = Math.acos(Math.max(-1, Math.min(1, cosTheta)));
+                    const angleDeg = angleRad * (180 / Math.PI);
+
+                    html += `<p><strong>Angle between Vectors / બે સદિશો વચ્ચેનો ખૂણો:</strong></p>`;
+                    html += `<p>1. Dot Product: \\( \\vec{A} \\cdot \\vec{B} = ${dotProd} \\)</p>`;
+                    html += `<p>2. Magnitudes: \\( |\\vec{A}| = \\sqrt{${aX*aX + aY*aY + aZ*aZ}} \\), \\( |\\vec{B}| = \\sqrt{${bX*bX + bY*bY + bZ*bZ}} \\)</p>`;
+                    html += `<p>3. Formula: \\( \\cos \\theta = \\frac{\\vec{A} \\cdot \\vec{B}}{|\\vec{A}| |\\vec{B}|} \\)</p>`;
+                    html += `<p>\\( \\cos \\theta = \\frac{${dotProd}}{${magA.toFixed(4)} \\times ${magB.toFixed(4)}} = ${cosTheta.toFixed(4)} \\)</p>`;
+                    html += `<p><strong>Result:</strong> \\( \\theta = ${angleDeg.toFixed(2)}^\\circ \\) (or ${angleRad.toFixed(4)} rad)</p>`;
+                }
+            }
+
+            renderMath(html);
+        }
+
+        // ============================================
+        // 3. Work Done & Moment Calculator
+        // ============================================
+        function calcWork() {
+            const fX = parseFloat(document.getElementById('fw-x').value) || 0;
+            const fY = parseFloat(document.getElementById('fw-y').value) || 0;
+            const fZ = parseFloat(document.getElementById('fw-z').value) || 0;
+            
+            const p1X = parseFloat(document.getElementById('p1-x').value) || 0;
+            const p1Y = parseFloat(document.getElementById('p1-y').value) || 0;
+            const p1Z = parseFloat(document.getElementById('p1-z').value) || 0;
+
+            const p2X = parseFloat(document.getElementById('p2-x').value) || 0;
+            const p2Y = parseFloat(document.getElementById('p2-y').value) || 0;
+            const p2Z = parseFloat(document.getElementById('p2-z').value) || 0;
+
+            const dX = p2X - p1X;
+            const dY = p2Y - p1Y;
+            const dZ = p2Z - p1Z;
+
+            const work = (fX * dX) + (fY * dY) + (fZ * dZ);
+
+            let html = `<h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution: Work Done / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Step 1: Identify Force / બળ ઓળખો</strong></p>`;
+            html += `<p>\\( \\vec{F} = ${fX}i + ${fY}j + ${fZ}k \\)</p>`;
+            
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>Step 2: Calculate Displacement Vector / સ્થાનાંતર સદિશ શોધો</strong></p>`;
+            html += `<p>\\( \\vec{d} = P_2 - P_1 = (${p2X} - ${p1X})i + (${p2Y} - ${p1Y})j + (${p2Z} - ${p1Z})k \\)</p>`;
+            html += `<p>\\( \\vec{d} = ${dX}i + ${dY}j + ${dZ}k \\)</p>`;
+            
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>Step 3: Calculate Work Done (Dot Product) / થયેલ કાર્ય શોધો (અદિશ ગુણાકાર)</strong></p>`;
+            html += `<p>\\( W = \\vec{F} \\cdot \\vec{d} \\)</p>`;
+            html += `<p>\\( W = (${fX})(${dX}) + (${fY})(${dY}) + (${fZ})(${dZ}) \\)</p>`;
+            html += `<p>\\( W = ${fX*dX} + ${fY*dY} + ${fZ*dZ} \\)</p>`;
+            html += `<p><strong>Final Answer (અંતિમ જવાબ):</strong> \\( W = ${work} \\text{ units} \\)</p>`;
+
+            renderMath(html);
+        }
+
+        function calcMoment() {
+            const fX = parseFloat(document.getElementById('fw-x').value) || 0;
+            const fY = parseFloat(document.getElementById('fw-y').value) || 0;
+            const fZ = parseFloat(document.getElementById('fw-z').value) || 0;
+            
+            const qX = parseFloat(document.getElementById('p1-x').value) || 0; // Pivot
+            const qY = parseFloat(document.getElementById('p1-y').value) || 0;
+            const qZ = parseFloat(document.getElementById('p1-z').value) || 0;
+
+            const pX = parseFloat(document.getElementById('p2-x').value) || 0; // Point of Action
+            const pY = parseFloat(document.getElementById('p2-y').value) || 0;
+            const pZ = parseFloat(document.getElementById('p2-z').value) || 0;
+
+            const rX = pX - qX;
+            const rY = pY - qY;
+            const rZ = pZ - qZ;
+
+            const mX = (rY * fZ) - (rZ * fY);
+            const mY = (rZ * fX) - (rX * fZ);
+            const mZ = (rX * fY) - (rY * fX);
+
+            let html = `<h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution: Moment of Force / સંપૂર્ણ ઉકેલ:</h3>`;
+            html += `<p><strong>Step 1: Identify Force / બળ ઓળખો</strong></p>`;
+            html += `<p>\\( \\vec{F} = ${fX}i + ${fY}j + ${fZ}k \\)</p>`;
+            
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>Step 2: Position Vector (Lever Arm) / સ્થાન સદિશ શોધો</strong></p>`;
+            html += `<p>\\( \\vec{r} = P_{action} - P_{pivot} = (${pX} - ${qX})i + (${pY} - ${qY})j + (${pZ} - ${qZ})k \\)</p>`;
+            html += `<p>\\( \\vec{r} = ${rX}i + ${rY}j + ${rZ}k \\)</p>`;
+            
+            html += `<hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+            
+            html += `<p><strong>Step 3: Calculate Moment (Cross Product) / ચાકમાત્રા શોધો (સદિશ ગુણાકાર)</strong></p>`;
+            html += `<p>\\( \\vec{M} = \\vec{r} \\times \\vec{F} = \\begin{vmatrix} i & j & k \\\\ ${rX} & ${rY} & ${rZ} \\\\ ${fX} & ${fY} & ${fZ} \\end{vmatrix} \\)</p>`;
+            html += `<p>\\( \\vec{M} = i((${rY})(${fZ}) - (${rZ})(${fY})) - j((${rX})(${fZ}) - (${rZ})(${fX})) + k((${rX})(${fY}) - (${rY})(${fX})) \\)</p>`;
+            html += `<p><strong>Final Answer (અંતિમ જવાબ):</strong> \\( \\vec{M} = ${mX}i ${mY >= 0 ? '+' : ''}${mY}j ${mZ >= 0 ? '+' : ''}${mZ}k \\)</p>`;
+
+            renderMath(html);
+        }
+
+        // Render MathJax dynamically
+        function renderMath(htmlContent) {
+            const outputBox = document.getElementById('solution-box');
+            outputBox.innerHTML = htmlContent;
+            if (window.MathJax) {
+                MathJax.typesetPromise([outputBox]).catch((err) => console.log('MathJax error: ', err.message));
+            }
+        }
+    </script>
+</body>
+</html>
