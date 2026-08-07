@@ -143,23 +143,28 @@
     </div>
 </div>
 
-<footer class="page-footer">
-    <div class="counters-wrapper">
-        <div class="visit-counter" style="margin-bottom: 5px;">
-            This Page Visits: 
-            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2Fpractice-test-sem1&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+<footer>
+        <!-- Left Side: Individual Page Visits -->
+        <div style="flex: 1; text-align: left;">
+            <span style="color: white; background: var(--primary); padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
+                Page Visits: 
+                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FYOUR_PAGE_NAME&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="height: 20px;">
+            </span>
         </div>
 
-        <div class="visit-counter" style="margin-bottom: 5px;">
-            Total Site Visits: 
-            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+        <!-- Center: Global Site Visits -->
+        <div style="flex: 1; text-align: center;">
+            <span style="color: white; background: #1e293b; border: 1px solid #475569; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                Total Site Visits: 
+                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="height: 20px;">
+            </span>
         </div>
-    </div>
-    <div class="copyright">
-        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
-    </div>
-</footer>
 
+        <!-- Right Side: Copyright -->
+        <div style="flex: 1; text-align: right; font-weight: bold; color: var(--accent);">
+            Prepared by Bhavin R Patel, Lecturer Mathematics
+        </div>
+    </footer>
 <script>
     function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
     function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
