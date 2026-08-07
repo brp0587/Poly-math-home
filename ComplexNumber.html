@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Numbers Study Guide | સંકર સંખ્યાઓ માર્ગદર્શિકા</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Sans+Gujarati:wght@400;600&display=swap" rel="stylesheet">
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #0ea5e9;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-guj: #475569;
+            --accent: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .guj { font-family: 'Noto Sans Gujarati', sans-serif; color: var(--text-guj); font-size: 0.95em; }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.2rem; opacity: 0.9; }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .topic-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover { transform: translateY(-5px); }
+        .topic-header { border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        .topic-header h2 { color: var(--primary); }
+
+        .visual-container {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+
+        /* Animations */
+        .pulse { animation: pulse 2s infinite; }
+        .spin { transform-origin: 0 0; animation: spin 10s linear infinite; }
+        @keyframes pulse { 0% { r: 4; opacity: 1; } 50% { r: 6; opacity: 0.7; } 100% { r: 4; opacity: 1; } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 0.5rem;
+        }
+
+        .step-block {
+            margin-bottom: 0.8rem;
+        }
+        
+        .step-num {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Interactive Lab */
+        .lab-section {
+            background: #1e293b;
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 4rem;
+        }
+        
+        .lab-section .guj { color: #cbd5e1; }
+        .lab-section h2 { color: #38bdf8; border-bottom: 2px solid #38bdf8; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        input, select, button {
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        input, select { flex: 1; min-width: 150px; outline: none; }
+        
+        button {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            min-width: 150px;
+        }
+
+        button:hover { background: #d97706; }
+
+        .lab-output {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            min-height: 150px;
+            font-size: 1.1rem;
+            border: 1px solid #334155;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .control-panel { flex-direction: column; }
+            input, select, button { width: 100%; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+            .examples-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>Complex Numbers</h1>
+        <p class="guj">સંકર સંખ્યાઓ - ઇન્ટરેક્ટિવ માર્ગદર્શિકા</p>
+    </header>
+
+    <div class="container">
+
+        <section class="topic-card">
+            <div class="topic-header">
+                <h2>5.1 Concept of Complex number</h2>
+                <div class="guj">સંકર સંખ્યાનો ખ્યાલ</div>
+            </div>
+            <p><strong>Definition:</strong> A number of the form \( z = a+bi \), where \(a\) and \(b\) are real numbers and \( i = \sqrt{-1} \) (so \( i^2 = -1 \)).</p>
+            <p class="guj"><strong>વ્યાખ્યા:</strong> \( z = a+bi \) સ્વરૂપની સંખ્યાને સંકર સંખ્યા કહે છે, જ્યાં \(a\) અને \(b\) વાસ્તવિક સંખ્યાઓ છે અને \( i = \sqrt{-1} \).</p>
+            
+            <p><strong>Application:</strong> Used in electrical engineering for AC circuit analysis to represent alternating currents and voltages.</p>
+            <p class="guj"><strong>ઉપયોગ:</strong> ઇલેક્ટ્રિકલ એન્જિનિયરિંગમાં AC સર્કિટના વિશ્લેષણ માટે.</p>
+
+            <div class="visual-container">
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
+                    <line x1="-100" y1="0" x2="100" y2="0" stroke="#cbd5e1" stroke-width="2"/>
+                    <line x1="0" y1="-100" x2="0" y2="100" stroke="#cbd5e1" stroke-width="2"/>
+                    <text x="80" y="-10" font-size="12" fill="#64748b">Re</text>
+                    <text x="10" y="-80" font-size="12" fill="#64748b">Im</text>
+                    <circle cx="50" cy="-50" r="4" fill="#2563eb" class="pulse"/>
+                    <line x1="0" y1="0" x2="50" y2="-50" stroke="#2563eb" stroke-dasharray="4"/>
+                    <text x="60" y="-55" font-size="14" fill="#1e293b">z = a + ib</text>
+                </svg>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-box">
+                    <div class="example-title">Example 1: Evaluate \( i^4 \)<br><span class="guj">ઉદાહરણ 1: કિંમત શોધો \( i^4 \)</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Write \( i^4 \) in terms of squares. \( i^4 = (i^2)^2 \).<br><span class="guj">(\( i^4 \) ને વર્ગના રૂપમાં લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> We know that \( i^2 = -1 \).<br><span class="guj">(આપણે જાણીએ છીએ કે \( i^2 = -1 \).)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Substitute the value: \( (-1)^2 = 1 \).<br><span class="guj">(કિંમત મૂકો: \( (-1)^2 = 1 \).)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 1 \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 2: Evaluate \( i^{10} \)<br><span class="guj">ઉદાહરણ 2: કિંમત શોધો \( i^{10} \)</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Break the power into multiples of 4: \( i^{10} = i^8 \cdot i^2 \).<br><span class="guj">(ઘાતને 4 ના ગુણાંકમાં વિભાજીત કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Rewrite \( i^8 \) as \( (i^4)^2 \).<br><span class="guj">(\( i^8 \) ને \( (i^4)^2 \) તરીકે લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Since \( i^4 = 1 \) and \( i^2 = -1 \), substitute: \( (1)^2 \cdot (-1) \).<br><span class="guj">(કિંમતો મૂકીને ગુણાકાર કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( -1 \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 3: Evaluate \( i^7 \)<br><span class="guj">ઉદાહરણ 3: કિંમત શોધો \( i^7 \)</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Break down the power: \( i^7 = i^4 \cdot i^3 \).<br><span class="guj">(ઘાતને વિભાજીત કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> We know \( i^4 = 1 \) and \( i^3 = -i \).<br><span class="guj">(આપણે જાણીએ છીએ કે \( i^4 = 1 \) અને \( i^3 = -i \).)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Multiply the values: \( 1 \cdot (-i) \).<br><span class="guj">(કિંમતો નો ગુણાકાર કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( -i \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 4: Evaluate \( i + i^2 + i^3 + i^4 \)<br><span class="guj">ઉદાહરણ 4: કિંમત શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Substitute standard values: \( i = i \), \( i^2 = -1 \), \( i^3 = -i \), \( i^4 = 1 \).<br><span class="guj">(મૂળભૂત કિંમતો મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Add them together: \( i + (-1) + (-i) + 1 \).<br><span class="guj">(તેમનો સરવાળો કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Cancel opposite terms: \( i \) cancels with \( -i \), and \( -1 \) cancels with \( 1 \).<br><span class="guj">(વિરુદ્ધ પદો રદ કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 0 \)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic-card">
+            <div class="topic-header">
+                <h2>5.2 Algebra of Complex numbers</h2>
+                <div class="guj">સંકર સંખ્યાઓનું બીજગણિત</div>
+            </div>
+            <p><strong>Definition:</strong> Performing mathematical operations like addition, subtraction, multiplication, and division on complex numbers by separating real and imaginary parts.</p>
+            <p class="guj"><strong>વ્યાખ્યા:</strong> સંકર સંખ્યાઓના વાસ્તવિક અને કાલ્પનિક ભાગને અલગ રાખી સરવાળા, બાદબાકી, ગુણાકાર અને ભાગાકાર કરવા.</p>
+            
+            <p><strong>Application:</strong> Signal processing and combining multiple wave frequencies.</p>
+            <p class="guj"><strong>ઉપયોગ:</strong> સિગ્નલ પ્રોસેસિંગ અને વિવિધ ફ્રિકવન્સીને જોડવા માટે.</p>
+
+            <div class="visual-container">
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
+                    <line x1="-100" y1="0" x2="100" y2="0" stroke="#cbd5e1"/>
+                    <line x1="0" y1="-100" x2="0" y2="100" stroke="#cbd5e1"/>
+                    <line x1="0" y1="0" x2="40" y2="-20" stroke="#ef4444" stroke-width="2"/>
+                    <text x="45" y="-15" font-size="12" fill="#ef4444">z&sub1;</text>
+                    <line x1="0" y1="0" x2="20" y2="-60" stroke="#10b981" stroke-width="2"/>
+                    <text x="10" y="-65" font-size="12" fill="#10b981">z&sub2;</text>
+                    <line x1="0" y1="0" x2="60" y2="-80" stroke="#8b5cf6" stroke-width="2"/>
+                    <line x1="40" y1="-20" x2="60" y2="-80" stroke="#10b981" stroke-dasharray="2"/>
+                    <line x1="20" y1="-60" x2="60" y2="-80" stroke="#ef4444" stroke-dasharray="2"/>
+                    <text x="65" y="-85" font-size="12" fill="#8b5cf6">z&sub1; + z&sub2;</text>
+                </svg>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-box">
+                    <div class="example-title">Example 1: Simplify \( (3+4i)(4-5i) \)<br><span class="guj">ઉદાહરણ 1: સાદું રૂપ આપો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Multiply each term (FOIL): \( 3(4) + 3(-5i) + 4i(4) + 4i(-5i) \).<br><span class="guj">(દરેક પદનો ગુણાકાર કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Calculate products: \( 12 - 15i + 16i - 20i^2 \).<br><span class="guj">(ગુણાકારની કિંમત શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Substitute \( i^2 = -1 \): \( 12 + i - 20(-1) \).<br><span class="guj">(\( i^2 = -1 \) કિંમત મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 32 + i \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 2: Find \(x, y\) if \( (2x-y) + 2yi = 6 + 4i \)<br><span class="guj">ઉદાહરણ 2: \(x, y\) શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Compare imaginary parts: \( 2y = 4 \).<br><span class="guj">(કાલ્પનિક ભાગોને સરખાવો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Solve for \( y \): \( y = 4/2 = 2 \).<br><span class="guj">(\( y \) માટે ઉકેલો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Compare real parts: \( 2x - y = 6 \).<br><span class="guj">(વાસ્તવિક ભાગોને સરખાવો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Put \( y=2 \): \( 2x - 2 = 6 \implies 2x = 8 \implies x = 4 \).<br><span class="guj">(\( y=2 \) કિંમત મૂકો અને \(x\) શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( x = 4, y = 2 \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 3: Expand \( (1+i)^2 \)<br><span class="guj">ઉદાહરણ 3: વિસ્તરણ કરો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Use algebraic identity \( (a+b)^2 = a^2 + 2ab + b^2 \).<br><span class="guj">(બીજગણિતનું સૂત્ર વાપરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Substitute values: \( (1)^2 + 2(1)(i) + (i)^2 \).<br><span class="guj">(કિંમતો મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Simplify terms: \( 1 + 2i + i^2 \).<br><span class="guj">(સાદું રૂપ આપો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Substitute \( i^2 = -1 \): \( 1 + 2i - 1 \).<br><span class="guj">(\( i^2 = -1 \) કિંમત મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 2i \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 4: Add \( (2+3i) + (1-4i) \)<br><span class="guj">ઉદાહરણ 4: સરવાળો કરો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Group real parts: \( (2 + 1) \).<br><span class="guj">(વાસ્તવિક ભાગો ભેગા કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Group imaginary parts: \( (3i - 4i) \).<br><span class="guj">(કાલ્પનિક ભાગો ભેગા કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Add the grouped parts: \( 3 + (-i) \).<br><span class="guj">(બંને નો સરવાળો કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 3 - i \)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic-card">
+            <div class="topic-header">
+                <h2>5.3 Conjugate, Modulus and Inverse</h2>
+                <div class="guj">અનુબદ્ધ, માનાંક અને વ્યસ્ત સંકર સંખ્યા</div>
+            </div>
+            <p><strong>Definition:</strong> 
+            <br><b>Conjugate (\(\bar{z}\)):</b> Flips the sign of the imaginary part (\( a - bi \)).
+            <br><b>Modulus (\(|z|\)):</b> Distance from the origin, calculated as \( \sqrt{a^2+b^2} \).
+            <br><b>Inverse (\(z^{-1}\)):</b> Multiplicative inverse, formulated as \( \frac{\bar{z}}{|z|^2} \).</p>
+            <p class="guj"><strong>વ્યાખ્યા:</strong> અનુબદ્ધ સંખ્યા કાલ્પનિક ભાગનું ચિહ્ન બદલે છે. માનાંક એ ઉગમબિંદુથી અંતર છે. વ્યસ્ત એટલે ૧ ના છેદમાં સંકર સંખ્યા.</p>
+            
+            <p><strong>Application:</strong> Used in control systems to find system stability margins.</p>
+            <p class="guj"><strong>ઉપયોગ:</strong> કંટ્રોલ સિસ્ટમ્સમાં સ્થિરતા શોધવા માટે.</p>
+
+            <div class="visual-container">
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
+                    <line x1="-100" y1="0" x2="100" y2="0" stroke="#cbd5e1"/>
+                    <line x1="0" y1="-100" x2="0" y2="100" stroke="#cbd5e1"/>
+                    <circle cx="50" cy="-50" r="4" fill="#2563eb"/>
+                    <text x="60" y="-55" font-size="12">z</text>
+                    <circle cx="50" cy="50" r="4" fill="#ef4444"/>
+                    <text x="60" y="60" font-size="12">z&#772; (Conjugate)</text>
+                    <line x1="50" y1="-50" x2="50" y2="50" stroke="#94a3b8" stroke-dasharray="4"/>
+                    <line x1="0" y1="0" x2="50" y2="-50" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="15" y="-35" font-size="12" fill="#d97706">|z|</text>
+                </svg>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-box">
+                    <div class="example-title">Example 1: Modulus of \( 5-12i \)<br><span class="guj">ઉદાહરણ 1: માનાંક શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Use modulus formula \( |z| = \sqrt{a^2 + b^2} \).<br><span class="guj">(માનાંક માટેનું સૂત્ર વાપરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Identify \( a = 5 \), \( b = -12 \).<br><span class="guj">(\( a \) અને \( b \) ઓળખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Calculate squares: \( 5^2 = 25 \), \( (-12)^2 = 144 \).<br><span class="guj">(વર્ગ કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Add and take square root: \( \sqrt{25+144} = \sqrt{169} \).<br><span class="guj">(સરવાળો કરી વર્ગમૂળ કાઢો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 13 \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 2: Inverse of \( Z = 3+4i \)<br><span class="guj">ઉદાહરણ 2: વ્યસ્ત શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Formula for inverse is \( Z^{-1} = \frac{\bar{Z}}{|Z|^2} \).<br><span class="guj">(વ્યસ્ત નું સૂત્ર લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Find conjugate \( \bar{Z} = 3 - 4i \).<br><span class="guj">(અનુબદ્ધ સંખ્યા શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Find squared modulus \( |Z|^2 = 3^2 + 4^2 = 25 \).<br><span class="guj">(માનાંકનો વર્ગ શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Substitute values into the formula.<br><span class="guj">(સૂત્રમાં કિંમત મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \frac{3}{25} - \frac{4}{25}i \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 3: Conjugate of \( \frac{2+3i}{3+2i} \)<br><span class="guj">ઉદાહરણ 3: અનુબદ્ધ સંખ્યા શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Rationalize by multiplying with \( \frac{3-2i}{3-2i} \).<br><span class="guj">(છેદની અનુબદ્ધ સંખ્યા વડે ગુણો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Multiply numerators: \( 6 - 4i + 9i - 6(-1) = 12 + 5i \).<br><span class="guj">(અંશનો ગુણાકાર કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Multiply denominators: \( 3^2 - (2i)^2 = 9 + 4 = 13 \).<br><span class="guj">(છેદનો ગુણાકાર કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Change the sign of the imaginary part to find conjugate.<br><span class="guj">(કાલ્પનિક ભાગનું ચિહ્ન બદલો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \frac{12}{13} - \frac{5}{13}i \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 4: Inverse of \( \frac{2+3i}{4-3i} \)<br><span class="guj">ઉદાહરણ 4: વ્યસ્ત શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Let \( W = \frac{2+3i}{4-3i} \). Its inverse is \( W^{-1} = \frac{4-3i}{2+3i} \).<br><span class="guj">(સંખ્યાને વ્યસ્ત કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Rationalize denominator: multiply by \( \frac{2-3i}{2-3i} \).<br><span class="guj">(છેદની અનુબદ્ધ કરણી વડે ગુણો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Numerator: \( 8 - 12i - 6i + 9i^2 = -1 - 18i \).<br><span class="guj">(અંશનું સાદું રૂપ આપો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Denominator: \( 2^2 + 3^2 = 13 \).<br><span class="guj">(છેદનું સાદું રૂપ આપો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \frac{-1 - 18i}{13} \)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic-card">
+            <div class="topic-header">
+                <h2>5.4 Argument and Polar form</h2>
+                <div class="guj">કોણાંક અને ધ્રુવીય સ્વરૂપ</div>
+            </div>
+            <p><strong>Definition:</strong> Argument (\(\theta\)) is the angle made with the positive real axis. Polar form represents the complex number as \( Z = r(\cos\theta + i\sin\theta) \).</p>
+            <p class="guj"><strong>વ્યાખ્યા:</strong> કોણાંક એ વાસ્તવિક અક્ષ સાથે બનાવેલો ખૂણો છે. ધ્રુવીય સ્વરૂપ \( Z = r(\cos\theta + i\sin\theta) \) છે.</p>
+            
+            <p><strong>Application:</strong> Used to analyze circular motion and electromagnetic waves.</p>
+            <p class="guj"><strong>ઉપયોગ:</strong> વર્તુળાકાર ગતિ અને ઇલેક્ટ્રોમેગ્નેટિક તરંગોના વિશ્લેષણમાં.</p>
+
+            <div class="visual-container">
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
+                    <line x1="-100" y1="0" x2="100" y2="0" stroke="#cbd5e1"/>
+                    <line x1="0" y1="-100" x2="0" y2="100" stroke="#cbd5e1"/>
+                    <line x1="0" y1="0" x2="60" y2="-60" stroke="#2563eb" stroke-width="2"/>
+                    <text x="20" y="-40" font-size="14" fill="#2563eb">r</text>
+                    <path d="M 30 0 A 30 30 0 0 0 21.2 -21.2" fill="none" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="35" y="-10" font-size="14" fill="#f59e0b">&theta;</text>
+                </svg>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-box">
+                    <div class="example-title">Example 1: Polar form of \( 1+i \)<br><span class="guj">ઉદાહરણ 1: ધ્રુવીય સ્વરૂપ</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Find Modulus \( r = \sqrt{1^2 + 1^2} = \sqrt{2} \).<br><span class="guj">(માનાંક શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Find angle \( \alpha = \tan^{-1}(1/1) = \frac{\pi}{4} \).<br><span class="guj">(ખૂણો શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Since \( a>0, b>0 \) (Quad I), \( \theta = \frac{\pi}{4} \).<br><span class="guj">(પ્રથમ ચરણમાં છે, તેથી કોણાંક નક્કી કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Write in formula \( Z = r(\cos\theta + i\sin\theta) \).<br><span class="guj">(ધ્રુવીય સ્વરૂપમાં લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \sqrt{2}(\cos\frac{\pi}{4} + i\sin\frac{\pi}{4}) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 2: Polar form of \( 1+\sqrt{3}i \)<br><span class="guj">ઉદાહરણ 2: ધ્રુવીય સ્વરૂપ</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Find Modulus \( r = \sqrt{1^2 + (\sqrt{3})^2} = \sqrt{4} = 2 \).<br><span class="guj">(માનાંક શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Find angle \( \alpha = \tan^{-1}(\sqrt{3}/1) = \frac{\pi}{3} \).<br><span class="guj">(ખૂણો શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Quadrant I, so \( \theta = \frac{\pi}{3} \).<br><span class="guj">(પ્રથમ ચરણ હોવાથી કોણાંક સરખો રહેશે.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 2(\cos\frac{\pi}{3} + i\sin\frac{\pi}{3}) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 3: Convert \( 1-\sqrt{3}i \) to polar<br><span class="guj">ઉદાહરણ 3: ધ્રુવીય સ્વરૂપમાં ફેરવો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Find Modulus \( r = \sqrt{1^2 + (-\sqrt{3})^2} = 2 \).<br><span class="guj">(માનાંક શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Find angle \( \alpha = \tan^{-1}(\sqrt{3}/1) = \frac{\pi}{3} \).<br><span class="guj">(ખૂણો શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Quadrant IV (\( a>0, b<0 \)), so \( \theta = -\frac{\pi}{3} \).<br><span class="guj">(ચોથા ચરણમાં હોવાથી કોણાંક ઋણ થશે.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 2(\cos(-\frac{\pi}{3}) + i\sin(-\frac{\pi}{3})) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 4: Find arg(\(-1\))<br><span class="guj">ઉદાહરણ 4: કોણાંક શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Write as complex number \( Z = -1 + 0i \).<br><span class="guj">(સંકર સંખ્યા તરીકે લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Identify coordinates: \( a = -1, b = 0 \).<br><span class="guj">(યામ ઓળખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> The point lies directly on the negative real axis.<br><span class="guj">(બિંદુ ઋણ વાસ્તવિક અક્ષ પર છે.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Angle for negative real axis is \( \pi \).<br><span class="guj">(ઋણ અક્ષ માટે ખૂણો \( \pi \) છે.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \pi \)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic-card">
+            <div class="topic-header">
+                <h2>5.5 De Moivre’s Theorem</h2>
+                <div class="guj">દ-મોવિયરનું પ્રમેય</div>
+            </div>
+            <p><strong>Definition:</strong> For any integer \(n\), \( (\cos\theta + i\sin\theta)^n = \cos(n\theta) + i\sin(n\theta) \).</p>
+            <p class="guj"><strong>વ્યાખ્યા:</strong> કોઈપણ પૂર્ણાંક \(n\) માટે, \( (\cos\theta + i\sin\theta)^n = \cos(n\theta) + i\sin(n\theta) \).</p>
+            
+            <p><strong>Application:</strong> Finding large powers and roots of complex variables in quantum mechanics effortlessly.</p>
+            <p class="guj"><strong>ઉપયોગ:</strong> ક્વોન્ટમ મિકેનિક્સમાં મોટી ઘાતની ગણતરી સરળતાથી કરવા.</p>
+
+            <div class="visual-container">
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
+                    <circle cx="0" cy="0" r="70" fill="none" stroke="#cbd5e1" stroke-dasharray="4"/>
+                    <g class="spin">
+                        <line x1="0" y1="0" x2="60.6" y2="-35" stroke="#2563eb" stroke-width="2"/>
+                        <circle cx="60.6" cy="-35" r="4" fill="#2563eb"/>
+                        <text x="65" y="-40" font-size="12">z</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-box">
+                    <div class="example-title">Example 1: Evaluate \( (\cos\frac{\pi}{2} + i\sin\frac{\pi}{2})^4 \)<br><span class="guj">ઉદાહરણ 1: કિંમત શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Apply De Moivre's Theorem. Multiply angle by power 4.<br><span class="guj">(પ્રમેય મુજબ ખૂણાને ઘાત 4 વડે ગુણો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Expression becomes: \( \cos(4 \cdot \frac{\pi}{2}) + i\sin(4 \cdot \frac{\pi}{2}) \).<br><span class="guj">(ગુણાકાર કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Simplify angle: \( \cos(2\pi) + i\sin(2\pi) \).<br><span class="guj">(ખૂણાનું સાદું રૂપ આપો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Evaluate trig values: \( 1 + i(0) \).<br><span class="guj">(ત્રિકોણમિતીય કિંમતો મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 1 \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 2: Simplify fraction of polar forms<br><span class="guj">ઉદાહરણ 2: સાદું રૂપ આપો</span></div>
+                    <p>\( \frac{(\cos 2\theta + i\sin 2\theta)^{-3} (\cos 3\theta - i\sin 3\theta)^2}{(\cos 2\theta + i\sin 2\theta)^{-7} (\cos 5\theta - i\sin 5\theta)^3} \)</p>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Convert all terms to \( cis \) format: \( \text{cis}(2\theta)^{-3} \cdot \text{cis}(-3\theta)^2 \), etc.<br><span class="guj">(બધા પદોને \( cis \) માં ફેરવો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Numerator: \( \text{cis}(-6\theta) \cdot \text{cis}(-6\theta) = \text{cis}(-12\theta) \).<br><span class="guj">(અંશનું સાદુંરૂપ.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Denominator: \( \text{cis}(-14\theta) \cdot \text{cis}(-15\theta) = \text{cis}(-29\theta) \).<br><span class="guj">(છેદનું સાદુંરૂપ.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Divide (subtract angles): \( -12\theta - (-29\theta) = 17\theta \).<br><span class="guj">(ભાગાકાર કરો, ખૂણાની બાદબાકી કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \cos(17\theta) + i\sin(17\theta) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 3: Evaluate \( (\cos 0 + i\sin 0)^7 \)<br><span class="guj">ઉદાહરણ 3: કિંમત શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Apply theorem: multiply angle by 7.<br><span class="guj">(પ્રમેય મુજબ ખૂણાને 7 વડે ગુણો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> It becomes \( \cos(7 \cdot 0) + i\sin(7 \cdot 0) \).<br><span class="guj">(ગુણાકાર દર્શાવો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Simplify angle: \( \cos(0) + i\sin(0) \).<br><span class="guj">(સાદુંરૂપ.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Evaluate trig functions: \( 1 + i(0) \).<br><span class="guj">(કિંમત મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 1 \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 4: Prove \( (1+i)^4 = -4 \)<br><span class="guj">ઉદાહરણ 4: સાબિત કરો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Convert \( 1+i \) to polar form: \( \sqrt{2}(\cos\frac{\pi}{4} + i\sin\frac{\pi}{4}) \).<br><span class="guj">(ધ્રુવીય સ્વરૂપમાં ફેરવો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Apply power 4: \( (\sqrt{2})^4 \cdot \text{cis}(4 \cdot \frac{\pi}{4}) \).<br><span class="guj">(ઘાત 4 લગાવો અને દ-મોવિયર પ્રમેય વાપરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Evaluate Modulus: \( (\sqrt{2})^4 = 4 \).<br><span class="guj">(માનાંકની ઘાત શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Evaluate Angle: \( \text{cis}(\pi) = -1 + i(0) = -1 \).<br><span class="guj">(ખૂણાની કિંમત શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 4 \cdot (-1) = -4 \) (Proved)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic-card">
+            <div class="topic-header">
+                <h2>5.6 Square root & Cube root of unity</h2>
+                <div class="guj">વર્ગમૂળ અને એકમના ઘનમૂળ</div>
+            </div>
+            <p><strong>Definition:</strong> The square root yields two solutions symmetrically. The cube roots of unity are \(1, \omega, \omega^2\), which form an equilateral triangle on the complex plane. (Recall: \( 1 + \omega + \omega^2 = 0 \) and \( \omega^3 = 1 \)).</p>
+            <p class="guj"><strong>વ્યાખ્યા:</strong> એકમના ઘનમૂળ \(1, \omega, \omega^2\) છે. \( 1 + \omega + \omega^2 = 0 \) અને \( \omega^3 = 1 \).</p>
+            
+            <p><strong>Application:</strong> Solving polynomial equations and stabilizing dynamic networks.</p>
+            <p class="guj"><strong>ઉપયોગ:</strong> બહુપદી સમીકરણો ઉકેલવા અને ડાયનેમિક નેટવર્કમાં.</p>
+
+            <div class="visual-container">
+                <svg width="200" height="200" viewBox="-100 -100 200 200">
+                    <circle cx="0" cy="0" r="60" fill="none" stroke="#cbd5e1"/>
+                    <polygon points="60,0 -30,-51.9 -30,51.9" fill="#e0e7ff" stroke="#4f46e5" stroke-dasharray="4"/>
+                    <circle cx="60" cy="0" r="4" fill="#2563eb"/>
+                    <text x="70" y="5" font-size="14">1</text>
+                    <circle cx="-30" cy="-51.9" r="4" fill="#ef4444"/>
+                    <text x="-45" y="-55" font-size="14">&omega;</text>
+                    <circle cx="-30" cy="51.9" r="4" fill="#10b981"/>
+                    <text x="-45" y="65" font-size="14">&omega;&sup2;</text>
+                </svg>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-box">
+                    <div class="example-title">Example 1: Square root of \( 3+4i \)<br><span class="guj">ઉદાહરણ 1: વર્ગમૂળ શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Find Modulus \( |Z| = \sqrt{3^2 + 4^2} = 5 \).<br><span class="guj">(માનાંક શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Use Formula: \( \pm \left( \sqrt{\frac{|Z|+a}{2}} + i\text{sgn}(b)\sqrt{\frac{|Z|-a}{2}} \right) \).<br><span class="guj">(વર્ગમૂળનું સૂત્ર વાપરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Here \( a=3, b=4 \) (positive, use +). Real part = \( \sqrt{\frac{5+3}{2}} = 2 \).<br><span class="guj">(વાસ્તવિક ભાગ શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Imaginary part = \( \sqrt{\frac{5-3}{2}} = 1 \).<br><span class="guj">(કાલ્પનિક ભાગ શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \pm(2 + i) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 2: Square root of \( 5+12i \)<br><span class="guj">ઉદાહરણ 2: વર્ગમૂળ શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Find Modulus \( |Z| = \sqrt{5^2 + 12^2} = 13 \).<br><span class="guj">(માનાંક શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Here \( a=5, b=12>0 \). Use positive sign in middle.<br><span class="guj">(મધ્યમાં ધન ચિહ્ન વાપરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Substitute into formula: \( \pm \left( \sqrt{\frac{13+5}{2}} + i\sqrt{\frac{13-5}{2}} \right) \).<br><span class="guj">(સૂત્રમાં કિંમત મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Simplify: \( \sqrt{9} = 3 \) and \( \sqrt{4} = 2 \).<br><span class="guj">(સાદુંરૂપ.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \pm(3 + 2i) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 3: Square root of \( 7+24i \)<br><span class="guj">ઉદાહરણ 3: વર્ગમૂળ શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Find Modulus \( |Z| = \sqrt{7^2 + 24^2} = 25 \).<br><span class="guj">(માનાંક શોધો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Here \( a=7, b=24>0 \).<br><span class="guj">(કિંમતો ઓળખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Substitute into formula: \( \pm \left( \sqrt{\frac{25+7}{2}} + i\sqrt{\frac{25-7}{2}} \right) \).<br><span class="guj">(સૂત્રમાં કિંમત મૂકો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Simplify: \( \sqrt{\frac{32}{2}} = 4 \) and \( \sqrt{\frac{18}{2}} = 3 \).<br><span class="guj">(સાદુંરૂપ.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( \pm(4 + 3i) \)</div>
+                </div>
+                <div class="example-box">
+                    <div class="example-title">Example 4: Find \( 1 + \omega + \omega^2 \)<br><span class="guj">ઉદાહરણ 4: કિંમત શોધો</span></div>
+                    <div class="step-block"><span class="step-num">Step 1:</span> Note roots: \( 1, \omega = \frac{-1+i\sqrt{3}}{2}, \omega^2 = \frac{-1-i\sqrt{3}}{2} \).<br><span class="guj">(ઘનમૂળ લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 2:</span> Write the sum: \( 1 + (\frac{-1+i\sqrt{3}}{2}) + (\frac{-1-i\sqrt{3}}{2}) \).<br><span class="guj">(સરવાળો લખો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 3:</span> Take common denominator 2: \( \frac{2 - 1 + i\sqrt{3} - 1 - i\sqrt{3}}{2} \).<br><span class="guj">(સામાન્ય છેદ 2 લો.)</span></div>
+                    <div class="step-block"><span class="step-num">Step 4:</span> Cancel terms: \( 2 - 1 - 1 = 0 \).<br><span class="guj">(પદો રદ કરો.)</span></div>
+                    <div class="step-block"><span class="step-num">Final Answer:</span> \( 0 \)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="lab-section">
+            <h2>Interactive Complex Numbers Calculator</h2>
+            <div class="guj" style="margin-bottom: 1.5rem;">ઇન્ટરેક્ટિવ સંકર સંખ્યા કેલ્ક્યુલેટર (આપેલ વિષયોના પદ્ધતિસરના ઉકેલો માટે)</div>
+
+            <div class="control-panel">
+               <input type="text" id="realPart" placeholder="Real Part (e.g. 2, sqrt(3)) વાસ્તવિક ભાગ">
+               <input type="text" id="imagPart" placeholder="Imaginary (e.g. -5, sqrt(2)) કાલ્પનિક ભાગ">
+                <select id="operation">
+                    <option value="modulus">Find Modulus (માનાંક)</option>
+                    <option value="conjugate">Find Conjugate (અનુબદ્ધ)</option>
+                    <option value="inverse">Find Inverse (વ્યસ્ત)</option>
+                    <option value="polar">Polar Form (ધ્રુવીય સ્વરૂપ)</option>
+                    <option value="sqrt">Square Root (વર્ગમૂળ)</option>
+                </select>
+                <button onclick="calculate()">Calculate (ગણતરી કરો)</button>
+            </div>
+
+            <div class="lab-output" id="output">
+                <em>Enter values and press calculate to see step-by-step solutions.<br>
+                પગલાં-દર-પગલાં ઉકેલ જોવા માટે કિંમતો દાખલ કરો અને બટન દબાવો.</em>
+            </div>
+        </section>
+
+    </div>
+
+<footer class="page-footer">
+    <div class="visit-counter" style="margin-bottom: 5px;">
+        This Page Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FComplex-Numbers-Learning-module&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+    </div>
+
+    <div class="visit-counter" style="margin-bottom: 15px;">
+        Total Site Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+    </div>
+    
+    <div class="copyright">
+        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+    </div>
+</footer>
+<script>
+        // Page visit counter logic
+        window.onload = function() {
+            let visits = localStorage.getItem('complexNumberPageVisits');
+            if (!visits) visits = 0;
+            visits++;
+            localStorage.setItem('complexNumberPageVisits', visits);
+            let visitCounterElem = document.getElementById('visitCounter');
+            if(visitCounterElem) {
+                visitCounterElem.innerText = "Page Visits / મુલાકાત: " + visits;
+            }
+        }
+
+        // Helper function to parse standard numbers, fractions (1/2), and square roots (sqrt(3))
+        function parseCustomInput(val) {
+            if (!val) return NaN;
+            
+            let str = val.replace(/\s+/g, '').toLowerCase();
+            
+            let sign = 1;
+            if (str.startsWith('-')) {
+                sign = -1;
+                str = str.substring(1);
+            }
+
+            if (str.includes('/')) {
+                let parts = str.split('/');
+                if (parts.length === 2) {
+                    let numerator = parseFloat(parts[0]);
+                    let denominator = parseFloat(parts[1]);
+                    
+                    if (!isNaN(numerator) && !isNaN(denominator) && denominator !== 0) {
+                        return sign * (numerator / denominator);
+                    }
+                }
+            }
+
+            if (str.startsWith('sqrt(') && str.endsWith(')')) {
+                let numStr = str.substring(5, str.length - 1);
+                return sign * Math.sqrt(parseFloat(numStr));
+            }
+            
+            return sign * parseFloat(str);
+        }
+
+        // Helper function to convert decimals to MathJax fractions (p/q)
+        function toFraction(value) {
+            if (isNaN(value)) return "0";
+            if (Math.abs(Math.round(value) - value) < 1e-10) return Math.round(value).toString();
+            
+            let sign = value < 0 ? "-" : "";
+            let n = Math.abs(value);
+            
+            let tolerance = 1.0E-6;
+            let h1 = 1, h2 = 0, k1 = 0, k2 = 1;
+            let b = n;
+            
+            do {
+                let a = Math.floor(b);
+                let aux = h1; h1 = a * h1 + h2; h2 = aux;
+                aux = k1; k1 = a * k1 + k2; k2 = aux;
+                b = 1 / (b - a);
+            } while (Math.abs(n - h1 / k1) > n * tolerance && k1 < 1000);
+            
+            if (k1 > 100) return sign + n.toFixed(3); 
+            
+            if (k1 === 1) return sign + h1;
+            return `${sign}\\frac{${h1}}{${k1}}`;
+        }
+
+        // Interactive Lab Logic
+        function calculate() {
+            let a = parseCustomInput(document.getElementById('realPart').value);
+            let b = parseCustomInput(document.getElementById('imagPart').value);
+            let op = document.getElementById('operation').value;
+            let out = document.getElementById('output');
+
+            if (isNaN(a) || isNaN(b)) {
+                out.innerHTML = "<span style='color:#ef4444;'>Please enter valid numbers or format like sqrt(2). (કૃપા કરીને માન્ય સંખ્યાઓ દાખલ કરો.)</span>";
+                return;
+            }
+
+            let steps = "";
+            let bSign = b >= 0 ? '+' : '-';
+            let absB = Math.abs(b);
+            
+            let aFrac = toFraction(a);
+            let absBFrac = toFraction(absB);
+            let bFrac = toFraction(b);
+
+            if (op === 'modulus') {
+                let r2 = a*a + b*b;
+                let r = Math.sqrt(r2);
+                steps = `
+                    <div style="margin-bottom:10px; color:#38bdf8;"><strong>Task: Find Modulus of \\( z = ${aFrac} ${bSign} ${absBFrac}i \\)</strong></div>
+                    <b>Step 1:</b> Formula for modulus is \\( |z| = \\sqrt{a^2 + b^2} \\)<br>
+                    <span class="guj">(માનાંક માટેનું સૂત્ર)</span><br><br>
+                    <b>Step 2:</b> Substitute \\( a = ${aFrac} \\) and \\( b = ${bFrac} \\)<br>
+                    <span class="guj">(\\( a \\) અને \\( b \\) ની કિંમત મૂકો)</span><br><br>
+                    <b>Step 3:</b> \\( |z| = \\sqrt{(${aFrac})^2 + (${bFrac})^2} = \\sqrt{${toFraction(r2)}} \\approx ${toFraction(r)} \\)
+                `;
+            } else if (op === 'conjugate') {
+                steps = `
+                    <div style="margin-bottom:10px; color:#38bdf8;"><strong>Task: Find Conjugate of \\( z = ${aFrac} ${bSign} ${absBFrac}i \\)</strong></div>
+                    <b>Step 1:</b> Formula for conjugate is \\( \\bar{z} = a - bi \\)<br>
+                    <span class="guj">(અનુબદ્ધ માટેનું સૂત્ર)</span><br><br>
+                    <b>Step 2:</b> Change the sign of the imaginary part.<br>
+                    <span class="guj">(કાલ્પનિક ભાગનું ચિહ્ન બદલો.)</span><br><br>
+                    <b>Step 3:</b> \\( \\bar{z} = ${aFrac} ${b >= 0 ? '-' : '+'} ${absBFrac}i \\)
+                `;
+            } else if (op === 'polar') {
+                let r = Math.sqrt(a*a + b*b);
+                let theta = Math.atan2(b, a);
+                let thetaDeg = (theta * 180 / Math.PI).toFixed(2);
+                steps = `
+                    <div style="margin-bottom:10px; color:#38bdf8;"><strong>Task: Polar form of \\( z = ${aFrac} ${bSign} ${absBFrac}i \\)</strong></div>
+                    <b>Step 1:</b> Find Modulus \\( r = \\sqrt{a^2 + b^2} = ${toFraction(r)} \\)<br>
+                    <span class="guj">(માનાંક શોધો)</span><br><br>
+                    <b>Step 2:</b> Find Argument \\( \\theta = \\tan^{-1}(b/a) = \\tan^{-1}(\\frac{${bFrac}}{${aFrac}}) \\approx ${thetaDeg}^\\circ \\)<br>
+                    <span class="guj">(કોણાંક શોધો)</span><br><br>
+                    <b>Step 3:</b> Polar form \\( z = r(\\cos\\theta + i\\sin\\theta) = ${toFraction(r)}(\\cos(${thetaDeg}^\\circ) + i\\sin(${thetaDeg}^\\circ)) \\)<br>
+                    <span class="guj">(ધ્રુવીય સ્વરૂપ)</span>
+                `;
+            } else if (op === 'inverse') {
+                let r2 = a*a + b*b;
+                if(r2 === 0) { 
+                    steps = "Inverse does not exist for \\( 0 + 0i \\). (વ્યસ્ત અસ્તિત્વમાં નથી.)"; 
+                } else {
+                    let invAFrac = toFraction(a / r2);
+                    let invBFrac = toFraction(absB / r2);
+                    steps = `
+                        <div style="margin-bottom:10px; color:#38bdf8;"><strong>Task: Find Inverse of \\( z = ${aFrac} ${bSign} ${absBFrac}i \\)</strong></div>
+                        <b>Step 1:</b> Formula for inverse is \\( z^{-1} = \\frac{\\bar{z}}{|z|^2} \\)<br>
+                        <span class="guj">(વ્યસ્ત માટેનું સૂત્ર)</span><br><br>
+                        <b>Step 2:</b> \\( \\bar{z} = ${aFrac} ${b >= 0 ? '-' : '+'} ${absBFrac}i \\) and \\( |z|^2 = ${toFraction(r2)} \\)<br><br>
+                        <b>Step 3:</b> \\( z^{-1} = ${invAFrac} ${b >= 0 ? '-' : '+'} ${invBFrac}i \\)
+                    `;
+                }
+            } else if (op === 'sqrt') {
+                let r = Math.sqrt(a*a + b*b);
+                let x = Math.sqrt((r + a) / 2);
+                let y = Math.sqrt((r - a) / 2);
+                let sgn = b >= 0 ? '+' : '-';
+                steps = `
+                    <div style="margin-bottom:10px; color:#38bdf8;"><strong>Task: Square root of \\( z = ${aFrac} ${bSign} ${absBFrac}i \\)</strong></div>
+                    <b>Step 1:</b> Formula: \\( \\pm \\left( \\sqrt{\\frac{|z|+a}{2}} + i \\cdot \\text{sgn}(b) \\sqrt{\\frac{|z|-a}{2}} \\right) \\)<br>
+                    <span class="guj">(વર્ગમૂળ માટેનું સૂત્ર)</span><br><br>
+                    <b>Step 2:</b> Calculate Modulus \\( |z| = ${toFraction(r)} \\)<br><br>
+                    <b>Step 3:</b> Real part = \\( \\sqrt{(${toFraction(r)} + ${aFrac})/2} = ${toFraction(x)} \\)<br>
+                    <b>Step 4:</b> Imag part = \\( \\sqrt{(${toFraction(r)} - ${aFrac})/2} = ${toFraction(y)} \\)<br><br>
+                    <b>Final Answer (જવાબ):</b> \\( \\pm (${toFraction(x)} ${sgn} ${toFraction(y)}i) \\)
+                `;
+            }
+
+            out.innerHTML = steps;
+            
+            if (window.MathJax) {
+                MathJax.typesetPromise([out]);
+            }
+        }
+</script>
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: Matrices | ફન લર્નિંગ શ્રેણિકો</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --accent: #43C6AC;
+            --dark: #2F2E41;
+            --light: #F9F9FF;
+            --box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), #3f3d56);
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        h1 { font-family: 'Nunito', sans-serif; font-size: 2.8rem; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .subtitle { font-size: 1.2rem; font-weight: 300; margin-top: 10px; color: #E6E6FA; }
+        
+        .container { max-width: 1050px; margin: 2rem auto; padding: 0 15px; flex: 1; }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--box-shadow);
+            border-top: 6px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        h2 { color: var(--primary); font-family: 'Nunito', sans-serif; border-bottom: 2px solid #eee; padding-bottom: 10px; font-size: 1.8rem;}
+        .bilingual { color: #555; font-size: 1.05rem; display: block; margin-bottom: 15px; background: #f8f9fa; padding: 10px 15px; border-left: 4px solid var(--secondary); border-radius: 4px; font-weight: 600;}
+        .eng-text { margin-bottom: 15px; }
+        
+        /* Collapsible Examples */
+        details.example-details {
+            background-color: #fffaf0;
+            border: 2px dashed #ffb703;
+            border-radius: 12px;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        details.example-details[open] {
+            padding-bottom: 1.5rem;
+        }
+        details.example-details summary {
+            font-weight: bold;
+            color: #fb8500;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            outline: none;
+            font-size: 1.1rem;
+        }
+        details.example-details summary:hover { color: #e85d04; }
+        
+        .step { background: white; padding: 12px; border-radius: 8px; margin-top: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border-left: 3px solid #ffb703; overflow-x: auto;}
+        
+        ul.custom-list { list-style: none; padding: 0; }
+        ul.custom-list li { padding: 10px 0; border-bottom: 1px dashed #ddd; display: flex; align-items: flex-start; gap: 10px; }
+        ul.custom-list li::before { content: '👉'; }
+
+        /* Calculator Styles */
+        .lab-section {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+        .lab-section h2 { color: white; border: none; }
+        .controls-panel {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .controls-panel select { padding: 8px 12px; border-radius: 6px; font-size: 1rem; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;}
+        
+        .workspaces { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .matrix-grid { display: grid; gap: 10px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 12px; margin-top: 10px;}
+        input.cell { width: 55px; height: 45px; text-align: center; font-size: 1.2rem; border: none; border-radius: 6px; font-weight: bold; }
+        input.cell:focus { outline: 3px solid var(--accent); }
+        
+        .action-buttons { margin: 30px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        button {
+            background-color: var(--accent); color: var(--dark); border: none; padding: 10px 20px; font-size: 1rem; border-radius: 30px; cursor: pointer; font-weight: 700; transition: transform 0.2s;
+        }
+        button:hover { transform: translateY(-3px); }
+        button.secondary { background-color: var(--secondary); color: white; }
+        
+        #result-display, #eq-result-display {
+            background: white; color: var(--dark); padding: 2rem; border-radius: 12px; font-size: 1.2rem; min-height: 100px; display: flex; flex-direction: column; align-items: flex-start; overflow-x: auto; text-align: left;
+        }
+        
+        .eq-solver { margin-top: 40px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; }
+        .eq-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; font-size: 1.2rem; flex-wrap: wrap;}
+        .eq-input { width: 60px; height: 40px; text-align: center; font-size: 1.2rem; border-radius: 6px; border: none;}
+
+        /* Footer Styles */
+        .page-footer {
+            background-color: var(--dark);
+            color: #E6E6FA;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            margin-top: auto;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .visit-counter {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .copyright { font-weight: 300; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>Unit 1: Matrices (શ્રેણિકો)</h1>
+        <div class="subtitle">Engineering & Applied Maths | ઇજનેરી ગણિત</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <h2>1.1 Concept of Matrix (શ્રેણિકનો ખ્યાલ)</h2>
+            <span class="bilingual">સંખ્યાઓની લંબચોરસ ગોઠવણી કે જેને [ ] અથવા ( ) કૌંસમાં દર્શાવવામાં આવે છે તેને શ્રેણિક કહે છે. ઘટકોની આડી રેખાઓને હાર (Rows) અને ઊભી રેખાઓને સ્તંભ (Columns) કહે છે.</span>
+            <div class="eng-text">
+                <p><strong>Order of Matrix (શ્રેણિકની કક્ષા):</strong> If a matrix has $m$ rows and $n$ columns, its order is written as $m \times n$.</p>
+                <p><strong>Equality of Matrices (શ્રેણિકોની સમાનતા):</strong> Two matrices are equal if their orders are the same and their corresponding elements are exactly equal.</p>
+            </div>
+
+            <details class="example-details"><summary>✍️ Example 1: Order of Matrix (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> What is the order of $A = \begin{bmatrix} 1 & 0 & 3 \\ -2 & 4 & 0 \end{bmatrix}$?</div>
+                <div class="step">Rows (હાર) = 2, Columns (સ્તંભ) = 3.<br><strong>Answer:</strong> The order is $2 \times 3$.</div>
+            </details>
+            
+            <details class="example-details"><summary>✍️ Example 2: Order of Matrix (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> What is the order of $A = \begin{bmatrix} 2 & 5 \\ 7 & 8 \end{bmatrix}$?</div>
+                <div class="step">Rows (હાર) = 2, Columns (સ્તંભ) = 2.<br><strong>Answer:</strong> The order is $2 \times 2$.</div>
+            </details>
+            
+            <details class="example-details"><summary>✍️ Example 3: Order of Matrix (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> What is the order of $A = \begin{bmatrix} 1 & 2 \\ 0 & -1 \\ 3 & 4 \end{bmatrix}$?</div>
+                <div class="step">Rows (હાર) = 3, Columns (સ્તંભ) = 2.<br><strong>Answer:</strong> The order is $3 \times 2$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Equality of Matrices (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $\begin{bmatrix} x+y & 3 \\ -7 & x-y \end{bmatrix} = \begin{bmatrix} 8 & 3 \\ -7 & 2 \end{bmatrix}$, find $x$ and $y$.</div>
+                <div class="step">Compare elements: $x + y = 8$ and $x - y = 2$.<br>Add them: $2x = 10 \Rightarrow x = 5$.<br>Substitute: $5 + y = 8 \Rightarrow y = 3$.<br><strong>Answer:</strong> $x = 5, y = 3$.</div>
+            </details>
+        </div>
+
+        <div class="card">
+            <h2>1.2 Types of Matrices (શ્રેણિકોના પ્રકારો)</h2>
+            <span class="bilingual">શ્રેણિકોના વિવિધ પ્રકારો (Different types of matrices).</span>
+            <ul class="custom-list">
+                <li><strong>Square Matrix (ચોરસ શ્રેણિક):</strong> Number of rows = Number of columns.</li>
+                <li><strong>Identity Matrix (એકમ શ્રેણિક):</strong> Principal diagonal elements are 1, others are 0. Denoted by $I$.</li>
+                <li><strong>Transpose (પરિવર્ત શ્રેણિક $A^T$):</strong> Swap all rows into corresponding columns (હારને સ્તંભમાં ફેરવતા).</li>
+                <li><strong>Singular Matrix (અસામાન્ય શ્રેણિક):</strong> Determinant is zero ($|A| = 0$).</li>
+            </ul>
+
+            <details class="example-details"><summary>✍️ Example 1: Square Matrix (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Which of the following is a square matrix? a) $[1, 3]$  b) $\begin{bmatrix} 1 \\ 5 \end{bmatrix}$ c) $\begin{bmatrix} 1 & 3 \\ 5 & 4 \end{bmatrix}$ d) $\begin{bmatrix} 1 & 3 & 2 \\ 5 & 4 & 5 \end{bmatrix}$</div>
+                <div class="step">A square matrix has equal rows and columns.<br><strong>Answer:</strong> Option (c) because it is a $2 \times 2$ matrix.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 2: Transpose (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 1 & -1 \end{bmatrix}$, then $A^T = ?$</div>
+                <div class="step">Change the row into a column.<br><strong>Answer:</strong> $A^T = \begin{bmatrix} 1 \\ -1 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 3: Transpose variables (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$, then $A^T = ?$</div>
+                <div class="step">Swap rows to columns. Row 1 $[a, b]$ becomes Column 1.<br><strong>Answer:</strong> $A^T = \begin{bmatrix} a & c \\ b & d \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Singular Matrix (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A$ is a non-singular matrix, then... ?</div>
+                <div class="step">For a matrix to be non-singular (સામાન્ય શ્રેણિક), its determinant must not be zero.<br><strong>Answer:</strong> $|A| \neq 0$.</div>
+            </details>
+        </div>
+
+        <div class="card">
+            <h2>1.3 Addition, Subtraction & Scalar Multiplication (સરવાળા, બાદબાકી અને અદિશ ગુણાકાર)</h2>
+            <span class="bilingual">શ્રેણિકોના સરવાળા અને બાદબાકી ત્યારે જ શક્ય બને છે જો બંને શ્રેણિકોની કક્ષા સમાન હોય.</span>
+            <div class="eng-text">
+                <p>Add/subtract corresponding elements. For scalar multiplication, multiply every single element inside the matrix by the given number.</p>
+            </div>
+
+            <details class="example-details"><summary>✍️ Example 1: Scalar Multiplication (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 1 & 2 \\ 3 & -1 \end{bmatrix}$, find $4A$.</div>
+                <div class="step">Multiply every element by 4.<br><strong>Answer:</strong> $4A = \begin{bmatrix} 4 & 8 \\ 12 & -4 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 2: Scalar Math (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}$, find $2A - 3I$.</div>
+                <div class="step">$2A = \begin{bmatrix} 2 & 4 \\ -2 & 2 \end{bmatrix}$. $3I = \begin{bmatrix} 3 & 0 \\ 0 & 3 \end{bmatrix}$.<br>Subtract: $\begin{bmatrix} 2-3 & 4-0 \\ -2-0 & 2-3 \end{bmatrix}$.<br><strong>Answer:</strong> $\begin{bmatrix} -1 & 4 \\ -2 & -1 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 3: Addition (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Find $\begin{bmatrix} 4 & 3 \\ 6 & 2 \end{bmatrix} + \begin{bmatrix} 1 & 5 \\ 5 & 8 \end{bmatrix}$.</div>
+                <div class="step">Add matching positions.<br><strong>Answer:</strong> $\begin{bmatrix} 4+1 & 3+5 \\ 6+5 & 2+8 \end{bmatrix} = \begin{bmatrix} 5 & 8 \\ 11 & 10 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Algebra (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 1 & 3 \\ 4 & -2 \end{bmatrix}$, find $2A - 2I$.</div>
+                <div class="step">$2A = \begin{bmatrix} 2 & 6 \\ 8 & -4 \end{bmatrix}$. $2I = \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix}$.<br><strong>Answer:</strong> $\begin{bmatrix} 0 & 6 \\ 8 & -6 \end{bmatrix}$.</div>
+            </details>
+        </div>
+
+        <div class="card">
+            <h2>1.4 Product of Two Matrices (બે શ્રેણિકોનો ગુણાકાર)</h2>
+            <span class="bilingual">ગુણાકાર AB ત્યારે જ શક્ય છે જો A ના સ્તંભની સંખ્યા = B ની હારની સંખ્યા હોય.</span>
+            <div class="eng-text">Multiply the rows of the first matrix by the corresponding columns of the second matrix.</div>
+
+            <details class="example-details"><summary>✍️ Example 1: Basic Product (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 3 \end{bmatrix}$ and $B = \begin{bmatrix} 4 \end{bmatrix}$, then $A \cdot B = ?$</div>
+                <div class="step">Order of A is $1 \times 1$, Order of B is $1 \times 1$.<br><strong>Answer:</strong> $\begin{bmatrix} 3 \times 4 \end{bmatrix} = \begin{bmatrix} 12 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 2: 2x2 Multiplication (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Find $\begin{bmatrix} 1 & 2 \\ 5 & 0 \end{bmatrix} \times \begin{bmatrix} -1 & 6 \\ 2 & 1 \end{bmatrix}$.</div>
+                <div class="step">$R_1 C_1: (1)(-1) + (2)(2) = 3$<br>$R_1 C_2: (1)(6) + (2)(1) = 8$<br>$R_2 C_1: (5)(-1) + (0)(2) = -5$<br>$R_2 C_2: (5)(6) + (0)(1) = 30$<br><strong>Answer:</strong> $\begin{bmatrix} 3 & 8 \\ -5 & 30 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 3: Finding Unknowns in Product (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $\begin{bmatrix} 0 & x & -2 \end{bmatrix} \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix} = \begin{bmatrix} 4 \end{bmatrix}$, find $x$.</div>
+                <div class="step">Multiply: $(0)(1) + (x)(2) + (-2)(3) = 4$<br>$0 + 2x - 6 = 4 \Rightarrow 2x = 10$.<br><strong>Answer:</strong> $x = 5$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Order of Product (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If A is a $2 \times 3$ matrix and B is a $3 \times 4$ matrix, what is the order of AB?</div>
+                <div class="step">The inner dimensions (3 and 3) match. The result takes the outer dimensions.<br><strong>Answer:</strong> The order of AB is $2 \times 4$.</div>
+            </details>
+        </div>
+
+        <div class="card">
+            <h2>1.4a Mixed Examples (મિશ્ર ઉદાહરણો 1.1 થી 1.4)</h2>
+            <span class="bilingual">સરવાળા, બાદબાકી, અદિશ ગુણાકાર, ગુણાકાર અને પરિવર્ત શ્રેણિક ના મિશ્ર દાખલા.</span>
+
+            <details class="example-details"><summary>✍️ Example 1: Transpose Rule (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 2 & 1 \\ 3 & 0 \end{bmatrix}$ and $B = \begin{bmatrix} 4 & -1 \\ 2 & 3 \end{bmatrix}$, prove $(A+B)^T = A^T + B^T$.</div>
+                <div class="step"><strong>L.H.S:</strong> $A+B = \begin{bmatrix} 6 & 0 \\ 5 & 3 \end{bmatrix} \Rightarrow (A+B)^T = \begin{bmatrix} 6 & 5 \\ 0 & 3 \end{bmatrix}$.</div>
+                <div class="step"><strong>R.H.S:</strong> $A^T = \begin{bmatrix} 2 & 3 \\ 1 & 0 \end{bmatrix}$, $B^T = \begin{bmatrix} 4 & 2 \\ -1 & 3 \end{bmatrix}$. Add them: $A^T+B^T = \begin{bmatrix} 6 & 5 \\ 0 & 3 \end{bmatrix}$.<br><strong>Answer:</strong> L.H.S = R.H.S. Proved.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 2: Combined Operations (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 2 & 5 \\ -1 & 3 \end{bmatrix}, B = \begin{bmatrix} 5 & 8 \\ 4 & 6 \end{bmatrix}, C = \begin{bmatrix} 4 & 2 \\ 1 & 5 \end{bmatrix}$, find $2A + 3B - C$.</div>
+                <div class="step">$2A = \begin{bmatrix} 4 & 10 \\ -2 & 6 \end{bmatrix}, 3B = \begin{bmatrix} 15 & 24 \\ 12 & 18 \end{bmatrix}$.</div>
+                <div class="step">Add $2A + 3B = \begin{bmatrix} 19 & 34 \\ 10 & 24 \end{bmatrix}$.<br>Subtract C: $\begin{bmatrix} 19-4 & 34-2 \\ 10-1 & 24-5 \end{bmatrix}$.<br><strong>Answer:</strong> $\begin{bmatrix} 15 & 32 \\ 9 & 19 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 3: Finding Unknown Matrix (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 2 & -1 \\ 4 & 3 \end{bmatrix}$ and $B = \begin{bmatrix} 3 & 2 \\ 1 & 4 \end{bmatrix}$, find matrix $X$ such that $2A + X = 3B$.</div>
+                <div class="step">Rearrange formula: $X = 3B - 2A$.<br>$3B = \begin{bmatrix} 9 & 6 \\ 3 & 12 \end{bmatrix}$, $2A = \begin{bmatrix} 4 & -2 \\ 8 & 6 \end{bmatrix}$.</div>
+                <div class="step">$X = \begin{bmatrix} 9-4 & 6-(-2) \\ 3-8 & 12-6 \end{bmatrix}$.<br><strong>Answer:</strong> $X = \begin{bmatrix} 5 & 8 \\ -5 & 6 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Proving Matrix Equation (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 3 & 1 \\ -1 & 2 \end{bmatrix}$, show that $A^2 - 5A + 7I = 0$.</div>
+                <div class="step">$A^2 = A \times A = \begin{bmatrix} 9-1 & 3+2 \\ -3-2 & -1+4 \end{bmatrix} = \begin{bmatrix} 8 & 5 \\ -5 & 3 \end{bmatrix}$.</div>
+                <div class="step">$-5A = \begin{bmatrix} -15 & -5 \\ 5 & -10 \end{bmatrix}$ and $7I = \begin{bmatrix} 7 & 0 \\ 0 & 7 \end{bmatrix}$.</div>
+                <div class="step">Add them: $\begin{bmatrix} 8-15+7 & 5-5+0 \\ -5+5+0 & 3-10+7 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}$. Proved.</div>
+            </details>
+        </div>
+
+        <div class="card">
+            <h2>1.5 Adjoint & Inverse of 2x2 and 3x3 Matrices</h2>
+            <span class="bilingual">ચોરસ શ્રેણિક A ના વ્યસ્ત શ્રેણિકને $A^{-1}$ વડે દર્શાવવામાં આવે છે. સૂત્ર: $A^{-1} = \frac{1}{|A|} adj A$</span>
+            
+            <details class="example-details"><summary>✍️ Example 1: Adjoint of 2x2 (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$, find $adj A$.</div>
+                <div class="step">Shortcut: Swap the principal diagonal (1 & 4), change signs of the other diagonal (2 & 3).<br><strong>Answer:</strong> $adj A = \begin{bmatrix} 4 & -2 \\ -3 & 1 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 2: Inverse of 2x2 (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Find the inverse of $A = \begin{bmatrix} 3 & 1 \\ -1 & 2 \end{bmatrix}$.</div>
+                <div class="step">Determinant $|A| = (3 \times 2) - (1 \times -1) = 6 + 1 = 7$.</div>
+                <div class="step">Adjoint $adj A = \begin{bmatrix} 2 & -1 \\ 1 & 3 \end{bmatrix}$.<br><strong>Answer:</strong> $A^{-1} = \frac{1}{7} \begin{bmatrix} 2 & -1 \\ 1 & 3 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 3: Adjoint Trick (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> If $A = \begin{bmatrix} 1 & -2 \\ 2 & -1 \end{bmatrix}$, then $adj A = ?$</div>
+                <div class="step">Swap diagonal elements (1 and -1), flip signs of (-2 and 2).<br><strong>Answer:</strong> $adj A = \begin{bmatrix} -1 & 2 \\ -2 & 1 \end{bmatrix}$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Inverse of 3x3 (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Find $A^{-1}$ for $A = \begin{bmatrix} 3 & -1 & 2 \\ 4 & 1 & -1 \\ 5 & 0 & 1 \end{bmatrix}$.</div>
+                <div class="step">Step 1: Determinant $|A| = 3(1-0) - (-1)(4-(-5)) + 2(0-5) = 3 + 9 - 10 = 2$.</div>
+                <div class="step">Step 2: Cofactor Matrix = $\begin{bmatrix} 1 & -9 & -5 \\ 1 & -7 & -5 \\ -1 & 11 & 7 \end{bmatrix}$.</div>
+                <div class="step">Step 3: Transpose to get $adj A = \begin{bmatrix} 1 & 1 & -1 \\ -9 & -7 & 11 \\ -5 & -5 & 7 \end{bmatrix}$.<br><strong>Answer:</strong> $A^{-1} = \frac{1}{2} \begin{bmatrix} 1 & 1 & -1 \\ -9 & -7 & 11 \\ -5 & -5 & 7 \end{bmatrix}$.</div>
+            </details>
+        </div>
+
+        <div class="card">
+            <h2>1.6 Solution of Simultaneous Linear Equations</h2>
+            <span class="bilingual">શ્રેણિકની મદદથી સમીકરણો ઉકેલવા: $AX = K \Rightarrow X = A^{-1}K$</span>
+
+            <details class="example-details"><summary>✍️ Example 1: Matrix Method (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Solve using matrices: $3x - 2y = 8$ and $5x + 4y = 6$.</div>
+                <div class="step">Form $AX=K \Rightarrow A = \begin{bmatrix} 3 & -2 \\ 5 & 4 \end{bmatrix}, K = \begin{bmatrix} 8 \\ 6 \end{bmatrix}$.</div>
+                <div class="step">$|A| = 22$. $adj A = \begin{bmatrix} 4 & 2 \\ -5 & 3 \end{bmatrix}$. $A^{-1} = \frac{1}{22} \begin{bmatrix} 4 & 2 \\ -5 & 3 \end{bmatrix}$.</div>
+                <div class="step">$X = A^{-1}K = \frac{1}{22} \begin{bmatrix} 32+12 \\ -40+18 \end{bmatrix} = \frac{1}{22} \begin{bmatrix} 44 \\ -22 \end{bmatrix}$.<br><strong>Answer:</strong> $x=2, y=-1$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 2: Matrix Method (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Solve $2x + 3y = 8$ and $3x + 4y = 11$.</div>
+                <div class="step">Form $A = \begin{bmatrix} 2 & 3 \\ 3 & 4 \end{bmatrix}, K = \begin{bmatrix} 8 \\ 11 \end{bmatrix}$.</div>
+                <div class="step">$|A| = (8 - 9) = -1$. $A^{-1} = \frac{1}{-1} \begin{bmatrix} 4 & -3 \\ -3 & 2 \end{bmatrix} = \begin{bmatrix} -4 & 3 \\ 3 & -2 \end{bmatrix}$.</div>
+                <div class="step">$X = \begin{bmatrix} -4 & 3 \\ 3 & -2 \end{bmatrix} \begin{bmatrix} 8 \\ 11 \end{bmatrix} = \begin{bmatrix} -32+33 \\ 24-22 \end{bmatrix} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$.<br><strong>Answer:</strong> $x=1, y=2$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 3: Matrix Method (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Solve $3x + 2y = 5$ and $2x - y = 1$.</div>
+                <div class="step">Form $A = \begin{bmatrix} 3 & 2 \\ 2 & -1 \end{bmatrix}, K = \begin{bmatrix} 5 \\ 1 \end{bmatrix}$.</div>
+                <div class="step">$|A| = (-3 - 4) = -7$. $A^{-1} = \frac{1}{-7} \begin{bmatrix} -1 & -2 \\ -2 & 3 \end{bmatrix}$.</div>
+                <div class="step">$X = \frac{1}{-7} \begin{bmatrix} -1 & -2 \\ -2 & 3 \end{bmatrix} \begin{bmatrix} 5 \\ 1 \end{bmatrix} = \frac{1}{-7} \begin{bmatrix} -7 \\ -7 \end{bmatrix} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$.<br><strong>Answer:</strong> $x=1, y=1$.</div>
+            </details>
+
+            <details class="example-details"><summary>✍️ Example 4: Arranging Equations (Click to view)</summary>
+                <div class="step"><strong>Question:</strong> Solve $2y + 5x = 4$ and $7x + 3y = 5$.</div>
+                <div class="step">Rewrite properly: $5x + 2y = 4$ and $7x + 3y = 5$.<br>$A = \begin{bmatrix} 5 & 2 \\ 7 & 3 \end{bmatrix}, K = \begin{bmatrix} 4 \\ 5 \end{bmatrix}$.</div>
+                <div class="step">$|A| = 15 - 14 = 1$. $A^{-1} = \begin{bmatrix} 3 & -2 \\ -7 & 5 \end{bmatrix}$.</div>
+                <div class="step">$X = \begin{bmatrix} 3 & -2 \\ -7 & 5 \end{bmatrix} \begin{bmatrix} 4 \\ 5 \end{bmatrix} = \begin{bmatrix} 12-10 \\ -28+25 \end{bmatrix} = \begin{bmatrix} 2 \\ -3 \end{bmatrix}$.<br><strong>Answer:</strong> $x=2, y=-3$.</div>
+            </details>
+        </div>
+
+        <div class="lab-section" id="interactive-lab">
+            <h2>🚀 The Matrix Master Lab (સ્ટેપ-બાય-સ્ટેપ કેલ્ક્યુલેટર)</h2>
+            <p>Select dimensions, enter numbers, and get detailed step-by-step solutions! / કક્ષા પસંદ કરો, સંખ્યા દાખલ કરો અને સ્ટેપ-બાય-સ્ટેપ ઉકેલ મેળવો!</p>
+            
+            <div class="controls-panel">
+                <div>
+                    <label><strong>Matrix A:</strong></label>
+                    <select id="a-rows" onchange="buildGrids()"><option value="1">1 Row</option><option value="2" selected>2 Rows</option><option value="3">3 Rows</option></select> × 
+                    <select id="a-cols" onchange="buildGrids()"><option value="1">1 Col</option><option value="2" selected>2 Cols</option><option value="3">3 Cols</option></select>
+                </div>
+                <div>
+                    <label><strong>Matrix B:</strong></label>
+                    <select id="b-rows" onchange="buildGrids()"><option value="1">1 Row</option><option value="2" selected>2 Rows</option><option value="3">3 Rows</option></select> × 
+                    <select id="b-cols" onchange="buildGrids()"><option value="1">1 Col</option><option value="2" selected>2 Cols</option><option value="3">3 Cols</option></select>
+                </div>
+            </div>
+
+            <div class="workspaces">
+                <div>
+                    <h3 style="color:#43C6AC">Matrix A</h3>
+                    <div id="grid-a" class="matrix-grid"></div>
+                </div>
+                <div>
+                    <h3 style="color:#FF6584">Matrix B</h3>
+                    <div id="grid-b" class="matrix-grid"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="calculate('add')">A + B (સરવાળો)</button>
+                <button onclick="calculate('sub')">A - B (બાદબાકી)</button>
+                <button class="secondary" onclick="calculate('mulAB')">A × B (ગુણાકાર)</button>
+                <button class="secondary" onclick="calculate('mulBA')">B × A (ગુણાકાર)</button>
+                <button onclick="calculate('transA')">$A^T$ (પરિવર્ત)</button>
+                <button onclick="calculate('detA')">$|A|$ (નિશ્ચાયક)</button>
+                <button class="secondary" onclick="calculate('adjA')">$adj A$ (સહઅવયવજ)</button>
+                <button class="secondary" onclick="calculate('invA')">$A^{-1}$ (વ્યસ્ત)</button>
+            </div>
+
+            <div id="result-display">Select an operation above to see the step-by-step solution here! / ઉકેલ જોવા માટે ઉપરનું કોઈપણ બટન દબાવો.</div>
+            
+            <div class="eq-solver">
+                <h2 style="border:none; margin-top:0;">📝 Linear Equation Solver (સુરેખ સમીકરણ ઉકેલ)</h2>
+                <p>Enter your pair of linear equations / સમીકરણો દાખલ કરો:</p>
+                <div class="eq-row">
+                    Equation 1: <input type="number" id="eq1_a" class="eq-input" value="3"> $x +$ 
+                    <input type="number" id="eq1_b" class="eq-input" value="-2"> $y =$ 
+                    <input type="number" id="eq1_c" class="eq-input" value="8">
+                </div>
+                <div class="eq-row">
+                    Equation 2: <input type="number" id="eq2_a" class="eq-input" value="5"> $x +$ 
+                    <input type="number" id="eq2_b" class="eq-input" value="4"> $y =$ 
+                    <input type="number" id="eq2_c" class="eq-input" value="6">
+                </div>
+                <button onclick="solveEquations()" style="margin-top:10px;">Solve Step-by-Step (ઉકેલો)</button>
+                
+                <div id="eq-result-display" style="margin-top: 20px;">Equation solution will appear here...</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+<footer class="page-footer">
+    <div class="visit-counter" style="margin-bottom: 5px;">
+        This Page Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2Fmatrices&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+    </div>
+
+    <div class="visit-counter" style="margin-bottom: 15px;">
+        Total Site Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+    </div>
+    
+    <div class="copyright">
+        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+    </div>
+</footer>
+    <script>
+        // Global Page Visit Counter Logic
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const namespace = 'bhavin-matrix-unit1'; // Unique namespace for your page
+            const key = 'visits';
+            
+            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visit-count').innerText = data.count;
+                })
+                .catch(error => {
+                    console.error('Error fetching global counter:', error);
+                    document.getElementById('visit-count').innerText = '1+'; // Fallback display
+                });
+        });
+
+        // Initialize dynamic grids
+        window.onload = function() {
+            buildGrids();
+        };
+
+        function buildGrids() {
+            createGrid('a'); createGrid('b');
+        }
+
+        function createGrid(name) {
+            const r = parseInt(document.getElementById(`${name}-rows`).value);
+            const c = parseInt(document.getElementById(`${name}-cols`).value);
+            const container = document.getElementById(`grid-${name}`);
+            container.style.gridTemplateColumns = `repeat(${c}, 55px)`;
+            container.innerHTML = '';
+            for (let i = 0; i < r; i++) {
+                for (let j = 0; j < c; j++) {
+                    let inp = document.createElement('input');
+                    inp.type = 'number'; inp.className = 'cell'; inp.id = `mat_${name}_${i}_${j}`;
+                    inp.value = (i === j) ? 1 : Math.floor(Math.random() * 5); // Add some numbers
+                    container.appendChild(inp);
+                }
+            }
+        }
+
+        function getMatrixData(name) {
+            const r = parseInt(document.getElementById(`${name}-rows`).value);
+            const c = parseInt(document.getElementById(`${name}-cols`).value);
+            let mat = [];
+            for (let i = 0; i < r; i++) {
+                let row = [];
+                for (let j = 0; j < c; j++) {
+                    row.push(parseFloat(document.getElementById(`mat_${name}_${i}_${j}`).value) || 0);
+                }
+                mat.push(row);
+            }
+            return mat;
+        }
+
+        function renderOutput(html, targetId = 'result-display') {
+            const display = document.getElementById(targetId);
+            display.innerHTML = html;
+            MathJax.typesetPromise([display]);
+        }
+
+        function formatLatex(mat) {
+            let tex = '\\begin{bmatrix} ';
+            for (let r = 0; r < mat.length; r++) {
+                tex += mat[r].map(n => Number.isInteger(n) ? n : n.toFixed(2)).join(' & ');
+                if (r < mat.length - 1) tex += ' \\\\ ';
+            }
+            tex += ' \\end{bmatrix}';
+            return tex;
+        }
+
+        function getDet(m) {
+            if (m.length !== m[0].length) return null;
+            if (m.length === 1) return m[0][0];
+            if (m.length === 2) return (m[0][0]*m[1][1]) - (m[0][1]*m[1][0]);
+            if (m.length === 3) {
+                return m[0][0]*(m[1][1]*m[2][2] - m[1][2]*m[2][1]) - m[0][1]*(m[1][0]*m[2][2] - m[1][2]*m[2][0]) + m[0][2]*(m[1][0]*m[2][1] - m[1][1]*m[2][0]);
+            }
+            return null;
+        }
+
+        function getAdjoint(m) {
+            if (m.length === 1) return [[1]];
+            if (m.length === 2) return [[m[1][1], -m[0][1]], [-m[1][0], m[0][0]]];
+            if (m.length === 3) {
+                return [
+                    [ (m[1][1]*m[2][2]-m[1][2]*m[2][1]), -(m[0][1]*m[2][2]-m[0][2]*m[2][1]),  (m[0][1]*m[1][2]-m[0][2]*m[1][1]) ],
+                    [-(m[1][0]*m[2][2]-m[1][2]*m[2][0]),  (m[0][0]*m[2][2]-m[0][2]*m[2][0]), -(m[0][0]*m[1][2]-m[0][2]*m[1][0]) ],
+                    [ (m[1][0]*m[2][1]-m[1][1]*m[2][0]), -(m[0][0]*m[2][1]-m[0][1]*m[2][0]),  (m[0][0]*m[1][1]-m[0][1]*m[1][0]) ]
+                ];
+            }
+        }
+
+        // STEP BY STEP MATH GENERATOR
+        function calculate(op) {
+            const A = getMatrixData('a');
+            const B = getMatrixData('b');
+            let steps = [];
+
+            try {
+                if (op === 'add' || op === 'sub') {
+                    if (A.length !== B.length || A[0].length !== B[0].length) {
+                        return renderOutput("<span style='color:#FF6584'>Error: Matrices must have the exact same order for Addition/Subtraction.<br>ભૂલ: સરવાળા/બાદબાકી માટે શ્રેણિકની કક્ષા સમાન હોવી જોઈએ.</span>");
+                    }
+                    steps.push(`<b>Step 1 (પગલું ૧):</b> Write matrices and ${op==='add'?'add':'subtract'} corresponding elements.<br>અનુરૂપ ઘટકોનો ${op==='add'?'સરવાળો':'બાદબાકી'} કરો.`);
+                    
+                    let stepTex = '\\begin{bmatrix} ';
+                    let res = [];
+                    for (let r = 0; r < A.length; r++) {
+                        let rowSteps = []; let resRow = [];
+                        for (let c = 0; c < A[0].length; c++) {
+                            let sign = op === 'add' ? '+' : '-';
+                            let bVal = B[r][c] < 0 && op==='add' ? `(${B[r][c]})` : B[r][c];
+                            rowSteps.push(`${A[r][c]} ${sign} ${bVal}`);
+                            resRow.push(op === 'add' ? A[r][c] + B[r][c] : A[r][c] - B[r][c]);
+                        }
+                        stepTex += rowSteps.join(' & ') + ' \\\\ ';
+                        res.push(resRow);
+                    }
+                    stepTex += '\\end{bmatrix}';
+                    
+                    steps.push(`\\[ A ${op==='add'?'+':'-'} B = ${stepTex} \\]`);
+                    steps.push(`<b>Step 2 (પગલું ૨):</b> Final Matrix (અંતિમ જવાબ):`);
+                    steps.push(`\\[ ${formatLatex(res)} \\]`);
+                } 
+                else if (op === 'mulAB' || op === 'mulBA') {
+                    let M1 = op === 'mulAB' ? A : B;
+                    let M2 = op === 'mulAB' ? B : A;
+                    let nameStr = op === 'mulAB' ? "A \\times B" : "B \\times A";
+                    
+                    if (M1[0].length !== M2.length) {
+                        return renderOutput(`<span style='color:#FF6584'>Error: Columns of first matrix must equal Rows of second matrix!<br>ભૂલ: પ્રથમ શ્રેણિકના સ્તંભ અને બીજા શ્રેણિકની હાર સમાન હોવી જોઈએ.</span>`);
+                    }
+                    
+                    steps.push(`<b>Step 1 (પગલું ૧):</b> Multiply rows of 1st matrix by columns of 2nd matrix.<br>પ્રથમ શ્રેણિકની હારનો બીજા શ્રેણિકના સ્તંભ સાથે ગુણાકાર કરો.`);
+                    
+                    let stepTex = '\\begin{bmatrix} ';
+                    let res = [];
+                    for (let r = 0; r < M1.length; r++) {
+                        let rowSteps = []; res[r] = [];
+                        for (let c = 0; c < M2[0].length; c++) {
+                            let cellMath = []; let sum = 0;
+                            for (let k = 0; k < M1[0].length; k++) {
+                                cellMath.push(`(${M1[r][k]}\\times${M2[k][c]})`);
+                                sum += M1[r][k] * M2[k][c];
+                            }
+                            rowSteps.push(cellMath.join('+'));
+                            res[r].push(sum);
+                        }
+                        stepTex += rowSteps.join(' & ') + ' \\\\ ';
+                    }
+                    stepTex += '\\end{bmatrix}';
+                    
+                    steps.push(`\\[ ${nameStr} = ${stepTex} \\]`);
+                    steps.push(`<b>Step 2 (પગલું ૨):</b> Simplify (સાદુંરૂપ આપો):`);
+                    steps.push(`\\[ ${nameStr} = ${formatLatex(res)} \\]`);
+                }
+                else if (op === 'transA') {
+                    steps.push(`<b>Step 1 (પગલું ૧):</b> Convert all rows into corresponding columns.<br>તમામ હારને અનુરૂપ સ્તંભમાં ફેરવો.`);
+                    let res = [];
+                    for (let c = 0; c < A[0].length; c++) {
+                        let row = []; for (let r = 0; r < A.length; r++) row.push(A[r][c]);
+                        res.push(row);
+                    }
+                    steps.push(`\\[ A^T = ${formatLatex(res)} \\]`);
+                }
+                else if (op === 'detA') {
+                    if (A.length !== A[0].length) return renderOutput("<span style='color:#FF6584'>Error: Not a Square Matrix.<br>ભૂલ: આ ચોરસ શ્રેણિક નથી.</span>");
+                    steps.push(`<b>Step 1 (પગલું ૧):</b> Calculate determinant formula.<br>નિશ્ચાયકનું સૂત્ર લાગુ કરો.`);
+                    
+                    if (A.length === 1) {
+                        steps.push(`\\[ |A| = ${A[0][0]} \\]`);
+                    } else if (A.length === 2) {
+                        steps.push(`\\[ |A| = (${A[0][0]} \\times ${A[1][1]}) - (${A[0][1]} \\times ${A[1][0]}) \\]`);
+                        steps.push(`\\[ |A| = (${A[0][0]*A[1][1]}) - (${A[0][1]*A[1][0]}) = ${getDet(A)} \\]`);
+                    } else if (A.length === 3) {
+                        let t1 = `${A[0][0]}[(${A[1][1]}\\times${A[2][2]}) - (${A[1][2]}\\times${A[2][1]})]`;
+                        let t2 = `${A[0][1]}[(${A[1][0]}\\times${A[2][2]}) - (${A[1][2]}\\times${A[2][0]})]`;
+                        let t3 = `${A[0][2]}[(${A[1][0]}\\times${A[2][1]}) - (${A[1][1]}\\times${A[2][0]})]`;
+                        steps.push(`\\[ |A| = ${t1} - ${t2} + ${t3} \\]`);
+                        steps.push(`\\[ |A| = ${getDet(A)} \\]`);
+                    }
+                }
+                else if (op === 'adjA') {
+                    if (A.length !== A[0].length) return renderOutput("<span style='color:#FF6584'>Error: Square Matrix required.</span>");
+                    let adj = getAdjoint(A);
+                    
+                    if (A.length === 2) {
+                        steps.push(`<b>Step 1 (પગલું ૧):</b> For 2x2, swap principal diagonal elements and change signs of the other diagonal.<br>મુખ્ય વિકર્ણના ઘટકો બદલો, અને બાકીના ચિહ્નો બદલો.`);
+                        steps.push(`\\[ adj A = ${formatLatex(adj)} \\]`);
+                    } 
+                    else if (A.length === 3) {
+                        steps.push(`<b>Step 1 (પગલું ૧):</b> Calculate the Cofactors for each element (દરેક ઘટકના સહઅવયવ શોધો).`);
+                        
+                        let c11 = (A[1][1]*A[2][2]) - (A[1][2]*A[2][1]);
+                        let c12 = -((A[1][0]*A[2][2]) - (A[1][2]*A[2][0]));
+                        let c13 = (A[1][0]*A[2][1]) - (A[1][1]*A[2][0]);
+                        let c21 = -((A[0][1]*A[2][2]) - (A[0][2]*A[2][1]));
+                        let c22 = (A[0][0]*A[2][2]) - (A[0][2]*A[2][0]);
+                        let c23 = -((A[0][0]*A[2][1]) - (A[0][1]*A[2][0]));
+                        let c31 = (A[0][1]*A[1][2]) - (A[0][2]*A[1][1]);
+                        let c32 = -((A[0][0]*A[1][2]) - (A[0][2]*A[1][0]));
+                        let c33 = (A[0][0]*A[1][1]) - (A[0][1]*A[1][0]);
+
+                        let cofMat = [
+                            [c11, c12, c13],
+                            [c21, c22, c23],
+                            [c31, c32, c33]
+                        ];
+
+                        let htmlMinors = `<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; font-size: 1rem; background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 15px 0;">`;
+                        htmlMinors += `<div>$C_{11} = +(${A[1][1]}\\times${A[2][2]} - ${A[1][2]}\\times${A[2][1]}) = ${c11}$</div>`;
+                        htmlMinors += `<div>$C_{12} = -(${A[1][0]}\\times${A[2][2]} - ${A[1][2]}\\times${A[2][0]}) = ${c12}$</div>`;
+                        htmlMinors += `<div>$C_{13} = +(${A[1][0]}\\times${A[2][1]} - ${A[1][1]}\\times${A[2][0]}) = ${c13}$</div>`;
+                        htmlMinors += `<div>$C_{21} = -(${A[0][1]}\\times${A[2][2]} - ${A[0][2]}\\times${A[2][1]}) = ${c21}$</div>`;
+                        htmlMinors += `<div>$C_{22} = +(${A[0][0]}\\times${A[2][2]} - ${A[0][2]}\\times${A[2][0]}) = ${c22}$</div>`;
+                        htmlMinors += `<div>$C_{23} = -(${A[0][0]}\\times${A[2][1]} - ${A[0][1]}\\times${A[2][0]}) = ${c23}$</div>`;
+                        htmlMinors += `<div>$C_{31} = +(${A[0][1]}\\times${A[1][2]} - ${A[0][2]}\\times${A[1][1]}) = ${c31}$</div>`;
+                        htmlMinors += `<div>$C_{32} = -(${A[0][0]}\\times${A[1][2]} - ${A[0][2]}\\times${A[1][0]}) = ${c32}$</div>`;
+                        htmlMinors += `<div>$C_{33} = +(${A[0][0]}\\times${A[1][1]} - ${A[0][1]}\\times${A[1][0]}) = ${c33}$</div>`;
+                        htmlMinors += `</div>`;
+                        
+                        steps.push(htmlMinors);
+                        steps.push(`<b>Step 2 (પગલું ૨):</b> Form Cofactor Matrix (સહઅવયવજ શ્રેણિક બનાવો).`);
+                        steps.push(`\\[ C = ${formatLatex(cofMat)} \\]`);
+                        steps.push(`<b>Step 3 (પગલું ૩):</b> Transpose the matrix to get Adjoint $C^T$ (પરિવર્ત કરો).`);
+                        steps.push(`\\[ adj A = ${formatLatex(adj)} \\]`);
+                    } else {
+                        steps.push(`\\[ adj A = ${formatLatex(adj)} \\]`);
+                    }
+                }
+                else if (op === 'invA') {
+                    let det = getDet(A);
+                    if (det === null) return renderOutput("<span style='color:#FF6584'>Error: Inverse is only for Square Matrices!<br>ભૂલ: ચોરસ શ્રેણિક જરૂરી છે.</span>");
+                    
+                    steps.push(`<b>Step 1 (પગલું ૧):</b> Find Determinant $|A|$.<br>નિશ્ચાયક $|A|$ શોધો.`);
+                    steps.push(`\\[ |A| = ${det} \\]`);
+                    
+                    if (det === 0) {
+                        steps.push(`<span style='color:#FF6584'>Since $|A| = 0$, Matrix is Singular. Inverse does not exist!<br>શૂન્ય હોવાથી વ્યસ્ત શ્રેણિક શક્ય નથી.</span>`);
+                    } else {
+                        let adj = getAdjoint(A);
+                        steps.push(`<b>Step 2 (પગલું ૨):</b> Find Adjoint $adj A$.<br>સહઅવયવજ $adj A$ શોધો.`);
+                        steps.push(`\\[ adj A = ${formatLatex(adj)} \\]`);
+                        steps.push(`<b>Step 3 (પગલું ૩):</b> Use formula $A^{-1} = \\frac{1}{|A|} adj A$.<br>સૂત્રનો ઉપયોગ કરો.`);
+                        steps.push(`\\[ A^{-1} = \\frac{1}{${det}} ${formatLatex(adj)} \\]`);
+                    }
+                }
+                
+                renderOutput(steps.join('<br>'));
+            } catch (e) {
+                renderOutput("An error occurred. Check inputs.");
+            }
+        }
+
+        // Equation Solver Logic
+        function solveEquations() {
+            let steps = [];
+            let a1 = parseFloat(document.getElementById('eq1_a').value);
+            let b1 = parseFloat(document.getElementById('eq1_b').value);
+            let c1 = parseFloat(document.getElementById('eq1_c').value);
+            let a2 = parseFloat(document.getElementById('eq2_a').value);
+            let b2 = parseFloat(document.getElementById('eq2_b').value);
+            let c2 = parseFloat(document.getElementById('eq2_c').value);
+
+            let A = [[a1, b1], [a2, b2]];
+            let K = [[c1], [c2]];
+
+            steps.push(`<b>Step 1 (પગલું ૧):</b> Write in Matrix Form $AX = K$.<br>શ્રેણિક સ્વરૂપમાં લખો.`);
+            steps.push(`\\[ A = ${formatLatex(A)}, X = \\begin{bmatrix} x \\\\ y \\end{bmatrix}, K = ${formatLatex(K)} \\]`);
+            
+            let detA = getDet(A);
+            steps.push(`<b>Step 2 (પગલું ૨):</b> Find Determinant $|A|$.<br>નિશ્ચાયક શોધો.`);
+            steps.push(`\\[ |A| = (${a1})(${b2}) - (${b1})(${a2}) = ${detA} \\]`);
+
+            if(detA === 0) {
+                steps.push(`<strong style="color:red">No unique solution exists since $|A| = 0$. (ઉકેલ શક્ય નથી)</strong>`);
+                return renderOutput(steps.join('<br>'), 'eq-result-display');
+            }
+
+            let adjA = getAdjoint(A);
+            steps.push(`<b>Step 3 (પગલું ૩):</b> Find $adj A$ and $A^{-1}$.<br>સહઅવયવજ અને વ્યસ્ત શોધો.`);
+            steps.push(`\\[ adj A = ${formatLatex(adjA)} \\]`);
+            steps.push(`\\[ A^{-1} = \\frac{1}{${detA}} ${formatLatex(adjA)} \\]`);
+
+            steps.push(`<b>Step 4 (પગલું ૪):</b> Multiply $X = A^{-1}K$.<br>ગુણાકાર કરો.`);
+            
+            let r1 = (adjA[0][0]*c1) + (adjA[0][1]*c2);
+            let r2 = (adjA[1][0]*c1) + (adjA[1][1]*c2);
+
+            steps.push(`\\[ X = \\frac{1}{${detA}} ${formatLatex(adjA)} ${formatLatex(K)} = \\frac{1}{${detA}} \\begin{bmatrix} (${adjA[0][0]}\\times${c1}) + (${adjA[0][1]}\\times${c2}) \\\\ (${adjA[1][0]}\\times${c1}) + (${adjA[1][1]}\\times${c2}) \\end{bmatrix} \\]`);
+            
+            steps.push(`\\[ X = \\frac{1}{${detA}} \\begin{bmatrix} ${r1} \\\\ ${r2} \\end{bmatrix} = \\begin{bmatrix} ${r1/detA} \\\\ ${r2/detA} \\end{bmatrix} \\]`);
+
+            steps.push(`<b>Final Answer (અંતિમ જવાબ):</b>`);
+            steps.push(`\\[ x = ${r1/detA}, \\quad y = ${r2/detA} \\]`);
+
+            renderOutput(steps.join('<br>'), 'eq-result-display');
+        }
+    </script>
+</body>
+</html>

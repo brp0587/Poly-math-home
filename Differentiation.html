@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Differentiation & Its Applications | વિકલન અને તેના ઉપયોગો</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+       <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
+        };
+    </script>
+
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-light: #60A5FA;
+            --secondary: #DB2777;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --gujarati-color: #047857;
+            --accent-bg: #EFF6FF;
+            --table-border: #E2E8F0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        .gu { font-family: 'Hind Vadodara', sans-serif; color: var(--gujarati-color); font-size: 1.1em; display: block; margin-top: 4px; }
+        .inline-gu { font-family: 'Hind Vadodara', sans-serif; color: var(--gujarati-color); }
+
+        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 3rem 1rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; flex: 1; }
+        
+        .card { background: var(--card-bg); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--primary); }
+        .card h2 { color: var(--primary); margin-bottom: 1rem; border-bottom: 2px solid var(--accent-bg); padding-bottom: 0.5rem; }
+        
+        .formula-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .formula-table th, .formula-table td { border: 1px solid var(--table-border); padding: 12px; text-align: left; }
+        .formula-table th { background-color: var(--accent-bg); color: var(--primary); }
+        
+        .example-box { background: #FDF2F8; border-left: 4px solid var(--secondary); padding: 1.5rem; margin-top: 1.5rem; border-radius: 0 8px 8px 0; }
+        .example-box h4 { color: var(--secondary); margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .example-box p { margin-bottom: 0.5rem; }
+        .step { padding-left: 1rem; border-left: 2px solid #E5E7EB; margin-bottom: 0.5rem; }
+
+        /* Interactive Lab Styles */
+        .interactive-lab { background: #1E293B; color: white; border-top: 5px solid #10B981; }
+        .interactive-lab h2 { color: #10B981; border-bottom-color: #334155; }
+        .interactive-lab .gu { color: #34D399; }
+        
+        .lab-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+        .lab-panel { background: #0F172A; padding: 2rem; border-radius: 8px; border: 1px solid #334155; margin-top: 1rem; }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; color: #CBD5E1; }
+        .input-group input { width: 100%; padding: 1rem; border-radius: 6px; border: 1px solid #475569; background: #1E293B; color: white; font-size: 1.2rem; font-family: monospace; }
+        
+        .coeff-inputs { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; font-size: 1.1rem; }
+        .coeff-inputs input[type="number"] { width: 70px; padding: 0.5rem; border-radius: 4px; border: 1px solid #4B5563; background: #374151; color: white; font-family: inherit; }
+
+        button { background: #10B981; color: white; border: none; padding: 1rem 2rem; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; width: 100%; }
+        button:hover { background: #059669; }
+        .btn-secondary { background: var(--primary); }
+        .btn-secondary:hover { background: #4338CA; }
+
+        .lab-output { margin-top: 2rem; padding: 1.5rem; background: #F8FAFC; color: #0F172A; border-radius: 8px; display: none; overflow-x: auto; border-left: 5px solid #10B981;}
+        .lab-output .step { border-left-color: #93C5FD; }
+
+        select.mode-selector { width: 100%; padding: 1rem; border-radius: 6px; background: #1E293B; color: white; border: 1px solid #3B82F6; margin-bottom: 1.5rem; font-size: 1.1rem; font-family: 'Poppins', sans-serif; cursor: pointer; }
+        
+        /* Footer Styles */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: #0F172A;
+            color: #9CA3AF;
+            border-top: 4px solid var(--primary);
+            font-size: 0.95rem;
+            margin-top: 2rem;
+        }
+        .page-footer .counter {
+            display: flex;
+            align-items: center;
+        }
+        .page-footer .counter-badge {
+            background: #3B82F6;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-left: 8px;
+            letter-spacing: 1px;
+        }
+        .page-footer .credits {
+            text-align: right;
+            line-height: 1.5;
+        }
+        .page-footer strong {
+            color: #F8FAFC;
+        }
+
+        @media (max-width: 768px) { 
+            .lab-container { grid-template-columns: 1fr; } 
+            .page-footer { flex-direction: column; gap: 1rem; text-align: center; }
+            .page-footer .credits { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>Advanced Differentiation & Applications</h1>
+        <p>Comprehensive Study Guide & Step-by-Step Calculator</p>
+        <div class="gu">વિકલન અને તેના ઉપયોગો - સંપૂર્ણ માર્ગદર્શિકા</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <h2>Standard Formulas of Derivatives <br><span class="gu">વિકલિતના પ્રમાણિત સૂત્રો</span></h2>
+            <p>Here are the standard derivative rules based on the syllabus. <em>Note: Typographical errors in the original study material for inverse trigonometric functions have been corrected to reflect true mathematical formulas.</em></p>
+            <table class="formula-table">
+                <thead>
+                    <tr>
+                        <th>Function $y = f(x)$ <span class="inline-gu">(વિધેય)</span></th>
+                        <th>Derivative $\frac{dy}{dx} = f'(x)$ <span class="inline-gu">(વિકલિત)</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>$k$ (where $k$ is constant / જ્યાં $k$ અચળ છે)</td><td>$0$</td></tr>
+                    <tr><td>$x$</td><td>$1$</td></tr>
+                    <tr><td>$k \cdot x$ (where $k$ is constant)</td><td>$k$</td></tr>
+                    <tr><td>$x^n$</td><td>$n \cdot x^{n-1}$</td></tr>
+                    <tr><td>$\frac{1}{x}$</td><td>$-\frac{1}{x^2}$</td></tr>
+                    <tr><td>$\sqrt{x}$</td><td>$\frac{1}{2\sqrt{x}}$</td></tr>
+                    <tr><td>$e^x$</td><td>$e^x$</td></tr>
+                    <tr><td>$a^x \quad (a > 0)$</td><td>$a^x \log_e a$</td></tr>
+                    <tr><td>$\log_e x$ or $\ln x$</td><td>$\frac{1}{x}$</td></tr>
+                    <tr><td>$\sin x$</td><td>$\cos x$</td></tr>
+                    <tr><td>$\cos x$</td><td>$-\sin x$</td></tr>
+                    <tr><td>$\tan x$</td><td>$\sec^2 x$</td></tr>
+                    <tr><td>$\cot x$</td><td>$-\csc^2 x$</td></tr>
+                    <tr><td>$\sec x$</td><td>$\sec x \tan x$</td></tr>
+                    <tr><td>$\csc x$</td><td>$-\csc x \cot x$</td></tr>
+                    <tr><td>$\sin^{-1} x$</td><td>$\frac{1}{\sqrt{1-x^2}}$</td></tr>
+                    <tr><td>$\cos^{-1} x$</td><td>$-\frac{1}{\sqrt{1-x^2}}$</td></tr>
+                    <tr><td>$\tan^{-1} x$</td><td>$\frac{1}{1+x^2}$</td></tr>
+                    <tr><td>$\cot^{-1} x$</td><td>$-\frac{1}{1+x^2}$</td></tr>
+                    <tr><td>$\sec^{-1} x$</td><td>$\frac{1}{|x|\sqrt{x^2-1}}$</td></tr>
+                    <tr><td>$\csc^{-1} x$</td><td>$-\frac{1}{|x|\sqrt{x^2-1}}$</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>1. Derivative using Definition (First Principle) <br><span class="gu">વ્યાખ્યાની મદદથી વિકલન (પ્રથમ સિદ્ધાંત)</span></h2>
+            <p>$$ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} $$</p>
+<div style="background-color: #EFF6FF; border: 1px solid #BFDBFE; padding: 18px 25px; border-radius: 8px; margin: 2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+    <div style="flex: 1; min-width: 250px;">
+        <strong style="color: #1E3A8A; font-size: 1.1rem; display: flex; align-items: center;">
+            <span style="margin-right: 8px;">⚠️</span> Need a quick review? (પુનરાવર્તનની જરૂર છે?)
+        </strong>
+        <p style="color: #3B82F6; font-size: 0.95rem; margin: 5px 0 0 0; line-height: 1.5;">
+            Derivatives use a lot of Trigonometry and Limit rules. Brush up on your basics before solving these! <br>
+            <span class="gu" style="color: #047857; margin-top: 2px;">વિકલનમાં ત્રિકોણમિતિ અને લક્ષ ના નિયમો મોટા પ્રમાણમાં વપરાય છે. પહેલા પાયાનું જ્ઞાન તાજું કરો!</span>
+        </p>
+    </div>
+    <a href="https://brp0587.github.io/Prerequisites-for-sem-2-maths/" style="background-color: #2563EB; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; white-space: nowrap; transition: background 0.2s; box-shadow: 0 2px 4px rgba(37,99,235,0.2);">
+        Practice Basics ↺
+    </a>
+</div>
+            <div class="example-box">
+                <h4>Example 1: Find the derivative of $f(x) = x^3$ using definition.</h4>
+                <span class="gu">વ્યાખ્યાની મદદથી $x^3$ નું $x$ સાપેક્ષ વિકલિત શોધો.</span>
+                <div class="step"><strong>Step 1 (Substitute into formula):</strong> $f'(x) = \lim_{h \to 0} \frac{(x+h)^3 - x^3}{h}$</div>
+                <div class="step"><strong>Step 2 (Expand using binomial theorem):</strong> $(x+h)^3 = x^3 + 3x^2h + 3xh^2 + h^3$. Substitute this back: <br> $f'(x) = \lim_{h \to 0} \frac{x^3 + 3x^2h + 3xh^2 + h^3 - x^3}{h}$</div>
+                <div class="step"><strong>Step 3 (Simplify numerator):</strong> Cancel $x^3 - x^3 = 0$. <br> $f'(x) = \lim_{h \to 0} \frac{3x^2h + 3xh^2 + h^3}{h}$</div>
+                <div class="step"><strong>Step 4 (Factor out h):</strong> $f'(x) = \lim_{h \to 0} \frac{h(3x^2 + 3xh + h^2)}{h}$</div>
+                <div class="step"><strong>Step 5 (Apply Limit):</strong> Cancel $h$ and substitute $h=0$. <br> $f'(x) = 3x^2 + 3x(0) + (0)^2 = 3x^2$</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 2: Find the derivative of $f(x) = \sqrt{x}$ using definition.</h4>
+                <span class="gu">વ્યાખ્યાની મદદથી $\sqrt{x}$ નું વિકલન મેળવો.</span>
+                <div class="step"><strong>Step 1 (Formula):</strong> $f'(x) = \lim_{h \to 0} \frac{\sqrt{x+h} - \sqrt{x}}{h}$</div>
+                <div class="step"><strong>Step 2 (Rationalize):</strong> Multiply numerator and denominator by the conjugate $(\sqrt{x+h} + \sqrt{x})$. <br> $f'(x) = \lim_{h \to 0} \frac{(\sqrt{x+h} - \sqrt{x})(\sqrt{x+h} + \sqrt{x})}{h(\sqrt{x+h} + \sqrt{x})}$</div>
+                <div class="step"><strong>Step 3 (Apply difference of squares):</strong> $(a-b)(a+b) = a^2 - b^2$. <br> $f'(x) = \lim_{h \to 0} \frac{(x+h) - x}{h(\sqrt{x+h} + \sqrt{x})}$</div>
+                <div class="step"><strong>Step 4 (Simplify & Limit):</strong> $\lim_{h \to 0} \frac{h}{h(\sqrt{x+h} + \sqrt{x})} = \lim_{h \to 0} \frac{1}{\sqrt{x+h} + \sqrt{x}}$ <br> Substitute $h=0 \implies f'(x) = \frac{1}{\sqrt{x} + \sqrt{x}} = \frac{1}{2\sqrt{x}}$</div>
+            </div>
+            
+            <div class="example-box">
+                <h4>Example 3: Find the derivative of $f(x) = \cos x$ using definition.</h4>
+                <span class="gu">વ્યાખ્યાની મદદથી $y = \cos x$ નું વિકલન શોધો.</span>
+                <div class="step"><strong>Step 1 (Formula):</strong> $f'(x) = \lim_{h \to 0} \frac{\cos(x+h) - \cos x}{h}$</div>
+                <div class="step"><strong>Step 2 (Trig Identity):</strong> Use $\cos C - \cos D = -2\sin\left(\frac{C+D}{2}\right)\sin\left(\frac{C-D}{2}\right)$. Let $C = x+h$, $D = x$. <br> $C+D = 2x+h$, $C-D = h$.</div>
+                <div class="step"><strong>Step 3 (Substitute):</strong> $f'(x) = \lim_{h \to 0} \frac{-2\sin\left(x + \frac{h}{2}\right)\sin\left(\frac{h}{2}\right)}{h}$</div>
+                <div class="step"><strong>Step 4 (Rearrange for standard limit):</strong> Rewrite as $\lim_{h \to 0} \left[ -\sin\left(x + \frac{h}{2}\right) \cdot \frac{\sin(h/2)}{h/2} \right]$</div>
+                <div class="step"><strong>Step 5 (Apply Limit):</strong> Since $\lim_{\theta \to 0} \frac{\sin \theta}{\theta} = 1$, as $h \to 0$, $h/2 \to 0$. <br> $f'(x) = -\sin(x + 0) \cdot 1 = -\sin x$</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. Working Rules & Chain Rule <br><span class="gu">કાર્યકારી નિયમો અને સાંકળ નિયમ</span></h2>
+            <div class="subsection">
+                <p><strong>Chain Rule:</strong> Used for composite functions. If $y$ is a function of $u$, and $u$ is a function of $x$, then $\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$.</p>
+                <span class="gu"><strong>સાંકળ નિયમ:</strong> સંયોજિત વિધેયો માટે. જો $y$ એ $u$ નું વિધેય હોય અને $u$ એ $x$ નું વિધેય હોય, તો $\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$.</span>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 1 (Chain Rule)</h4>
+                <p>If $y = \log(x + \sqrt{x^2 + a^2})$, then find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $y = \log(x + \sqrt{x^2 + a^2})$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Outer function):</strong> Derivative of $\log(u)$ is $\frac{1}{u}$. <br> $\frac{dy}{dx} = \frac{1}{x + \sqrt{x^2 + a^2}} \cdot \frac{d}{dx}(x + \sqrt{x^2 + a^2})$</div>
+                <div class="step"><strong>Step 2 (Inner function):</strong> Differentiate the terms inside. $\frac{d}{dx}(x) = 1$. Using chain rule for the square root: $\frac{d}{dx}((x^2+a^2)^{1/2}) = \frac{1}{2\sqrt{x^2+a^2}} \cdot 2x = \frac{x}{\sqrt{x^2+a^2}}$.</div>
+                <div class="step"><strong>Step 3 (Combine):</strong> $\frac{dy}{dx} = \frac{1}{x + \sqrt{x^2 + a^2}} \cdot \left[1 + \frac{x}{\sqrt{x^2 + a^2}}\right]$</div>
+                <div class="step"><strong>Step 4 (Simplify):</strong> Take LCM inside the bracket: $\frac{\sqrt{x^2 + a^2} + x}{\sqrt{x^2 + a^2}}$. <br> $\frac{dy}{dx} = \frac{1}{(x + \sqrt{x^2 + a^2})} \cdot \frac{(x + \sqrt{x^2 + a^2})}{\sqrt{x^2 + a^2}}$ <br> Cancel the common term. Final Answer: $\frac{1}{\sqrt{x^2 + a^2}}$</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 2 (Chain Rule)</h4>
+                <p>If $y = \log(\sec x + \tan x)$ then find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $y = \log(\sec x + \tan x)$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Outer function):</strong> $\frac{dy}{dx} = \frac{1}{\sec x + \tan x} \cdot \frac{d}{dx}(\sec x + \tan x)$</div>
+                <div class="step"><strong>Step 2 (Inner functions):</strong> $\frac{d}{dx}(\sec x) = \sec x \tan x$ and $\frac{d}{dx}(\tan x) = \sec^2 x$. <br> $\frac{dy}{dx} = \frac{1}{\sec x + \tan x} \cdot (\sec x \tan x + \sec^2 x)$</div>
+                <div class="step"><strong>Step 3 (Factor & Cancel):</strong> Take $\sec x$ common from the numerator: $\sec x(\tan x + \sec x)$. <br> $\frac{dy}{dx} = \frac{\sec x(\tan x + \sec x)}{\sec x + \tan x} = \sec x$</div>
+            </div>
+            
+            <div class="example-box">
+                <h4>Example 3 (Sum & Chain Rules)</h4>
+                <p>If $y = e^{\tan x} + \log(\sin x)$ then find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $y = e^{\tan x} + \log(\sin x)$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Apply Sum Rule):</strong> $\frac{dy}{dx} = \frac{d}{dx}(e^{\tan x}) + \frac{d}{dx}(\log(\sin x))$</div>
+                <div class="step"><strong>Step 2 (Chain Rule on term 1):</strong> $\frac{d}{dx}(e^{\tan x}) = e^{\tan x} \cdot \frac{d}{dx}(\tan x) = e^{\tan x} \sec^2 x$</div>
+                <div class="step"><strong>Step 3 (Chain Rule on term 2):</strong> $\frac{d}{dx}(\log(\sin x)) = \frac{1}{\sin x} \cdot \frac{d}{dx}(\sin x) = \frac{\cos x}{\sin x} = \cot x$</div>
+                <div class="step"><strong>Step 4 (Combine):</strong> Final Answer: $\frac{dy}{dx} = e^{\tan x} \sec^2 x + \cot x$</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>3. Parametric & Logarithmic Differentiation <br><span class="gu">પ્રચલ અને લઘુગણકીય વિધેયોનું વિકલન</span></h2>
+            
+            <div class="subsection">
+                <p><strong>Parametric (પ્રચલ):</strong> When $x$ and $y$ are given in terms of a third variable $t$ or $\theta$. Rule: $\frac{dy}{dx} = \frac{dy/dt}{dx/dt}$.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 1 (Parametric)</h4>
+                <p>If $x = a(t + \sin t)$ and $y = a(1 - \cos t)$, find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $x = a(t + \sin t)$ અને $y = a(1 - \cos t)$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Find dx/dt):</strong> Differentiate $x$ w.r.t $t$. $\frac{dx}{dt} = a(1 + \cos t)$</div>
+                <div class="step"><strong>Step 2 (Find dy/dt):</strong> Differentiate $y$ w.r.t $t$. $\frac{dy}{dt} = a(0 - (-\sin t)) = a \sin t$</div>
+                <div class="step"><strong>Step 3 (Divide):</strong> $\frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{a \sin t}{a(1 + \cos t)} = \frac{\sin t}{1 + \cos t}$</div>
+                <div class="step"><strong>Step 4 (Trig Identity Simplification):</strong> Use $\sin t = 2 \sin(t/2) \cos(t/2)$ and $1 + \cos t = 2 \cos^2(t/2)$. <br> $\frac{dy}{dx} = \frac{2 \sin(t/2) \cos(t/2)}{2 \cos^2(t/2)} = \frac{\sin(t/2)}{\cos(t/2)} = \tan\left(\frac{t}{2}\right)$</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 2 (Parametric)</h4>
+                <p>If $x = 2e^{-t}$ and $y = \frac{1}{2}e^t$, find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $x = 2e^{-t}$ અને $y = \frac{1}{2}e^t$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Find dx/dt):</strong> $\frac{dx}{dt} = 2 \cdot (-1) \cdot e^{-t} = -2e^{-t}$</div>
+                <div class="step"><strong>Step 2 (Find dy/dt):</strong> $\frac{dy}{dt} = \frac{1}{2}e^t$</div>
+                <div class="step"><strong>Step 3 (Divide):</strong> $\frac{dy}{dx} = \frac{\frac{1}{2}e^t}{-2e^{-t}}$</div>
+                <div class="step"><strong>Step 4 (Simplify):</strong> Move $e^{-t}$ to the numerator: $\frac{dy}{dx} = -\frac{1}{4}e^t \cdot e^t = -\frac{1}{4}e^{2t}$</div>
+            </div>
+
+            <div class="subsection" style="margin-top:2rem;">
+                <p><strong>Logarithmic (લઘુગણકીય):</strong> Used when a variable is in the power of another variable (e.g., $y = [f(x)]^{g(x)}$).</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 3 (Logarithmic)</h4>
+                <p>If $y = x^x$ then find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $y = x^x$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Take Log):</strong> Apply natural logarithm to both sides: $\ln y = \ln(x^x) \implies \ln y = x \ln x$</div>
+                <div class="step"><strong>Step 2 (Differentiate implicitly):</strong> Differentiate w.r.t $x$. Left side becomes $\frac{1}{y} \frac{dy}{dx}$. Right side needs Product Rule ($uv' + vu'$).</div>
+                <div class="step"><strong>Step 3 (Product Rule):</strong> $\frac{1}{y} \frac{dy}{dx} = x \cdot \frac{d}{dx}(\ln x) + \ln x \cdot \frac{d}{dx}(x) = x\left(\frac{1}{x}\right) + \ln x(1) = 1 + \ln x$</div>
+                <div class="step"><strong>Step 4 (Isolate dy/dx):</strong> Multiply both sides by $y$. $\frac{dy}{dx} = y(1 + \ln x)$. <br> Replace $y$ with original function: $\frac{dy}{dx} = x^x(1 + \ln x)$</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 4 (Logarithmic)</h4>
+                <p>If $y = (\sin x)^{\tan x}$ then find $\frac{dy}{dx}$.</p>
+                <span class="gu">જો $y = (\sin x)^{\tan x}$ હોય તો $\frac{dy}{dx}$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Take Log):</strong> $\ln y = \tan x \cdot \ln(\sin x)$</div>
+                <div class="step"><strong>Step 2 (Differentiate implicitly):</strong> $\frac{1}{y}\frac{dy}{dx} = \tan x \cdot \frac{d}{dx}(\ln(\sin x)) + \ln(\sin x) \cdot \frac{d}{dx}(\tan x)$</div>
+                <div class="step"><strong>Step 3 (Chain Rule inner terms):</strong> $\frac{d}{dx}(\ln(\sin x)) = \frac{1}{\sin x} \cdot \cos x = \cot x$. <br> $\frac{1}{y}\frac{dy}{dx} = \tan x \cdot \cot x + \ln(\sin x) \cdot \sec^2 x$</div>
+                <div class="step"><strong>Step 4 (Simplify):</strong> Since $\tan x \cdot \cot x = 1$, we get $\frac{1}{y}\frac{dy}{dx} = 1 + \sec^2 x \ln(\sin x)$. <br> Final Answer: $\frac{dy}{dx} = (\sin x)^{\tan x} [1 + \sec^2 x \ln(\sin x)]$</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>4. Successive Differentiation ("Prove That") <br><span class="gu">ઉત્તરોત્તર વિકલન</span></h2>
+            
+            <div class="example-box">
+                <h4>Example 1</h4>
+                <p>If $y = A \cos pt + B \sin pt$, prove that $\frac{d^2y}{dt^2} + p^2y = 0$.</p>
+                <span class="gu">જો $y = A \cos pt + B \sin pt$ હોય તો સાબિત કરો કે $\frac{d^2y}{dt^2} + p^2y = 0$.</span>
+                <div class="step"><strong>Step 1 (First Derivative):</strong> Differentiate w.r.t $t$. <br> $\frac{dy}{dt} = A(-\sin pt \cdot p) + B(\cos pt \cdot p) = -Ap \sin pt + Bp \cos pt$</div>
+                <div class="step"><strong>Step 2 (Second Derivative):</strong> Differentiate again w.r.t $t$. <br> $\frac{d^2y}{dt^2} = -Ap(\cos pt \cdot p) + Bp(-\sin pt \cdot p) = -Ap^2 \cos pt - Bp^2 \sin pt$</div>
+                <div class="step"><strong>Step 3 (Factorize):</strong> Factor out $-p^2$. <br> $\frac{d^2y}{dt^2} = -p^2(A \cos pt + B \sin pt)$</div>
+                <div class="step"><strong>Step 4 (Substitute original y):</strong> Since $y = A \cos pt + B \sin pt$, we get: <br> $\frac{d^2y}{dt^2} = -p^2y \implies \frac{d^2y}{dt^2} + p^2y = 0$. (Proved)</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 2</h4>
+                <p>If $y = 2e^{3x} + 3e^{-2x}$, prove that $\frac{d^2y}{dx^2} - \frac{dy}{dx} - 6y = 0$.</p>
+                <span class="gu">જો $y = 2e^{3x} + 3e^{-2x}$ હોય તો સાબિત કરો કે $\frac{d^2y}{dx^2} - \frac{dy}{dx} - 6y = 0$.</span>
+                <div class="step"><strong>Step 1 (First Derivative):</strong> $\frac{dy}{dx} = y_1 = 2(3e^{3x}) + 3(-2e^{-2x}) = 6e^{3x} - 6e^{-2x}$</div>
+                <div class="step"><strong>Step 2 (Second Derivative):</strong> $\frac{d^2y}{dx^2} = y_2 = 6(3e^{3x}) - 6(-2e^{-2x}) = 18e^{3x} + 12e^{-2x}$</div>
+                <div class="step"><strong>Step 3 (Evaluate LHS):</strong> Substitute $y_2$, $y_1$, and $y$ into LHS = $\frac{d^2y}{dx^2} - \frac{dy}{dx} - 6y$. <br> LHS = $(18e^{3x} + 12e^{-2x}) - (6e^{3x} - 6e^{-2x}) - 6(2e^{3x} + 3e^{-2x})$</div>
+                <div class="step"><strong>Step 4 (Group and Cancel):</strong> <br> For $e^{3x}$: $18 - 6 - 12 = 0$ <br> For $e^{-2x}$: $12 - (-6) - 18 = 12 + 6 - 18 = 0$. <br> LHS = $0 =$ RHS. (Proved)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>5. Applications of Differentiation <br><span class="gu">વિકલનના ઉપયોગો</span></h2>
+            
+            <h3 style="color: var(--primary); margin-top: 1.5rem; border-bottom: 2px solid var(--accent-bg); padding-bottom: 0.5rem;">Part A: Velocity & Acceleration (વેગ અને પ્રવેગ)</h3>
+            
+            <div class="example-box">
+                <h4>Example 1</h4>
+                <p>The equation of motion is $s = t^3 - 6t^2 + 9t$. Find velocity and acceleration at $t=3$ sec. Find $t$ when acceleration is zero.</p>
+                <span class="gu">એક કણની ગતિનું સમીકરણ $s = t^3 - 6t^2 + 9t$ છે. $t=3$ સેકન્ડે તેનો વેગ અને પ્રવેગ મેળવો. જ્યારે પ્રવેગ શૂન્ય હોય ત્યારે $t$ શોધો.</span>
+                <div class="step"><strong>Step 1 (Velocity equation):</strong> Velocity is $v = \frac{ds}{dt} = 3t^2 - 12t + 9$.</div>
+                <div class="step"><strong>Step 2 (Velocity at t=3):</strong> Substitute $t=3$. $v = 3(3)^2 - 12(3) + 9 = 27 - 36 + 9 = 0$ units/sec.</div>
+                <div class="step"><strong>Step 3 (Acceleration equation):</strong> Acceleration is $a = \frac{dv}{dt} = 6t - 12$.</div>
+                <div class="step"><strong>Step 4 (Acceleration at t=3):</strong> Substitute $t=3$. $a = 6(3) - 12 = 18 - 12 = 6$ units/sec².</div>
+                <div class="step"><strong>Step 5 (Time when a=0):</strong> Set $a = 0 \implies 6t - 12 = 0 \implies 6t = 12 \implies t = 2$ seconds.</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 2</h4>
+                <p>The equation of motion of a particle is $s = 2t^3 - 3t^2 - 12t + 7$. Find velocity when acceleration is zero.</p>
+                <span class="gu">કણની ગતિનું સમીકરણ $s = 2t^3 - 3t^2 - 12t + 7$ છે. જ્યારે પ્રવેગ શૂન્ય હોય ત્યારે વેગ શોધો.</span>
+                <div class="step"><strong>Step 1 (Find v and a):</strong> <br> Velocity $v = \frac{ds}{dt} = 6t^2 - 6t - 12$. <br> Acceleration $a = \frac{dv}{dt} = 12t - 6$.</div>
+                <div class="step"><strong>Step 2 (Set a = 0):</strong> To find when acceleration is zero, set $12t - 6 = 0$. <br> $\implies 12t = 6 \implies t = 0.5$ seconds.</div>
+                <div class="step"><strong>Step 3 (Find Velocity):</strong> Substitute $t=0.5$ back into the velocity equation. <br> $v = 6(0.5)^2 - 6(0.5) - 12 = 6(0.25) - 3 - 12$ <br> $v = 1.5 - 3 - 12 = -13.5$ units/sec.</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 3</h4>
+                <p>The distance $s$ at time $t$ is given by $s = t^3 - 5t^2 + 3t + 4$. Find the time when the velocity is zero.</p>
+                <span class="gu">$s = t^3 - 5t^2 + 3t + 4$ માટે જ્યારે વેગ શૂન્ય હોય તે સમય શોધો.</span>
+                <div class="step"><strong>Step 1 (Find Velocity):</strong> Differentiate $s$ with respect to $t$. <br> $v = \frac{ds}{dt} = 3t^2 - 10t + 3$.</div>
+                <div class="step"><strong>Step 2 (Set v = 0):</strong> Since we want the time when velocity is zero, set the equation to zero: <br> $3t^2 - 10t + 3 = 0$.</div>
+                <div class="step"><strong>Step 3 (Solve Quadratic Equation):</strong> Factorize the equation by splitting the middle term. <br> $3t^2 - 9t - 1t + 3 = 0$ <br> $3t(t - 3) - 1(t - 3) = 0$ <br> $(3t - 1)(t - 3) = 0$</div>
+                <div class="step"><strong>Step 4 (Final Answer):</strong> The velocity is zero at $t = 3$ seconds or $t = \frac{1}{3}$ seconds.</div>
+            </div>
+
+            <h3 style="color: var(--primary); margin-top: 2.5rem; border-bottom: 2px solid var(--accent-bg); padding-bottom: 0.5rem;">Part B: Maxima & Minima (મહત્તમ અને ન્યૂનતમ મૂલ્યો)</h3>
+
+            <div class="example-box">
+                <h4>Example 4</h4>
+                <p>Find maximum and minimum value of $f(x) = 2x^3 - 3x^2 - 12x + 5$.</p>
+                <span class="gu">વિધેય $f(x) = 2x^3 - 3x^2 - 12x + 5$ ની મહત્તમ અને ન્યૂનત્તમ કિંમત શોધો.</span>
+                <div class="step"><strong>Step 1 (First Derivative):</strong> Find $f'(x) = 6x^2 - 6x - 12$.</div>
+                <div class="step"><strong>Step 2 (Critical Points):</strong> Set $f'(x) = 0 \implies 6(x^2 - x - 2) = 0 \implies (x-2)(x+1) = 0$. Roots are $x=2$ and $x=-1$.</div>
+                <div class="step"><strong>Step 3 (Second Derivative):</strong> Find $f''(x) = \frac{d}{dx}(6x^2 - 6x - 12) = 12x - 6$.</div>
+                <div class="step"><strong>Step 4 (Test $x=2$):</strong> $f''(2) = 12(2) - 6 = 18$. Since $18 > 0$, function has a <strong>Minimum</strong> at $x=2$. <br> Min Value = $f(2) = 2(8) - 3(4) - 12(2) + 5 = 16 - 12 - 24 + 5 = -15$.</div>
+                <div class="step"><strong>Step 5 (Test $x=-1$):</strong> $f''(-1) = 12(-1) - 6 = -18$. Since $-18 < 0$, function has a <strong>Maximum</strong> at $x=-1$. <br> Max Value = $f(-1) = 2(-1) - 3(1) - 12(-1) + 5 = -2 - 3 + 12 + 5 = 12$.</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 5</h4>
+                <p>Find the maximum and minimum values of $f(x) = x^3 - 3x + 11$.</p>
+                <span class="gu">$f(x) = x^3 - 3x + 11$ ના મહત્તમ અને ન્યૂનતમ મૂલ્યો શોધો.</span>
+                <div class="step"><strong>Step 1 (First Derivative):</strong> $f'(x) = 3x^2 - 3$.</div>
+                <div class="step"><strong>Step 2 (Critical Points):</strong> Set $f'(x) = 0 \implies 3(x^2 - 1) = 0 \implies x^2 = 1 \implies x = 1$ and $x = -1$.</div>
+                <div class="step"><strong>Step 3 (Second Derivative):</strong> $f''(x) = \frac{d}{dx}(3x^2 - 3) = 6x$.</div>
+                <div class="step"><strong>Step 4 (Test $x=1$):</strong> $f''(1) = 6(1) = 6 > 0$, so it is a <strong>Minimum</strong>. <br> Min Value = $f(1) = (1)^3 - 3(1) + 11 = 1 - 3 + 11 = 9$.</div>
+                <div class="step"><strong>Step 5 (Test $x=-1$):</strong> $f''(-1) = 6(-1) = -6 < 0$, so it is a <strong>Maximum</strong>. <br> Max Value = $f(-1) = (-1)^3 - 3(-1) + 11 = -1 + 3 + 11 = 13$.</div>
+            </div>
+
+            <div class="example-box">
+                <h4>Example 6</h4>
+                <p>Find maximum and minimum values for the function $f(x) = x^3 - 6x^2 + 9x + 6$.</p>
+                <span class="gu">વિધેય $f(x) = x^3 - 6x^2 + 9x + 6$ ના મહત્તમ અને ન્યૂનતમ મૂલ્યો શોધો.</span>
+                <div class="step"><strong>Step 1 (First Derivative):</strong> $f'(x) = 3x^2 - 12x + 9$.</div>
+                <div class="step"><strong>Step 2 (Critical Points):</strong> Set $f'(x) = 0 \implies 3(x^2 - 4x + 3) = 0 \implies 3(x-3)(x-1) = 0$. Roots are $x=3$ and $x=1$.</div>
+                <div class="step"><strong>Step 3 (Second Derivative):</strong> $f''(x) = 6x - 12$.</div>
+                <div class="step"><strong>Step 4 (Test $x=1$):</strong> $f''(1) = 6(1) - 12 = -6 < 0$, so it is a <strong>Maximum</strong>. <br> Max Value = $f(1) = 1^3 - 6(1)^2 + 9(1) + 6 = 1 - 6 + 9 + 6 = 10$.</div>
+                <div class="step"><strong>Step 5 (Test $x=3$):</strong> $f''(3) = 6(3) - 12 = 18 - 12 = 6 > 0$, so it is a <strong>Minimum</strong>. <br> Min Value = $f(3) = 3^3 - 6(3)^2 + 9(3) + 6 = 27 - 54 + 27 + 6 = 6$.</div>
+            </div>
+            
+            <div class="example-box">
+                <h4>Example 7</h4>
+                <p>Find the maximum and minimum values of $f(x) = 2x^3 - 15x^2 + 36x + 10$.</p>
+                <span class="gu">$f(x) = 2x^3 - 15x^2 + 36x + 10$ ના મહત્તમ અને ન્યૂનતમ મૂલ્યો શોધો.</span>
+                <div class="step"><strong>Step 1 (First Derivative):</strong> $f'(x) = 6x^2 - 30x + 36$.</div>
+                <div class="step"><strong>Step 2 (Critical Points):</strong> Set $f'(x) = 0 \implies 6(x^2 - 5x + 6) = 0 \implies 6(x-2)(x-3) = 0$. Roots are $x=2$ and $x=3$.</div>
+                <div class="step"><strong>Step 3 (Second Derivative):</strong> $f''(x) = 12x - 30$.</div>
+                <div class="step"><strong>Step 4 (Test $x=2$):</strong> $f''(2) = 12(2) - 30 = 24 - 30 = -6 < 0$, so it is a <strong>Maximum</strong>. <br> Max Value = $f(2) = 2(8) - 15(4) + 36(2) + 10 = 16 - 60 + 72 + 10 = 38$.</div>
+                <div class="step"><strong>Step 5 (Test $x=3$):</strong> $f''(3) = 12(3) - 30 = 36 - 30 = 6 > 0$, so it is a <strong>Minimum</strong>. <br> Min Value = $f(3) = 2(27) - 15(9) + 36(3) + 10 = 54 - 135 + 108 + 10 = 37$.</div>
+            </div>
+
+        </div>
+
+        <div class="card interactive-lab" id="interactive-lab-1">
+            <h2>🧮 Calculator 1: Applications Lab <br><span class="gu">એપ્લિકેશન લેબ</span></h2>
+            <p>Input parameters to generate step-by-step mathematical solutions for Kinematics and Extrema. <br><span class="gu">સ્ટેપ-બાય-સ્ટેપ ઉકેલો માટે મૂલ્યો દાખલ કરો.</span></p>
+
+            <div class="lab-container">
+                <div class="lab-panel">
+                    <h3>Velocity & Acceleration <br><span class="gu" style="font-size: 0.9em;">વેગ અને પ્રવેગ</span></h3>
+                    <p style="font-size:0.85rem; color:#9CA3AF; margin-bottom: 1rem;">$s(t) = At^3 + Bt^2 + Ct + D$</p>
+                    
+                    <div class="coeff-inputs">
+                        $s(t) = $ 
+                        <input type="number" id="vA" value="1" placeholder="A"> $t^3 + $
+                        <input type="number" id="vB" value="-6" placeholder="B"> $t^2 + $
+                        <input type="number" id="vC" value="9" placeholder="C"> $t + $
+                        <input type="number" id="vD" value="0" placeholder="D">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Enter Time ($t$) in sec / સમય ($t$):</label>
+                        <input type="number" id="vTime" value="3" style="width: 100px;">
+                    </div>
+                    <button onclick="calculateKinematics()">Calculate $v$ and $a$</button>
+                </div>
+
+                <div class="lab-panel">
+                    <h3>Maxima & Minima <br><span class="gu" style="font-size: 0.9em;">મહત્તમ અને ન્યૂનતમ</span></h3>
+                    <p style="font-size:0.85rem; color:#9CA3AF; margin-bottom: 1rem;">$f(x) = Ax^3 + Bx^2 + Cx + D$</p>
+                    
+                    <div class="coeff-inputs">
+                        $f(x) = $ 
+                        <input type="number" id="mA" value="1" placeholder="A"> $x^3 + $
+                        <input type="number" id="mB" value="0" placeholder="B"> $x^2 + $
+                        <input type="number" id="mC" value="-3" placeholder="C"> $x + $
+                        <input type="number" id="mD" value="11" placeholder="D">
+                    </div>
+                    <button class="btn-secondary" onclick="calculateExtrema()">Find Max / Min</button>
+                </div>
+            </div>
+
+            <div id="lab-output-1" class="lab-output"></div>
+        </div>
+        
+        <div class="card interactive-lab" id="interactive-lab-2" style="border-left-color: #3B82F6;">
+            <h2 style="color: #3B82F6;">🚀 Calculator 2: Step-by-Step Problem Solver <br><span class="gu" style="color:#60A5FA;">સ્ટેપ-બાય-સ્ટેપ સોલ્વર</span></h2>
+            <p>Select a differentiation method and input your functions to get a detailed step-by-step 1st derivative solution. <br><span class="gu">વિકલનની રીત પસંદ કરો અને વિધેય દાખલ કરીને સ્ટેપ-બાય-સ્ટેપ ઉકેલ મેળવો.</span></p>
+
+            <div class="lab-panel" style="margin-top: 1.5rem;">
+                
+                <select id="calc2-mode" class="mode-selector" onchange="switchCalc2Mode()">
+                    <option value="chain">1. Chain Rule / સાંકળ નિયમ ( y = f(g(x)) )</option>
+                    <option value="implicit">2. Implicit Function / ગૂઢ વિધેય ( F(x,y) = 0 )</option>
+                    <option value="parametric">3. Parametric Function / પ્રચલ વિધેય ( x(t), y(t) )</option>
+                    <option value="logarithmic">4. Logarithmic Differentiation / લઘુગણકીય વિકલન ( y = u(x)^v(x) )</option>
+                </select>
+
+                <div id="panel-chain" class="calc2-panel">
+                    <div class="input-group">
+                        <label>Outer Function $f(u)$ / બહારનું વિધેય $f(u)$:</label>
+                        <input type="text" id="cr_f" value="sin(u)">
+                        <label style="margin-top:1rem;">Inner Function $u = g(x)$ / અંદરનું વિધેય $g(x)$:</label>
+                        <input type="text" id="cr_g" value="x^2">
+                    </div>
+                </div>
+
+                <div id="panel-implicit" class="calc2-panel" style="display:none;">
+                    <div class="input-group">
+                        <label>Equation $F(x,y) = 0$. Enter $F(x,y)$ / સમીકરણ $F(x,y) = 0$:</label>
+                        <input type="text" id="imp_f" value="x^2 + y^2 - 25">
+                    </div>
+                </div>
+
+                <div id="panel-parametric" class="calc2-panel" style="display:none;">
+                    <div class="input-group">
+                        <label>Enter $x(t)$ / $x(t)$ દાખલ કરો:</label>
+                        <input type="text" id="par_x" value="2*t^2">
+                        <label style="margin-top:1rem;">Enter $y(t)$ / $y(t)$ દાખલ કરો:</label>
+                        <input type="text" id="par_y" value="3*t^3">
+                    </div>
+                </div>
+
+                <div id="panel-logarithmic" class="calc2-panel" style="display:none;">
+                    <div class="input-group">
+                        <label>Base $u(x)$ / આધાર $u(x)$:</label>
+                        <input type="text" id="log_u" value="x">
+                        <label style="margin-top:1rem;">Exponent $v(x)$ / ઘાતાંક $v(x)$:</label>
+                        <input type="text" id="log_v" value="cos(x)">
+                    </div>
+                </div>
+
+                <button onclick="calculateAdvancedDerivatives()" style="background: #3B82F6; margin-top:1rem;">Show Step-by-Step Solution</button>
+            </div>
+
+            <div id="lab-output-2" class="lab-output" style="border-left: 5px solid #3B82F6;"></div>
+        </div>
+
+    </div>
+
+<footer class="page-footer">
+    <div class="visit-counter" style="margin-bottom: 5px;">
+        This Page Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FDifferentiation-Learning-Module&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+    </div>
+
+    <div class="visit-counter" style="margin-bottom: 15px;">
+        Total Site Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+    </div>
+    
+    <div class="copyright">
+        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+    </div>
+</footer>
+    <script>
+        // Formats polynomials nicely
+        function formatTerm(coeff, power, variable, isFirst) {
+            if (coeff === 0) return "";
+            let sign = coeff > 0 ? (isFirst ? "" : " + ") : (isFirst ? "-" : " - ");
+            let absCoeff = Math.abs(coeff);
+            let coeffStr = (absCoeff === 1 && power !== 0) ? "" : absCoeff;
+            let varStr = "";
+            if (power > 1) varStr = `${variable}^${power}`;
+            else if (power === 1) varStr = variable;
+            return sign + coeffStr + varStr;
+        }
+
+        function buildPolynomial(a, b, c, d, variable) {
+            let terms = [];
+            if(a !== 0) terms.push(formatTerm(a, 3, variable, terms.length === 0));
+            if(b !== 0) terms.push(formatTerm(b, 2, variable, terms.length === 0));
+            if(c !== 0) terms.push(formatTerm(c, 1, variable, terms.length === 0));
+            if(d !== 0) terms.push(formatTerm(d, 0, variable, terms.length === 0));
+            if(terms.length === 0) return "0";
+            return terms.join("");
+        }
+
+        // Calculator 1 Logic (Kinematics)
+        function calculateKinematics() {
+            const A = parseFloat(document.getElementById('vA').value) || 0;
+            const B = parseFloat(document.getElementById('vB').value) || 0;
+            const C = parseFloat(document.getElementById('vC').value) || 0;
+            const D = parseFloat(document.getElementById('vD').value) || 0;
+            const t = parseFloat(document.getElementById('vTime').value) || 0;
+
+            const s_str = buildPolynomial(A, B, C, D, "t");
+            const v_str = buildPolynomial(0, 3*A, 2*B, C, "t");
+            const a_str = buildPolynomial(0, 0, 6*A, 2*B, "t");
+
+            const v_a_coeff = 3*A; const v_b_coeff = 2*B; const v_c_coeff = C;
+            const a_m_coeff = 6*A; const a_c_coeff = 2*B;
+
+            const v_val = v_a_coeff*Math.pow(t, 2) + v_b_coeff*t + v_c_coeff;
+            const a_val = a_m_coeff*t + a_c_coeff;
+
+            const outputDiv = document.getElementById('lab-output-1');
+            outputDiv.style.display = 'block';
+
+            outputDiv.innerHTML = `
+                <h3 style="color:var(--primary); margin-bottom:1rem;">Kinematics Solution / ઉકેલ:</h3>
+                <div class="step">
+                    <strong>Step 1 (Equation of motion / ગતિનું સમીકરણ):</strong>
+                    <p>$$ s(t) = ${s_str} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 2 (Find Velocity Equation):</strong> Differentiate $s(t)$ w.r.t $t$:
+                    <p>$$ v(t) = \\frac{ds}{dt} = ${v_str} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 3 (Calculate Velocity at $t = ${t}$):</strong> Substitute $t$ into $v(t)$:
+                    <p>$$ v(${t}) = (${v_a_coeff})(${t})^2 + (${v_b_coeff})(${t}) + (${v_c_coeff}) $$</p>
+                    <p>$$ v(${t}) = (${v_a_coeff * t * t}) + (${v_b_coeff * t}) + (${v_c_coeff}) = ${v_val} \\text{ units/sec} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 4 (Find Acceleration Equation):</strong> Differentiate $v(t)$ w.r.t $t$:
+                    <p>$$ a(t) = \\frac{dv}{dt} = ${a_str} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 5 (Calculate Acceleration at $t = ${t}$):</strong> Substitute $t$ into $a(t)$:
+                    <p>$$ a(${t}) = (${a_m_coeff})(${t}) + (${a_c_coeff}) = ${a_val} \\text{ units/sec}^2 $$</p>
+                </div>
+            `;
+            
+            MathJax.typesetPromise([outputDiv]);
+        }
+
+        // Calculator 1 Logic (Extrema)
+        function calculateExtrema() {
+            const A = parseFloat(document.getElementById('mA').value) || 0;
+            const B = parseFloat(document.getElementById('mB').value) || 0;
+            const C = parseFloat(document.getElementById('mC').value) || 0;
+            const D = parseFloat(document.getElementById('mD').value) || 0;
+
+            const f_str = buildPolynomial(A, B, C, D, "x");
+            const f1_str = buildPolynomial(0, 3*A, 2*B, C, "x");
+            const f2_str = buildPolynomial(0, 0, 6*A, 2*B, "x");
+
+            const outputDiv = document.getElementById('lab-output-1');
+            outputDiv.style.display = 'block';
+
+            let resultHtml = `
+                <h3 style="color:var(--primary); margin-bottom:1rem;">Maxima & Minima Solution / ઉકેલ:</h3>
+                <div class="step">
+                    <strong>Step 1 (Given Function / આપેલ વિધેય):</strong>
+                    <p>$$ f(x) = ${f_str} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 2 (First Derivative / પ્રથમ વિકલિત):</strong>
+                    <p>$$ f'(x) = ${f1_str} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 3 (Second Derivative / દ્વિતીય વિકલિત):</strong>
+                    <p>$$ f''(x) = ${f2_str} $$</p>
+                </div>
+                <div class="step">
+                    <strong>Step 4 (Find Critical Points):</strong> Set $f'(x) = 0$
+                    <p>$$ ${f1_str} = 0 $$</p>
+            `;
+
+            const qa = 3 * A;
+            const qb = 2 * B;
+            const qc = C;
+
+            if (qa === 0) {
+                resultHtml += `<p style="color:red;">For this calculator to work properly, 'A' must not be 0 (must be cubic). Equation reduces to linear/quadratic.</p></div>`;
+            } else {
+                const discriminant = (qb * qb) - (4 * qa * qc);
+                resultHtml += `<p>Using quadratic formula: $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ where $a=${qa}, b=${qb}, c=${qc}$</p>`;
+                resultHtml += `<p>Discriminant $\\Delta = (${qb})^2 - 4(${qa})(${qc}) = ${discriminant}$</p>`;
+
+                if (discriminant < 0) {
+                    resultHtml += `<p>$\\Delta < 0$. Roots are imaginary. No real maxima or minima exist. <br><span class="gu">બીજ કાલ્પનિક છે. કોઈ વાસ્તવિક મહત્તમ કે ન્યૂનતમ મૂલ્ય નથી.</span></p></div>`;
+                } else {
+                    const x1 = (-qb + Math.sqrt(discriminant)) / (2 * qa);
+                    const x2 = (-qb - Math.sqrt(discriminant)) / (2 * qa);
+                    let roots = Array.from(new Set([x1, x2])); 
+
+                    resultHtml += `<p>Roots (બીજ): $x = ${roots.map(r => r.toFixed(2)).join(', ')}$</p></div>`;
+                    resultHtml += `<div class="step"><strong>Step 5 (Second Derivative Test):</strong> Test roots in $f''(x)$</div>`;
+                    
+                    roots.forEach(root => {
+                        const f2_val = 6 * A * root + 2 * B;
+                        const f_val = A * Math.pow(root, 3) + B * Math.pow(root, 2) + C * root + D;
+                        
+                        resultHtml += `<div style="background:#fff; padding:1rem; border-radius:6px; margin: 1rem 0; border:1px solid #E5E7EB; margin-left: 2rem;">`;
+                        resultHtml += `<h4>Testing $x = ${root.toFixed(2)}$:</h4>`;
+                        resultHtml += `<p>Substitute $x$ into $f''(x)$: $$ f''(${root.toFixed(2)}) = 6(${A})(${root.toFixed(2)}) + 2(${B}) = ${f2_val.toFixed(2)} $$</p>`;
+                        
+                        if (f2_val > 0) {
+                            resultHtml += `<p style="color:#059669; font-weight:bold;">Since $f''(x) > 0$, the function has a MINIMUM at $x = ${root.toFixed(2)}$. <br><span class="gu">અહીં $f''(x) > 0$ હોવાથી, વિધેય ન્યૂનતમ છે.</span></p>`;
+                            resultHtml += `<p>Substitute $x$ into original $f(x)$ to find Min Value: <br> $$ f(${root.toFixed(2)}) = ${f_val.toFixed(2)} $$</p>`;
+                        } else if (f2_val < 0) {
+                            resultHtml += `<p style="color:#DC2626; font-weight:bold;">Since $f''(x) < 0$, the function has a MAXIMUM at $x = ${root.toFixed(2)}$. <br><span class="gu">અહીં $f''(x) < 0$ હોવાથી, વિધેય મહત્તમ છે.</span></p>`;
+                            resultHtml += `<p>Substitute $x$ into original $f(x)$ to find Max Value: <br> $$ f(${root.toFixed(2)}) = ${f_val.toFixed(2)} $$</p>`;
+                        } else {
+                            resultHtml += `<p>Since $f''(x) = 0$, the test fails (Inflection point possible).</p>`;
+                        }
+                        resultHtml += `</div>`;
+                    });
+                }
+            }
+
+            outputDiv.innerHTML = resultHtml;
+            MathJax.typesetPromise([outputDiv]);
+        }
+
+        // Switch modes for Calculator 2
+        function switchCalc2Mode() {
+            document.querySelectorAll('.calc2-panel').forEach(p => p.style.display = 'none');
+            const mode = document.getElementById('calc2-mode').value;
+            document.getElementById('panel-' + mode).style.display = 'block';
+            document.getElementById('lab-output-2').style.display = 'none';
+        }
+        
+        // Calculator 2 Logic (Step-by-Step 1st Derivative)
+        function calculateAdvancedDerivatives() {
+            const mode = document.getElementById('calc2-mode').value;
+            const outputDiv = document.getElementById('lab-output-2');
+            outputDiv.style.display = 'block';
+            
+            let html = `<h3 style="color:#3B82F6; margin-bottom:1rem;">Derivation Steps / ઉકેલનાં પગલાં:</h3>`;
+            
+            try {
+                if (mode === 'chain') {
+                    const fStr = document.getElementById('cr_f').value;
+                    const gStr = document.getElementById('cr_g').value;
+                    
+                    const fNode = math.parse(fStr);
+                    const gNode = math.parse(gStr);
+                    
+                    const dfdu = math.simplify(math.derivative(fNode, 'u'));
+                    const dgdx = math.simplify(math.derivative(gNode, 'x'));
+
+                    html += `
+                        <div class="step">
+                            <strong>Step 1: Identify Functions (વિધેયો ઓળખો)</strong>
+                            <p>Outer function / બહારનું વિધેય: $$ f(u) = ${fNode.toTex()} $$</p>
+                            <p>Inner function / અંદરનું વિધેય: $$ u = g(x) = ${gNode.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 2: Differentiate Outer Function (બહારના વિધેયનું વિકલન કરો)</strong>
+                            <p>Differentiate $f(u)$ w.r.t $u$:</p>
+                            <p>$$ f'(u) = \\frac{df}{du} = ${dfdu.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 3: Differentiate Inner Function (અંદરના વિધેયનું વિકલન કરો)</strong>
+                            <p>Differentiate $g(x)$ w.r.t $x$:</p>
+                            <p>$$ g'(x) = \\frac{du}{dx} = ${dgdx.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 4: Apply Chain Rule (સાંકળ નિયમ લાગુ કરો)</strong>
+                            <p>Formula: $$ \\frac{dy}{dx} = \\frac{df}{du} \\cdot \\frac{du}{dx} $$</p>
+                            <p>$$ \\frac{dy}{dx} = \\left( ${dfdu.toTex()} \\right) \\cdot \\left( ${dgdx.toTex()} \\right) $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 5: Substitute $u = g(x)$ back ($u$ ની કિંમત પાછી મૂકો)</strong>
+                            <p>Substitute $u = ${gNode.toTex()}$ into the equation:</p>
+                            <p>$$ \\frac{dy}{dx} = f'(${gNode.toTex()}) \\cdot g'(x) $$</p>
+                            <p><strong>Final Answer:</strong> $$ \\frac{dy}{dx} = \\left( ${dfdu.toTex().replace(/u/g, `(${gNode.toTex()})`)} \\right) \\cdot \\left( ${dgdx.toTex()} \\right) $$</p>
+                        </div>
+                    `;
+                } 
+                else if (mode === 'implicit') {
+                    const fStr = document.getElementById('imp_f').value;
+                    const fNode = math.parse(fStr);
+                    
+                    const dfdx = math.simplify(math.derivative(fNode, 'x'));
+                    const dfdy = math.simplify(math.derivative(fNode, 'y'));
+
+                    html += `
+                        <div class="step">
+                            <strong>Step 1: Define the Function (વિધેય વ્યાખ્યાયિત કરો)</strong>
+                            <p>Given Equation: $$ F(x,y) = ${fNode.toTex()} = 0 $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 2: Differentiate Partially w.r.t $x$ ($x$ ની સાપેક્ષે આંશિક વિકલન)</strong>
+                            <p>Treat $y$ as a constant and differentiate $F(x,y)$ w.r.t $x$:</p>
+                            <p>$$ \\frac{\\partial F}{\\partial x} = ${dfdx.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 3: Differentiate Partially w.r.t $y$ ($y$ ની સાપેક્ષે આંશિક વિકલન)</strong>
+                            <p>Treat $x$ as a constant and differentiate $F(x,y)$ w.r.t $y$:</p>
+                            <p>$$ \\frac{\\partial F}{\\partial y} = ${dfdy.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 4: Apply Implicit Formula (ગૂઢ વિધેયનું સૂત્ર લાગુ કરો)</strong>
+                            <p>Formula: $$ \\frac{dy}{dx} = - \\frac{\\frac{\\partial F}{\\partial x}}{\\frac{\\partial F}{\\partial y}} $$</p>
+                            <p><strong>Final Answer:</strong> $$ \\frac{dy}{dx} = - \\frac{${dfdx.toTex()}}{${dfdy.toTex()}} $$</p>
+                        </div>
+                    `;
+                }
+                else if (mode === 'parametric') {
+                    const xStr = document.getElementById('par_x').value;
+                    const yStr = document.getElementById('par_y').value;
+                    
+                    const xNode = math.parse(xStr);
+                    const yNode = math.parse(yStr);
+                    
+                    const dxdt = math.simplify(math.derivative(xNode, 't'));
+                    const dydt = math.simplify(math.derivative(yNode, 't'));
+
+                    html += `
+                        <div class="step">
+                            <strong>Step 1: Given Parametric Equations (આપેલ પ્રચલ સમીકરણો)</strong>
+                            <p>$$ x(t) = ${xNode.toTex()} \\quad \\text{and} \\quad y(t) = ${yNode.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 2: Differentiate $x$ w.r.t $t$ ($x$ નું $t$ સાપેક્ષ વિકલન)</strong>
+                            <p>$$ \\frac{dx}{dt} = ${dxdt.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 3: Differentiate $y$ w.r.t $t$ ($y$ નું $t$ સાપેક્ષ વિકલન)</strong>
+                            <p>$$ \\frac{dy}{dt} = ${dydt.toTex()} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 4: Apply Parametric Formula (પ્રચલ વિધેયનું સૂત્ર લાગુ કરો)</strong>
+                            <p>Formula: $$ \\frac{dy}{dx} = \\frac{\\frac{dy}{dt}}{\\frac{dx}{dt}} $$</p>
+                            <p><strong>Final Answer:</strong> $$ \\frac{dy}{dx} = \\frac{${dydt.toTex()}}{${dxdt.toTex()}} $$</p>
+                        </div>
+                    `;
+                }
+                else if (mode === 'logarithmic') {
+                    const uStr = document.getElementById('log_u').value;
+                    const vStr = document.getElementById('log_v').value;
+                    
+                    const uNode = math.parse(uStr);
+                    const vNode = math.parse(vStr);
+                    
+                    const duNode = math.simplify(math.derivative(uNode, 'x'));
+                    const dvNode = math.simplify(math.derivative(vNode, 'x'));
+
+                    html += `
+                        <div class="step">
+                            <strong>Step 1: Given Equation (આપેલ સમીકરણ)</strong>
+                            <p>$$ y = u(x)^{v(x)} \\implies y = \\left(${uNode.toTex()}\\right)^{\\left(${vNode.toTex()}\\right)} $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 2: Take Natural Log on Both Sides (બંને બાજુ લઘુગણક લેતા)</strong>
+                            <p>$$ \\ln y = ${vNode.toTex()} \\cdot \\ln\\left(${uNode.toTex()}\\right) $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 3: Differentiate Implicitly w.r.t $x$ ($x$ સાપેક્ષ વિકલન કરતા)</strong>
+                            <p>Apply Product Rule to the right side ($uv' + vu'$):</p>
+                            <p>$$ \\frac{1}{y} \\frac{dy}{dx} = \\frac{d}{dx}\\left[${vNode.toTex()}\\right] \\cdot \\ln\\left(${uNode.toTex()}\\right) + ${vNode.toTex()} \\cdot \\frac{d}{dx}\\left[\\ln\\left(${uNode.toTex()}\\right)\\right] $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 4: Find Derivatives of Sub-components (ઘટકોના વિકલિત શોધો)</strong>
+                            <p>Derivative of Exponent: $$ \\frac{d}{dx}[${vNode.toTex()}] = ${dvNode.toTex()} $$</p>
+                            <p>Derivative of Base using Chain Rule: $$ \\frac{d}{dx}[\\ln(${uNode.toTex()})] = \\frac{1}{${uNode.toTex()}} \\cdot \\left(${duNode.toTex()}\\right) $$</p>
+                        </div>
+                        <div class="step">
+                            <strong>Step 5: Substitute and Isolate $\\frac{dy}{dx}$ (સૂત્રમાં કિંમત મૂકો)</strong>
+                            <p>Substitute components back into Step 3:</p>
+                            <p>$$ \\frac{1}{y} \\frac{dy}{dx} = \\left(${dvNode.toTex()}\\right) \\ln\\left(${uNode.toTex()}\\right) + \\frac{${vNode.toTex()} \\cdot \\left(${duNode.toTex()}\\right)}{${uNode.toTex()}} $$</p>
+                            <p>Multiply both sides by $y = \\left(${uNode.toTex()}\\right)^{\\left(${vNode.toTex()}\\right)}$:</p>
+                            <p><strong>Final Answer:</strong> $$ \\frac{dy}{dx} = \\left(${uNode.toTex()}\\right)^{\\left(${vNode.toTex()}\\right)} \\left[ \\left(${dvNode.toTex()}\\right) \\ln\\left(${uNode.toTex()}\\right) + \\frac{${vNode.toTex()} \\cdot \\left(${duNode.toTex()}\\right)}{${uNode.toTex()}} \\right] $$</p>
+                        </div>
+                    `;
+                }
+
+                outputDiv.innerHTML = html;
+                MathJax.typesetPromise([outputDiv]);
+
+            } catch (error) {
+                outputDiv.innerHTML = `<p style="color:red; font-weight:bold;">Error parsing functions. Please ensure you are using valid mathematical syntax (e.g., use 2*x instead of 2x, and proper parentheses).</p><p class="gu" style="color:red;">ભૂલ. કૃપા કરીને માન્ય ગાણિતિક સ્વરૂપનો ઉપયોગ કરો.</p>`;
+            }
+        }
+
+        // Page Visit Counter Logic
+        window.addEventListener('DOMContentLoaded', (event) => {
+            let visits = localStorage.getItem('page_visits_count');
+            if (!visits) {
+                visits = 1;
+            } else {
+                visits = parseInt(visits) + 1;
+            }
+            localStorage.setItem('page_visits_count', visits);
+            document.getElementById('visitCounter').innerText = visits.toLocaleString();
+        });
+    </script>
+</body>
+</html>

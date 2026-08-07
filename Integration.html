@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration & Its Applications | સંકલન અને તેના ઉપયોગો</title>
+    
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/nerdamer.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Algebra.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Calculus.js"></script>
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #be185d;
+            --accent: #059669;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 2.8rem; letter-spacing: 1px; }
+        header p { font-size: 1.3rem; opacity: 0.9; margin-top: 0.5rem; }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            color: var(--primary);
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title span.gu {
+            color: var(--secondary);
+            font-size: 1.4rem;
+            margin-top: 0.3rem;
+            font-weight: normal;
+        }
+
+        .bilingual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .bilingual-grid { grid-template-columns: 1fr; }
+        }
+
+        .en-text { border-left: 4px solid var(--primary); padding-left: 1rem; }
+        .gu-text { border-left: 4px solid var(--secondary); padding-left: 1rem; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: left;
+        }
+        th { background-color: var(--primary); color: white; font-size: 1.1rem; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+
+        .example-box {
+            background-color: #f8fafc;
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            background: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .step {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .diagram-container {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        svg { max-width: 100%; height: auto; }
+
+        .lab-section {
+            background: linear-gradient(145deg, #ffffff, #f0fdf4);
+            border: 2px solid var(--accent);
+        }
+
+        .control-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group { margin-bottom: 1.5rem; }
+        label { font-weight: bold; display: block; margin-bottom: 0.5rem; color: var(--text-dark); }
+        
+        input[type="text"], input[type="number"], select {
+            padding: 0.8rem 1rem;
+            font-size: 1.2rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            font-family: monospace;
+        }
+
+        input:focus, select:focus { border-color: var(--primary); outline: none; }
+
+        .flex-row { display: flex; gap: 1rem; align-items: center; }
+        .flex-row > div { flex: 1; }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover { background-color: #047857; }
+
+        #solution-output {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: none;
+            border-top: 4px solid var(--accent);
+            margin-top: 1.5rem;
+        }
+
+        .final-answer-box {
+            background-color: #dcfce7;
+            border: 2px solid #22c55e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .analysis-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .visit-counter {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .credits { font-size: 1.1rem; color: #bae6fd; font-weight: bold; }
+
+        /* Formula Box Styling */
+        .formula-highlight-box {
+            background-color: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .formula-highlight-box h4 {
+            color: #b45309;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+    <header>
+        <h1>Integration & Its Applications</h1>
+        <p>સંકલન અને તેના ઉપયોગો - Complete Study Guide</p>
+    </header>
+
+    <div class="container">
+<div style="background-color: #FFFBEB; border-left: 6px solid #F59E0B; padding: 25px; border-radius: 8px; margin-bottom: 2.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <h3 style="color: #B45309; margin-top: 0; display: flex; align-items: center; font-size: 1.4rem;">
+        <span style="font-size: 1.8rem; margin-right: 12px;">🌍</span> 
+        Why learn Integration? (આપણે સંકલન શા માટે શીખીએ છીએ?)
+    </h3>
+    <div class="bilingual-grid" style="margin-bottom: 0;">
+        <div style="padding-left: 1rem; border-left: 3px solid #FCD34D; color: #451A03;">
+            <strong>English:</strong> Imagine trying to find the exact area of a highly irregular shape, like a lake or a piece of land. Integration is the mathematical tool that lets us slice that shape into tiny, measurable pieces to find the total area, volume, or even total energy in an electrical system.
+        </div>
+        <div style="padding-left: 1rem; border-left: 3px solid #FCD34D; font-family: 'Hind Vadodara', sans-serif; color: #047857; font-size: 1.1rem;">
+            <strong>ગુજરાતી:</strong> ધારો કે તમારે કોઈ અનિયમિત આકાર (જેમ કે તળાવ કે જમીન) નું ચોક્કસ ક્ષેત્રફળ શોધવું છે. સંકલન એ એવું ગાણિતિક સાધન છે જે તે આકારને અસંખ્ય નાના-નાના ભાગોમાં વહેંચીને કુલ ક્ષેત્રફળ, ઘનફળ કે સિસ્ટમની કુલ ઊર્જા શોધવામાં મદદ કરે છે.
+        </div>
+    </div>
+</div>
+        <div class="section">
+            <h2 class="section-title">
+                Standard Integration Formulas 
+                <span class="gu">સંકલનના પ્રમાણિત સૂત્રો</span>
+            </h2>
+            <div class="en-text" style="margin-bottom: 1rem;">
+                Integration is the mathematical process of finding the antiderivative of a function. The constant of integration, denoted as \( c \), is always added to indefinite integrals because the derivative of a constant is zero. 
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Function / વિધેય \( f(x) \)</th>
+                        <th>Integral / સંકલિત \( \int f(x) dx \)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>\( x^n \) (where \(n \neq -1\))</td><td>\( \frac{x^{n+1}}{n+1} + c \)</td></tr>
+                    <tr><td>\( \frac{1}{x} \)</td><td>\( \log_e |x| + c \)</td></tr>
+                    <tr><td>\( e^x \)</td><td>\( e^x + c \)</td></tr>
+                    <tr><td>\( a^x \)</td><td>\( \frac{a^x}{\log_e a} + c \)</td></tr>
+                    <tr><td>\( \sin x \)</td><td>\( -\cos x + c \)</td></tr>
+                    <tr><td>\( \cos x \)</td><td>\( \sin x + c \)</td></tr>
+                    <tr><td>\( \sec^2 x \)</td><td>\( \tan x + c \)</td></tr>
+                    <tr><td>\( \sec x \tan x \)</td><td>\( \sec x + c \)</td></tr>
+                    <tr><td>\( \csc^2 x \)</td><td>\( -\cot x + c \)</td></tr>
+                    <tr><td>\( \csc x \cot x \)</td><td>\( -\csc x + c \)</td></tr>
+                    <tr><td>\( \frac{1}{1+x^2} \)</td><td>\( \tan^{-1} x + c \)</td></tr>
+                    <tr><td>\( \frac{1}{\sqrt{1-x^2}} \)</td><td>\( \sin^{-1} x + c \)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                3.1 & 3.2 Concept & Basic Integrals 
+                <span class="gu">સંકલનનો ખ્યાલ અને મૂળભૂત નિયમો</span>
+            </h2>
+            <div class="bilingual-grid">
+                <div class="en-text">
+                    <strong>Linearity Rule:</strong> Integration is the reverse of differentiation. When integrating a sum or difference of functions multiplied by constants, you can integrate each function separately and multiply by the constant.
+                </div>
+                <div class="gu-text">
+                    <strong>સુરેખતાનો નિયમ:</strong> સંકલન એ વિકલનની ઉલટી પ્રક્રિયા છે. બે વિધેયોના સરવાળા કે બાદબાકીના સંકલનને અલગ-અલગ કરી શકાય છે. અચળ પદને સંકલનની બહાર કાઢી શકાય છે.
+                </div>
+            </div>
+
+            <div class="formula-highlight-box">
+                <h4>Linearity Property / સુરેખતાનો ગુણધર્મ:</h4>
+                <p>\( \int [a \cdot f(x) \pm b \cdot g(x)] dx = a \int f(x) dx \pm b \int g(x) dx \)</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 1: Evaluate \(\int x^5 dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Use the power rule \(\int x^n dx = \frac{x^{n+1}}{n+1} + c\).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Substitute \(n=5\).<br>
+                    $$ I = \frac{x^{5+1}}{5+1} + c = \frac{x^6}{6} + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 2: Evaluate \(\int \frac{1}{x^2} dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Express as a negative power.<br>
+                    $$ I = \int x^{-2} dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply power rule with \(n=-2\).<br>
+                    $$ I = \frac{x^{-2+1}}{-2+1} + c = \frac{x^{-1}}{-1} + c = -\frac{1}{x} + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 3: Evaluate \(\int (x^3 + 5x^2 - 4) dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Apply Linearity / સરવાળાનો નિયમ લાગુ કરો.<br>
+                    $$ I = \int x^3 dx + 5\int x^2 dx - 4\int 1 dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply power rule.<br>
+                    $$ I = \frac{x^4}{4} + 5\left(\frac{x^3}{3}\right) - 4x + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 4: Evaluate \(\int (e^x + \sin x + \sec^2 x) dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Separate the integrals using linearity.<br>
+                    $$ I = \int e^x dx + \int \sin x dx + \int \sec^2 x dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply standard formulas directly from the table.<br>
+                    $$ I = e^x + (-\cos x) + \tan x + c = e^x - \cos x + \tan x + c $$
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                3.3 Method of Substitution 
+                <span class="gu">આદેશની રીત</span>
+            </h2>
+            <div class="bilingual-grid">
+                <div class="en-text">
+                    <strong>Substitution Method:</strong> Used when an integral contains a composite function \( f(g(x)) \) multiplied by the derivative of its inner function \( g'(x) \). We substitute the inner function with a new variable \( t \).
+                </div>
+                <div class="gu-text">
+                    <strong>આદેશની રીત:</strong> જ્યારે સંકલનમાં કોઈ વિધેય અને તેનું વિકલિત બંને આપેલા હોય, ત્યારે તે વિધેય બરાબર નવો ચલ \( t \) ધારવામાં આવે છે જેથી સંકલન સરળ બને.
+                </div>
+            </div>
+
+            <div class="formula-highlight-box">
+                <h4>Substitution Rule / આદેશનું સૂત્ર:</h4>
+                <p>If \( I = \int f(g(x)) \cdot g'(x) dx \)<br>
+                Let \( g(x) = t \implies g'(x) dx = dt \)<br>
+                Then, \( I = \int f(t) dt \)</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 1: Evaluate \(\int \frac{\cos(\log x)}{x} dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Notice that the derivative of \(\log x\) is \(\frac{1}{x}\). Let \( \log x = t \). Differentiating both sides gives \( \frac{1}{x} dx = dt \).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Substitute into the integral.<br>
+                    $$ I = \int \cos(t) dt $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Integrate and replace \(t\) with \(\log x\).<br>
+                    $$ I = \sin(t) + c = \sin(\log x) + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 2: Evaluate \(\int x \sin(x^2) dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Let \( x^2 = t \). Differentiating gives \( 2x dx = dt \implies x dx = \frac{dt}{2} \).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Substitute into the integral.<br>
+                    $$ I = \int \sin(t) \frac{dt}{2} = \frac{1}{2} \int \sin(t) dt $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Integrate and replace \(t\).<br>
+                    $$ I = \frac{1}{2} (-\cos t) + c = -\frac{1}{2} \cos(x^2) + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 3: Evaluate \(\int \frac{e^{\tan^{-1} x}}{1+x^2} dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> The derivative of \(\tan^{-1} x\) is \(\frac{1}{1+x^2}\). Let \( \tan^{-1} x = t \). Then \( \frac{1}{1+x^2} dx = dt \).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> The integral simplifies to:<br>
+                    $$ I = \int e^t dt $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Integrate and replace \(t\).<br>
+                    $$ I = e^t + c = e^{\tan^{-1} x} + c $$
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                3.4 Integration By Parts 
+                <span class="gu">ખંડશઃ સંકલન (ગુણાકારનો નિયમ)</span>
+            </h2>
+            <div class="bilingual-grid">
+                <div class="en-text">
+                    <strong>Integration by Parts:</strong> This method is used when two functions are multiplied together. It acts as the product rule for integration. The order in which you choose the first function (\(u\)) and the second function (\(v\)) is crucial and is determined by the <strong>LIATE</strong> rule.
+                </div>
+                <div class="gu-text">
+                    <strong>ખંડશઃ સંકલન:</strong> જ્યારે બે જુદા જુદા પ્રકારના વિધેયોનો ગુણાકાર આપ્યો હોય ત્યારે આ રીતનો ઉપયોગ થાય છે. આ સંકલન માટેના ગુણાકારનો નિયમ છે. પ્રથમ વિધેય (\(u\)) અને દ્વિતીય વિધેય (\(v\)) ની પસંદગી <strong>LIATE</strong> ના નિયમ મુજબ કરવામાં આવે છે.
+                </div>
+            </div>
+
+            <div class="formula-highlight-box" style="border-left-color: #1e3a8a; background-color: #eff6ff;">
+                <h4 style="color: #1e3a8a;">Formula for Integration by Parts / ખંડશઃ સંકલનનું સૂત્ર:</h4>
+                <p>If \(u\) and \(v\) are two functions of \(x\), then:</p>
+                <p>$$ \int u \cdot v \, dx = u \int v \, dx - \int \left( \frac{du}{dx} \int v \, dx \right) dx $$</p>
+                <p><strong>In Words:</strong> (First function) × (Integral of Second) - Integral of [ (Derivative of First) × (Integral of Second) ]</p>
+            </div>
+
+            <div style="background-color: #fdf2f8; padding: 20px; border-radius: 10px; margin: 0 0 2rem 0; border: 1px solid #fbcfe8; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <h3 style="color: #9d174d; margin-top: 0; display: flex; align-items: center;">
+                    <span style="font-size: 1.5em; margin-right: 10px;">💡</span> 
+                    The LIATE Rule (LIATE નો નિયમ)
+                </h3>
+                
+                <p style="color: #0f172a; margin-bottom: 15px;">
+                    The <strong>LIATE</strong> rule is used to decide which function should be \(u\) (the one to differentiate) and which should be \(v\) (the one to integrate). The function that comes <strong>first</strong> in the word LIATE is chosen as \( u \).
+                </p>
+
+                <ul style="line-height: 2; color: #1e293b; font-size: 16px; margin-bottom: 15px;">
+                    <li><strong>L</strong> = <strong>Logarithmic</strong> (લઘુગણકીય વિધેયો) &rarr; e.g., \( \log x, \ln x \)</li>
+                    <li><strong>I</strong> = <strong>Inverse Trigonometric</strong> (પ્રતિ-ત્રિકોણમિતિય વિધેયો) &rarr; e.g., \( \sin^{-1}x, \tan^{-1}x \)</li>
+                    <li><strong>A</strong> = <strong>Algebraic</strong> (બૈજિક વિધેયો) &rarr; e.g., \( x, x^2, x^3 \)</li>
+                    <li><strong>T</strong> = <strong>Trigonometric</strong> (ત્રિકોણમિતિય વિધેયો) &rarr; e.g., \( \sin x, \cos x \)</li>
+                    <li><strong>E</strong> = <strong>Exponential</strong> (ઘાતાંકીય વિધેયો) &rarr; e.g., \( e^x, 2^x \)</li>
+                </ul>
+                
+                <div style="background-color: #ffffff; padding: 10px 15px; border-left: 4px solid #9d174d; border-radius: 0 5px 5px 0;">
+                    <strong>Example (ઉદાહરણ):</strong> In \( \int x \log x \, dx \), we have \( x \) (Algebraic) and \( \log x \) (Logarithmic). Since 'L' comes before 'A' in the word LIATE, we take \( u = \log x \) and \( v = x \).
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 1: Evaluate \(\int x \log x dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> By LIATE, \(u = \log x\) and \(v = x\).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply the formula \( \int uv = u\int v - \int(u'\int v) \).<br>
+                    $$ I = (\log x) \int x dx - \int \left( \frac{d}{dx}(\log x) \int x dx \right) dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Execute integrals.<br>
+                    $$ I = (\log x)\left(\frac{x^2}{2}\right) - \int \frac{1}{x} \left(\frac{x^2}{2}\right) dx $$
+                    $$ I = \frac{x^2}{2} \log x - \frac{1}{2} \int x dx = \frac{x^2}{2} \log x - \frac{x^2}{4} + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 2: Evaluate \(\int x e^x dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> By LIATE, \(u = x\) (Algebraic) and \(v = e^x\) (Exponential).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply formula.<br>
+                    $$ I = x \int e^x dx - \int \left( \frac{d}{dx}(x) \int e^x dx \right) dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Evaluate.<br>
+                    $$ I = x e^x - \int (1 \cdot e^x) dx = x e^x - e^x + c = e^x(x - 1) + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 3: Evaluate \(\int x \sin x dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> By LIATE, \(u = x\) (A) and \(v = \sin x\) (T).
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply formula.<br>
+                    $$ I = x \int \sin x dx - \int \left( \frac{d}{dx}(x) \cdot \int \sin x dx \right) dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Evaluate.<br>
+                    $$ I = x (-\cos x) - \int 1(-\cos x) dx = -x\cos x + \int \cos x dx $$
+                    $$ I = -x\cos x + \sin x + c $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 4: Evaluate \(\int x^2 e^x dx\) (Requires two applications)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> By LIATE, \(u = x^2\) and \(v = e^x\).<br>
+                    $$ I = x^2 e^x - \int (2x \cdot e^x) dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> We must use By Parts again on \( \int 2x e^x dx \). Let \(u=2x\) and \(v=e^x\).<br>
+                    $$ \int 2x e^x dx = 2x e^x - \int (2 \cdot e^x) dx = 2x e^x - 2e^x $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Substitute back into Step 1.<br>
+                    $$ I = x^2 e^x - (2x e^x - 2e^x) + c = e^x(x^2 - 2x + 2) + c $$
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                3.5 Definite Integral & Properties
+                <span class="gu">નિયત સંકલિત અને ગુણધર્મો</span>
+            </h2>
+            <div class="bilingual-grid">
+                <div class="en-text">
+                    <strong>Definite Integral:</strong> A definite integral has upper and lower limits. It calculates the exact net area under a curve between those two points. No constant of integration (\(+c\)) is needed.
+                </div>
+                <div class="gu-text">
+                    <strong>નિયત સંકલિત:</strong> નિયત સંકલનમાં ઉપલી અને નીચલી સીમાઓ આપેલી હોય છે. તે આપેલ વક્રના નીચેના ક્ષેત્રફળની ચોક્કસ કિંમત આપે છે. તેમાં સંકલનનો અચળાંક (\(+c\)) મુકાતો નથી.
+                </div>
+            </div>
+
+            <div class="formula-highlight-box">
+                <h4>Fundamental Theorem of Calculus / મૂળભૂત પ્રમેય:</h4>
+                <p>$$ \int_{a}^{b} f(x) dx = [F(x)]_a^b = F(b) - F(a) $$</p>
+                <p>Where \( F(x) \) is the integral of \( f(x) \), \( b \) is the upper limit, and \( a \) is the lower limit.</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 1: Evaluate \(\int_{0}^{1} e^x dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Integrate without limits first.<br>
+                    $$ \int e^x dx = e^x $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Apply upper limit - lower limit.<br>
+                    $$ I = [e^x]_0^1 = e^1 - e^0 = e - 1 $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 2: Evaluate \(\int_{-1}^{1} (x^2 + 1) dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Integrate term by term.<br>
+                    $$ I = \left[ \frac{x^3}{3} + x \right]_{-1}^{1} $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Put limits: \( (\text{Upper}) - (\text{Lower}) \).<br>
+                    $$ I = \left( \frac{1^3}{3} + 1 \right) - \left( \frac{(-1)^3}{3} + (-1) \right) $$
+                    $$ I = \frac{4}{3} - \left(-\frac{4}{3}\right) = \frac{8}{3} $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 3: Evaluate \(\int_{0}^{\pi/2} \frac{\tan x}{\tan x + \cot x} dx\)</div>
+                <div class="step">
+                    <strong>Step 1:</strong> Let this be Equation 1. Use Property \(\int_0^a f(x) dx = \int_0^a f(a-x) dx\).<br>
+                    $$ I = \int_{0}^{\pi/2} \frac{\tan(\frac{\pi}{2}-x)}{\tan(\frac{\pi}{2}-x) + \cot(\frac{\pi}{2}-x)} dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Since \(\tan(\pi/2 - x) = \cot x\) and \(\cot(\pi/2 - x) = \tan x\):<br>
+                    $$ I = \int_{0}^{\pi/2} \frac{\cot x}{\cot x + \tan x} dx \quad \dots (2) $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Add Eq (1) and Eq (2).<br>
+                    $$ 2I = \int_{0}^{\pi/2} \frac{\tan x + \cot x}{\tan x + \cot x} dx = \int_0^{\pi/2} 1 dx = [x]_0^{\pi/2} = \frac{\pi}{2} \implies I = \frac{\pi}{4} $$
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                3.6 Applications: Area
+                <span class="gu">ઉપયોગો: ક્ષેત્રફળ</span>
+            </h2>
+            <div class="bilingual-grid">
+                <div class="en-text">
+                    <strong>Area Under a Curve:</strong> The area \(A\) bounded by the curve \(y = f(x)\), the x-axis, and the vertical lines \(x = a\) and \(x = b\) is given by the definite integral of \(f(x)\) from \(a\) to \(b\).
+                </div>
+                <div class="gu-text">
+                    <strong>વક્ર નીચેનું ક્ષેત્રફળ:</strong> વક્ર \(y = f(x)\), X-અક્ષ અને રેખાઓ \(x = a\), \(x = b\) વડે ઘેરાયેલા પ્રદેશનું ક્ષેત્રફળ એ \(a\) થી \(b\) સુધીના નિયત સંકલિત બરાબર થાય છે.
+                </div>
+            </div>
+
+            <div class="formula-highlight-box">
+                <h4>Area Formula / ક્ષેત્રફળનું સૂત્ર:</h4>
+                <p>$$ Area = \int_{a}^{b} y \, dx = \int_{a}^{b} f(x) \, dx $$</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 1: Area bounded by curve \(y = 3x^2\), lines \(x = 2, x = 3\) and X-axis.</div>
+                <div class="diagram-container">
+                    <svg width="250" height="150" viewBox="0 0 300 200">
+                        <line x1="20" y1="180" x2="280" y2="180" stroke="black" stroke-width="2" />
+                        <line x1="20" y1="20" x2="20" y2="180" stroke="black" stroke-width="2" />
+                        <path d="M 20 180 Q 150 160 250 40" fill="none" stroke="#be185d" stroke-width="3"/>
+                        <path d="M 120 180 L 120 150 Q 185 100 220 75 L 220 180 Z" fill="#059669" opacity="0.3"/>
+                        <line x1="120" y1="180" x2="120" y2="150" stroke="black" stroke-dasharray="4"/>
+                        <line x1="220" y1="180" x2="220" y2="75" stroke="black" stroke-dasharray="4"/>
+                        <text x="110" y="195" font-size="12">x=2</text><text x="210" y="195" font-size="12">x=3</text>
+                    </svg>
+                </div>
+                <div class="step">
+                    $$ A = \int_{2}^{3} 3x^2 dx = 3 \left[ \frac{x^3}{3} \right]_2^3 = [x^3]_2^3 = 27 - 8 = 19 \text{ sq. units} $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Example 2: Find the area of circle \(x^2 + y^2 = a^2\) using integration.</div>
+                <div class="diagram-container">
+                    <svg width="200" height="200" viewBox="0 0 200 200">
+                        <line x1="10" y1="100" x2="190" y2="100" stroke="black" stroke-width="2" />
+                        <line x1="100" y1="10" x2="100" y2="190" stroke="black" stroke-width="2" />
+                        <circle cx="100" cy="100" r="70" fill="none" stroke="#be185d" stroke-width="3"/>
+                        <path d="M 100 100 L 170 100 A 70 70 0 0 0 100 30 Z" fill="#059669" opacity="0.3"/>
+                        <text x="165" y="115" font-size="12">x=a</text><text x="105" y="25" font-size="12">y=a</text>
+                    </svg>
+                </div>
+                <div class="step">
+                    <strong>Step 1:</strong> Find the area of the first quadrant and multiply by 4. In Q1, \( y = \sqrt{a^2 - x^2} \).<br>
+                    $$ A = 4 \times \int_{0}^{a} \sqrt{a^2 - x^2} dx $$
+                </div>
+                <div class="step">
+                    <strong>Step 2:</strong> Use standard formula \(\int \sqrt{a^2 - x^2} dx = \frac{x}{2}\sqrt{a^2-x^2} + \frac{a^2}{2}\sin^{-1}(\frac{x}{a})\).<br>
+                    $$ A = 4 \left[ \frac{x}{2}\sqrt{a^2-x^2} + \frac{a^2}{2}\sin^{-1}\left(\frac{x}{a}\right) \right]_0^a $$
+                </div>
+                <div class="step">
+                    <strong>Step 3:</strong> Apply limits.<br>
+                    $$ A = 4 \left[ (0 + \frac{a^2}{2}\sin^{-1}(1)) - (0 + 0) \right] = 4 \left( \frac{a^2}{2} \cdot \frac{\pi}{2} \right) = \pi a^2 $$
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                Applications: Volume of Solid of Revolution
+                <span class="gu">ઉપયોગો: પરિભ્રમણથી બનતા ઘનનું ઘનફળ</span>
+            </h2>
+            <div class="bilingual-grid">
+                <div class="en-text">
+                    <strong>Volume of Revolution:</strong> When a curve \(y = f(x)\) is rotated 360° around the x-axis, it creates a 3D solid. The volume of this solid is calculated by integrating the area of circular slices (\(\pi y^2\)).
+                </div>
+                <div class="gu-text">
+                    <strong>પરિભ્રમણ ઘનફળ:</strong> જ્યારે વક્ર \(y = f(x)\) ને X-અક્ષની આસપાસ 360° પરિભ્રમણ કરાવવામાં આવે છે, ત્યારે એક ઘન આકાર બને છે. આ આકારનું ઘનફળ શોધવા માટે વર્તુળાકાર આડછેદ (\(\pi y^2\)) નું સંકલન કરવામાં આવે છે.
+                </div>
+            </div>
+
+            <div class="formula-highlight-box">
+                <h4>Volume Formula / ઘનફળનું સૂત્ર:</h4>
+                <p>$$ Volume = \pi \int_{a}^{b} y^2 \, dx = \pi \int_{a}^{b} [f(x)]^2 \, dx $$</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">1. Volume of a Cylinder (નળાકારનું ઘનફળ)</div>
+                <p>Revolve the line \(y = r\) around the x-axis from \(x=0\) to \(x=h\).</p>
+                <div class="diagram-container">
+                    <svg width="300" height="150" viewBox="0 0 300 150">
+                        <line x1="20" y1="75" x2="280" y2="75" stroke="black" stroke-width="1" stroke-dasharray="4"/>
+                        <ellipse cx="60" cy="75" rx="15" ry="40" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+                        <ellipse cx="240" cy="75" rx="15" ry="40" fill="#bae6fd" opacity="0.5" stroke="#1e3a8a" stroke-width="2"/>
+                        <line x1="60" y1="35" x2="240" y2="35" stroke="#1e3a8a" stroke-width="2"/>
+                        <line x1="60" y1="115" x2="240" y2="115" stroke="#1e3a8a" stroke-width="2"/>
+                        <text x="140" y="25" font-size="12">y = r</text>
+                        <text x="140" y="95" font-size="12">h</text>
+                    </svg>
+                </div>
+                <div class="step">
+                    $$ V = \pi \int_0^h (r)^2 dx = \pi r^2 \int_0^h 1 dx $$
+                    $$ V = \pi r^2 [x]_0^h = \pi r^2 h $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">2. Volume of a Cone (શંકુનું ઘનફળ)</div>
+                <p>Revolve the line \(y = \frac{r}{h}x\) around the x-axis from \(x=0\) to \(x=h\).</p>
+                <div class="diagram-container">
+                    <svg width="300" height="150" viewBox="0 0 300 150">
+                        <line x1="20" y1="75" x2="280" y2="75" stroke="black" stroke-width="1" stroke-dasharray="4"/>
+                        <ellipse cx="240" cy="75" rx="15" ry="50" fill="#bae6fd" opacity="0.5" stroke="#059669" stroke-width="2"/>
+                        <line x1="60" y1="75" x2="240" y2="25" stroke="#059669" stroke-width="2"/>
+                        <line x1="60" y1="75" x2="240" y2="125" stroke="#059669" stroke-width="2"/>
+                        <text x="130" y="40" font-size="12">y = (r/h)x</text>
+                    </svg>
+                </div>
+                <div class="step">
+                    $$ V = \pi \int_0^h \left(\frac{r}{h}x\right)^2 dx = \pi \frac{r^2}{h^2} \int_0^h x^2 dx $$
+                    $$ V = \pi \frac{r^2}{h^2} \left[ \frac{x^3}{3} \right]_0^h = \frac{1}{3} \pi r^2 h $$
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">3. Volume of a Sphere (ગોલકનું ઘનફળ)</div>
+                <p>Revolve the semicircle \(y = \sqrt{r^2 - x^2}\) around the x-axis from \(x=-r\) to \(x=r\).</p>
+                <div class="diagram-container">
+                    <svg width="200" height="200" viewBox="0 0 200 200">
+                        <line x1="10" y1="100" x2="190" y2="100" stroke="black" stroke-width="1" stroke-dasharray="4"/>
+                        <circle cx="100" cy="100" r="70" fill="#bae6fd" opacity="0.3" stroke="#be185d" stroke-width="2"/>
+                        <ellipse cx="100" cy="100" rx="70" ry="20" fill="none" stroke="#be185d" stroke-width="1" stroke-dasharray="4"/>
+                        <text x="90" y="20" font-size="12">y = √(r² - x²)</text>
+                        <text x="20" y="115" font-size="12">-r</text><text x="170" y="115" font-size="12">r</text>
+                    </svg>
+                </div>
+                <div class="step">
+                    $$ V = \pi \int_{-r}^r (r^2 - x^2) dx = \pi \left[ r^2 x - \frac{x^3}{3} \right]_{-r}^r = \frac{4}{3} \pi r^3 $$
+                </div>
+            </div>
+        </div>
+
+        <div class="section lab-section" id="interactive-lab">
+            <h2 class="section-title" style="border-bottom-color: var(--accent);">
+                Advanced Symbolic Calculator Lab
+                <span class="gu" style="color: var(--accent);">એડવાન્સ સ્ટુડન્ટ કેલ્ક્યુલેટર લેબ</span>
+            </h2>
+            
+            <div class="bilingual-grid" style="margin-bottom: 2rem;">
+                <div class="en-text">
+                    <strong>Universal Algebra Engine:</strong> Just type naturally! This tool understands student typing like <code>x sin(x)</code>, <code>e^x</code>, <code>sin^-1(x)</code>, or <code>x^2 e^x</code>. It will automatically reformat your input, recommend the method, and solve it exactly!
+                </div>
+                <div class="gu-text">
+                    <strong>યુનિવર્સલ અલ્જેબ્રા એન્જિન:</strong> ફક્ત સ્વાભાવિક રીતે ટાઇપ કરો! આ ટૂલ <code>x sin(x)</code>, <code>e^x</code>, <code>sin^-1(x)</code> જેવી સ્ટુડન્ટ ટાઇપિંગ સમજે છે. તે યોગ્ય પદ્ધતિની ભલામણ કરશે અને ચોક્કસ ઉકેલ આપશે!
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <div class="input-group">
+                    <label>Enter Any Function \(f(x)\):</label>
+                    <input type="text" id="advanced-function" placeholder="e.g. x sin(x)  OR  e^x / (x+1)  OR  sin^-1(x)" value="x^2 e^x">
+                    <small style="color:var(--text-light); margin-top:5px; display:block;">Try typing: <code>x^2 e^x</code>, <code>sin(x)^2</code>, <code>1/(x^2 - 1)</code>, <code>x log(x)</code>, <code>sin^-1(x)</code>, <code>e^x sin(x)</code></small>
+                </div>
+
+                <div class="input-group flex-row">
+                    <div>
+                        <label>Integration Type / પ્રકાર:</label>
+                        <select id="adv-calc-type" onchange="toggleAdvLimits()">
+                            <option value="indefinite">Indefinite (અનિયત)</option>
+                            <option value="definite">Definite (નિયત)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group flex-row" id="adv-lab-limits" style="display:none;">
+                    <div>
+                        <label>Lower Limit (a):</label>
+                        <input type="text" id="adv-lab-lower" value="0">
+                    </div>
+                    <div>
+                        <label>Upper Limit (b):</label>
+                        <input type="text" id="adv-lab-upper" value="pi">
+                    </div>
+                </div>
+
+                <button onclick="calculateAdvancedIntegration()">Solve via Symbolic Engine / ઉકેલ મેળવો</button>
+            </div>
+
+            <div id="solution-output"></div>
+        </div>
+
+    </div>
+
+<footer class="page-footer">
+    <div class="visit-counter" style="margin-bottom: 5px;">
+        This Page Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FIntegration-Learning-Module&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+    </div>
+
+    <div class="visit-counter" style="margin-bottom: 15px;">
+        Total Site Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+    </div>
+    
+    <div class="copyright">
+        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+    </div>
+</footer>
+    <script>
+        // Page Visit Counter
+        document.addEventListener("DOMContentLoaded", () => {
+            let count = localStorage.getItem("math_site_visits");
+            count = count ? parseInt(count) + 1 : 1;
+            localStorage.setItem("math_site_visits", count);
+            // Note: The visual counter is handled by visitorbadge.io now, but kept local storage intact for your logic.
+        });
+
+        function toggleAdvLimits() {
+            const type = document.getElementById('adv-calc-type').value;
+            document.getElementById('adv-lab-limits').style.display = type === 'definite' ? 'flex' : 'none';
+        }
+
+        // Smart Input Pre-Processor for Student-friendly typing
+        function formatStudentInput(str) {
+            let s = str.toLowerCase();
+            
+            // 1. Inverse Trig Functions (sin^-1 x -> asin(x))
+            s = s.replace(/sin\^-1\s*\(?/g, 'asin(');
+            s = s.replace(/cos\^-1\s*\(?/g, 'acos(');
+            s = s.replace(/tan\^-1\s*\(?/g, 'atan(');
+            
+            // 2. Implicit multiplication (e.g. "x sin(x)" -> "x*sin(x)")
+            s = s.replace(/([x0-9])\s+(sin|cos|tan|log|ln|exp|asin|acos|atan)/g, '$1*$2');
+            
+            return s;
+        }
+
+        // Method Analyzer heuristics based on string matching
+        function analyzeFunction(funcStr) {
+            let methods = [];
+            if(funcStr.includes('*') && (funcStr.includes('sin') || funcStr.includes('cos') || funcStr.includes('exp') || funcStr.includes('log') || funcStr.includes('e^'))) {
+                methods.push("Product Rule / By Parts (LIATE) - ખંડશઃ સંકલન");
+            }
+            if(funcStr.includes('/') && funcStr.includes('(') && funcStr.includes(')')) {
+                methods.push("Rational / Partial Fractions (આંશિક અપૂર્ણાંક) or Substitution");
+            }
+            if((funcStr.includes('sin') || funcStr.includes('cos') || funcStr.includes('tan')) && funcStr.includes('^')) {
+                methods.push("Trigonometric Identities (ત્રિકોણમિતીય નિત્યસમ)");
+            }
+            if(funcStr.includes('log') || funcStr.includes('exp') || funcStr.includes('e^')) {
+                methods.push("Substitution Method (આદેશની રીત)");
+            }
+            if(methods.length === 0) {
+                methods.push("Standard Polynomial Power Rules (મૂળભૂત નિયમો)");
+            }
+            return methods;
+        }
+
+        function calculateAdvancedIntegration() {
+            const rawInput = document.getElementById('advanced-function').value;
+            const type = document.getElementById('adv-calc-type').value;
+            const lowerStr = document.getElementById('adv-lab-lower').value;
+            const upperStr = document.getElementById('adv-lab-upper').value;
+            const output = document.getElementById('solution-output');
+
+            if (!rawInput.trim()) {
+                output.innerHTML = "<p style='color:red;'>Please enter a function.</p>";
+                output.style.display = "block";
+                return;
+            }
+
+            try {
+                // Pre-process user typing (e.g. sin^-1, x sinx)
+                let mathFunc = formatStudentInput(rawInput);
+                
+                // 1. Clean formatting for LaTeX display
+                let inputTex = nerdamer(mathFunc).toTeX();
+                let limitsTex = type === 'definite' ? `_{${nerdamer(lowerStr).toTeX()}}^{${nerdamer(upperStr).toTeX()}}` : '';
+                
+                // 2. Analyze Method (using original input to catch e^x and spaces)
+                let recommendedMethods = analyzeFunction(rawInput.toLowerCase());
+                let badges = recommendedMethods.map(m => `<span class="analysis-badge">Strategy: ${m}</span>`).join('');
+
+                // 3. Symbolic Integration via Nerdamer
+                let integralResult = nerdamer(`integrate(${mathFunc}, x)`);
+                let integralTex = integralResult.toTeX();
+
+                let stepsHTML = `
+                    <h3 style="color:var(--primary); margin-top:0;">Smart Symbolic Analysis:</h3>
+                    <div style="margin-bottom:1.5rem;">${badges}</div>
+                    
+                    <div class="step">
+                        <strong>Step 1: Setup Integral Form</strong><br>
+                        $$ I = \\int${limitsTex} \\left( ${inputTex} \\right) dx $$
+                    </div>
+
+                    <div class="step">
+                        <strong>Step 2: Apply Integration Rules & Execute</strong><br>
+                        Applying algebraic evaluation to find the antiderivative:
+                        $$ \\int \\left( ${inputTex} \\right) dx = ${integralTex} $$
+                    </div>
+                `;
+
+                // 4. Definite limit evaluation if requested
+                if (type === 'definite') {
+                    // Evaluate at upper
+                    let valUpper = nerdamer(integralResult.text(), {x: upperStr});
+                    // Evaluate at lower
+                    let valLower = nerdamer(integralResult.text(), {x: lowerStr});
+                    
+                    let finalAns = nerdamer(`${valUpper.text()} - (${valLower.text()})`).evaluate();
+                    let finalTex = finalAns.toTeX();
+                    let decVal = Number(finalAns.text()).toFixed(4);
+
+                    stepsHTML += `
+                    <div class="step">
+                        <strong>Step 3: Apply Limits (Fundamental Theorem)</strong><br>
+                        Substitute \\(x = ${upperStr}\\) and \\(x = ${lowerStr}\\).
+                        $$ I = \\left[ ${integralTex} \\right]_{${lowerStr}}^{${upperStr}} $$
+                        $$ I = (${valUpper.toTeX()}) - (${valLower.toTeX()}) $$
+                    </div>
+                    <div class="final-answer-box">
+                        Final Exact Answer: $$ I = ${finalTex} $$
+                        <span style="font-size:1rem; font-weight:normal; display:block; margin-top:5px;">Approx: ${decVal !== 'NaN' ? decVal : 'Symbolic Expression'}</span>
+                    </div>
+                    `;
+                } else {
+                    stepsHTML += `
+                    <div class="final-answer-box">
+                        Final Answer: $$ I = ${integralTex} + C $$
+                    </div>
+                    `;
+                }
+
+                output.innerHTML = stepsHTML;
+                output.style.display = "block";
+
+                if (window.MathJax) {
+                    MathJax.typesetPromise([output]);
+                }
+
+            } catch (err) {
+                console.error(err);
+                output.innerHTML = `
+                    <h3 style="color:red;">Calculation Error</h3>
+                    <p>Could not parse or integrate the function. Please ensure correct mathematical syntax.</p>
+                    <p><em>Tips: Ensure all brackets are closed. Inverse trig uses <code>sin^-1(x)</code> or <code>asin(x)</code>.</em></p>
+                `;
+                output.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

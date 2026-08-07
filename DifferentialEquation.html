@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Differential Equations Interactive Study Guide</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Mukta+Vaani:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-eng: #334155;
+            --text-guj: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .gujarati {
+            font-family: 'Mukta Vaani', sans-serif;
+            color: var(--text-guj);
+            font-size: 1.05rem;
+            margin-top: 5px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #818CF8);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin: 3rem 0 1.5rem 0;
+            font-size: 1.5rem;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .real-life-box {
+            background-color: #ECFDF5;
+            border-left: 5px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .example-card {
+            background: #F1F5F9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .example-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #CBD5E1;
+            padding-bottom: 0.5rem;
+        }
+
+        .step {
+            margin-bottom: 0.8rem;
+            padding-left: 1rem;
+            border-left: 2px dashed #94A3B8;
+        }
+
+        /* Enhanced Animations & Visuals */
+        .anim-wrapper {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .anim-container {
+            width: 100%;
+            height: 150px;
+            background: #E0E7FF;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .anim-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            z-index: 10;
+        }
+
+        /* 1. Spring Mass Animation (2nd Order DE: my'' + cy' + ky = 0) */
+        .spring {
+            stroke: var(--primary);
+            stroke-width: 3;
+            fill: none;
+            transform-origin: top;
+            animation: springStretch 2s infinite ease-in-out alternate;
+        }
+        .mass {
+            fill: var(--secondary);
+            animation: massMove 2s infinite ease-in-out alternate;
+        }
+        @keyframes springStretch {
+            0% { transform: scaleY(0.6); }
+            100% { transform: scaleY(1.4); }
+        }
+        @keyframes massMove {
+            0% { transform: translateY(-25px); }
+            100% { transform: translateY(25px); }
+        }
+
+        /* 2. Direction Field Animation (1st Order DE: dy/dx = f(x,y)) */
+        .slope-line {
+            stroke: #4F46E5;
+            stroke-width: 2;
+            stroke-linecap: round;
+            transform-origin: center;
+            animation: rotateField 4s infinite alternate ease-in-out;
+        }
+        @keyframes rotateField {
+            0% { transform: rotate(-20deg); stroke: #4F46E5; }
+            50% { transform: rotate(45deg); stroke: #10B981; }
+            100% { transform: rotate(90deg); stroke: #F59E0B; }
+        }
+
+        /* 3. Variable Separation Animation (Particles Sorting) */
+        .particle-x {
+            width: 12px; height: 12px; border-radius: 50%; background: var(--primary);
+            position: absolute; animation: sortX 3s infinite alternate ease-in-out;
+        }
+        .particle-y {
+            width: 12px; height: 12px; border-radius: 50%; background: var(--secondary);
+            position: absolute; animation: sortY 3s infinite alternate ease-in-out;
+        }
+        @keyframes sortX {
+            0% { left: 50%; top: 50%; opacity: 0.5; }
+            100% { left: 20%; top: calc(30% + 40% * var(--rand)); opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes sortY {
+            0% { left: 50%; top: 50%; opacity: 0.5; }
+            100% { left: 80%; top: calc(30% + 40% * var(--rand)); opacity: 1; transform: scale(1.2); }
+        }
+        .separator-line {
+            width: 2px; height: 80%; background: #94A3B8; border-radius: 2px;
+            animation: pulseLine 1.5s infinite alternate;
+        }
+        @keyframes pulseLine { 0% { opacity: 0.3; } 100% { opacity: 1; box-shadow: 0 0 10px #94A3B8; } }
+
+        /* 4. Linear DE Curve Family Animation (Integrating Factor) */
+        .curve-path {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 2;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawCurve 3s infinite linear;
+        }
+        .curve-path:nth-child(2) { stroke: var(--secondary); animation-delay: 0.5s; }
+        .curve-path:nth-child(3) { stroke: #F59E0B; animation-delay: 1s; }
+        @keyframes drawCurve {
+            0% { stroke-dashoffset: 200; opacity: 0; }
+            20% { opacity: 1; }
+            80% { stroke-dashoffset: 0; opacity: 1; }
+            100% { stroke-dashoffset: 0; opacity: 0; }
+        }
+
+        /* Interactive Lab */
+        .lab-section {
+            background: #1E293B;
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .lab-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #60A5FA;
+        }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        @media(max-width: 768px) {
+            .lab-grid { grid-template-columns: 1fr; }
+        }
+
+        .input-group {
+            background: #334155;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .input-field {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid #475569;
+            background: #1E293B;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        button.calc-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button.calc-btn:hover {
+            background: #059669;
+        }
+
+        .output-group {
+            background: #F8FAFC;
+            color: var(--dark);
+            padding: 2rem;
+            border-radius: 10px;
+            min-height: 300px;
+        }
+
+        .lab-equation-display {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #E2E8F0;
+            border-radius: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .counter {
+            background: #334155;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .copyright {
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
+    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
+        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+    </a>
+</nav>
+<header>
+    <h1>Unit 4: Differential Equations</h1>
+    <div class="gujarati" style="color: #E0E7FF; font-size: 1.3rem;">એકમ 4: વિકલ સમીકરણો</div>
+    <p style="margin-top: 10px;">Interactive Study Guide & Lab</p>
+</header>
+
+<div class="container">
+
+    <h2 class="section-title">
+        4.1 Concept and Definition, Order and Degree<br>
+        <span class="gujarati" style="color: #CBD5E1; font-size: 1.1rem;">વિકલ સમીકરણનો ખ્યાલ, વ્યાખ્યા, કક્ષા અને પરિમાણ</span>
+    </h2>
+
+    <div class="content-card">
+        
+        <div class="anim-wrapper">
+            <div class="anim-container">
+                <span class="anim-label">2nd Order DE (Oscillator)</span>
+                <svg width="60" height="150" viewBox="0 0 60 150">
+                    <line x1="10" y1="5" x2="50" y2="5" stroke="#334155" stroke-width="4"/>
+                    <path class="spring" d="M30,5 L30,20 L15,30 L45,40 L15,50 L45,60 L15,70 L45,80 L30,90 L30,100" />
+                    <rect class="mass" x="15" y="100" width="30" height="30" rx="4" />
+                </svg>
+            </div>
+            <div class="anim-container" style="background:#ECFDF5;">
+                <span class="anim-label">1st Order DE (Slope Field)</span>
+                <svg width="150" height="100" viewBox="0 0 150 100">
+                    <g class="slope-line" style="transform-origin: 25px 25px;"><line x1="15" y1="25" x2="35" y2="25"/></g>
+                    <g class="slope-line" style="transform-origin: 75px 25px;"><line x1="65" y1="25" x2="85" y2="25"/></g>
+                    <g class="slope-line" style="transform-origin: 125px 25px;"><line x1="115" y1="25" x2="135" y2="25"/></g>
+                    <g class="slope-line" style="transform-origin: 25px 75px;"><line x1="15" y1="75" x2="35" y2="75"/></g>
+                    <g class="slope-line" style="transform-origin: 75px 75px;"><line x1="65" y1="75" x2="85" y2="75"/></g>
+                    <g class="slope-line" style="transform-origin: 125px 75px;"><line x1="115" y1="75" x2="135" y2="75"/></g>
+                </svg>
+            </div>
+        </div>
+        
+        <h3>Definition <span class="gujarati">(વ્યાખ્યા)</span></h3>
+        <p>An equation involving independent variables, dependent variables, and their differential coefficients (derivatives) is called a differential equation.</p>
+        <p class="gujarati">ચલો (x, y) અને તેના વિકલિતો ($\frac{dy}{dx}, \frac{d^2y}{dx^2}, \dots$) વચ્ચેના વિધેયાત્મક સંબંધ ધરાવતા સમીકરણને વિકલ સમીકરણ કહે છે.</p>
+
+        <div style="margin-top: 1rem;">
+            <strong>Order (કક્ષા):</strong> The order of the highest order derivative present in the equation.<br>
+            <span class="gujarati">વિકલ સમીકરણમાં આવતા ઉચ્ચતમ કક્ષાના વિકલિતને તે સમીકરણની કક્ષા કહે છે.</span>
+        </div>
+        <div style="margin-top: 1rem;">
+            <strong>Degree (પરિમાણ):</strong> The power of the highest order derivative, provided the equation is a polynomial in its derivatives.<br>
+            <span class="gujarati">બહુપદી સ્વરૂપના વિકલ સમીકરણમાં આવતા ઉચ્ચતમ કક્ષાના વિકલિતની ઘાતને તે સમીકરણનું પરિમાણ કહે છે.</span>
+        </div>
+
+        <div class="real-life-box">
+            <strong>Real-Life Application <span class="gujarati">(વાસ્તવિક જીવનમાં ઉપયોગ)</span>:</strong><br>
+            Differential equations are used to model the swinging of a pendulum (physics), population growth in biology, and the cooling of a hot cup of coffee over time (Newton's Law of Cooling).<br>
+            <span class="gujarati">ભૌતિકશાસ્ત્રમાં લોલકની ગતિ, જીવવિજ્ઞાનમાં વસ્તી વધારો અને ગરમ કોફીના ઠંડા પડવાના દરની ગણતરી કરવા માટે વિકલ સમીકરણોનો ઉપયોગ થાય છે.</span>
+        </div>
+
+        <h3>Solved Examples <span class="gujarati">(ઉકેલેલા ઉદાહરણો)</span></h3>
+        <div class="example-grid">
+            <div class="example-card">
+                <h4>Example 1</h4>
+                <div class="step">
+                    Find Order and Degree: <br>
+                    $$ x\left(\frac{dy}{dx}\right) + \cos\left(\frac{d^2y}{dx^2}\right) = 0 $$
+                </div>
+                <div class="step">
+                    <strong>Order (કક્ષા):</strong> 2 <br>(Highest derivative is $\frac{d^2y}{dx^2}$)
+                </div>
+                <div class="step">
+                    <strong>Degree (પરિમાણ):</strong> Not Defined <span class="gujarati">(વ્યાખ્યાયિત નથી)</span> <br>
+                    (Because the derivative is inside a cosine function, not a polynomial).
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 2</h4>
+                <div class="step">
+                    Find Order and Degree: <br>
+                    $$ \left(\frac{d^2y}{dx^2}\right)^4 + 3\left(\frac{dy}{dx}\right)^5 + 7y = 0 $$
+                </div>
+                <div class="step">
+                    <strong>Order (કક્ષા):</strong> 2
+                </div>
+                <div class="step">
+                    <strong>Degree (પરિમાણ):</strong> 4 <br>
+                    (The power of the highest derivative $\frac{d^2y}{dx^2}$ is 4).
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 3</h4>
+                <div class="step">
+                    Find Order and Degree: <br>
+                    $$ \left(\frac{d^3y}{dx^3}\right)^2 + \left(\frac{d^2y}{dx^2}\right)^4 + y = 0 $$
+                </div>
+                <div class="step">
+                    <strong>Order (કક્ષા):</strong> 3
+                </div>
+                <div class="step">
+                    <strong>Degree (પરિમાણ):</strong> 2
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 4</h4>
+                <div class="step">
+                    Find Order and Degree: <br>
+                    $$ \left(\frac{d^2y}{dx^2}\right)^2 + \left(\frac{d^2y}{dx^2}\right)^4 + 3\frac{dy}{dx} = 0 $$
+                </div>
+                <div class="step">
+                    <strong>Order (કક્ષા):</strong> 2
+                </div>
+                <div class="step">
+                    <strong>Degree (પરિમાણ):</strong> 4 <br>
+                    (Highest power of the highest derivative present).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">
+        4.2 Solution by Variable Separable Method<br>
+        <span class="gujarati" style="color: #CBD5E1; font-size: 1.1rem;">વિયોજનીય ચલની રીતથી ઉકેલ</span>
+    </h2>
+
+    <div class="content-card">
+        
+        <div class="anim-container" style="margin-bottom: 2rem;">
+            <span class="anim-label">Variable Separation Process</span>
+            <div class="particle-x" style="--rand: 0.1"></div>
+            <div class="particle-x" style="--rand: 0.5"></div>
+            <div class="particle-x" style="--rand: 0.9"></div>
+            
+            <div class="separator-line"></div>
+            
+            <div class="particle-y" style="--rand: 0.2"></div>
+            <div class="particle-y" style="--rand: 0.6"></div>
+            <div class="particle-y" style="--rand: 0.8"></div>
+            
+            <div style="position: absolute; left: 10%; font-weight: bold; color: var(--primary);">f(x)dx</div>
+            <div style="position: absolute; right: 10%; font-weight: bold; color: var(--secondary);">g(y)dy</div>
+        </div>
+
+        <h3>Concept <span class="gujarati">(ખ્યાલ)</span></h3>
+        <p>If a first-order differential equation can be written such that all terms containing $x$ are on one side with $dx$, and all terms containing $y$ are on the other side with $dy$, it can be solved by direct integration.</p>
+        <p class="gujarati">જો વિકલ સમીકરણને એવી રીતે લખી શકાય કે જ્યાં $x$ ના પદો $dx$ સાથે અને $y$ ના પદો $dy$ સાથે અલગ પડે, તો બંને બાજુ સંકલન કરીને ઉકેલ મેળવી શકાય છે.</p>
+
+        <div class="real-life-box">
+            <strong>Real-Life Application <span class="gujarati">(વાસ્તવિક જીવનમાં ઉપયોગ)</span>:</strong><br>
+            Used in calculating radioactive decay where the rate of decay of a substance is directly proportional to the amount of substance currently present ($\frac{dN}{dt} = -kN$).<br>
+            <span class="gujarati">કિરણોત્સર્ગી પદાર્થોના વિઘટનનો દર શોધવા માટે ઉપયોગી છે, જ્યાં વિઘટનનો દર હાજર જથ્થાના સમપ્રમાણમાં હોય છે.</span>
+        </div>
+
+        <h3>Solved Examples <span class="gujarati">(ઉકેલેલા ઉદાહરણો)</span></h3>
+        <div class="example-grid">
+            <div class="example-card">
+                <h4>Example 1</h4>
+                <div class="step">
+                    Solve: $$ \frac{dy}{dx} = \frac{y}{x} $$
+                </div>
+                <div class="step">
+                    Separate variables (ચલોને અલગ કરતા):<br>
+                    $$ \frac{1}{y}dy = \frac{1}{x}dx $$
+                </div>
+                <div class="step">
+                    Integrate both sides (બંને બાજુ સંકલન કરતા):<br>
+                    $$ \int \frac{1}{y}dy = \int \frac{1}{x}dx $$
+                    $$ \log|y| = \log|x| + \log|c| $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> $$ y = cx $$
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 2</h4>
+                <div class="step">
+                    Solve: $$ x\,dy + y\,dx = 0 $$
+                </div>
+                <div class="step">
+                    Separate variables:<br>
+                    $$ x\,dy = -y\,dx \implies \frac{1}{y}dy = -\frac{1}{x}dx $$
+                </div>
+                <div class="step">
+                    Integrate:<br>
+                    $$ \int \frac{1}{y}dy = -\int \frac{1}{x}dx $$
+                    $$ \log|y| = -\log|x| + \log|c| $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> <br>
+                    $$ \log(xy) = \log(c) \implies xy = c $$
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 3</h4>
+                <div class="step">
+                    Solve: $$ \frac{dy}{dx} = x^2 \cdot e^{-y} $$
+                </div>
+                <div class="step">
+                    Separate variables:<br>
+                    $$ e^y\,dy = x^2\,dx $$
+                </div>
+                <div class="step">
+                    Integrate:<br>
+                    $$ \int e^y\,dy = \int x^2\,dx $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> $$ e^y = \frac{x^3}{3} + c $$
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 4</h4>
+                <div class="step">
+                    Solve: $$ xy\,dy = (x+1)(y+1)dx $$
+                </div>
+                <div class="step">
+                    Separate variables:<br>
+                    $$ \frac{y}{y+1}dy = \frac{x+1}{x}dx $$
+                    $$ \left(1 - \frac{1}{y+1}\right)dy = \left(1 + \frac{1}{x}\right)dx $$
+                </div>
+                <div class="step">
+                    Integrate:<br>
+                    $$ \int \left(1 - \frac{1}{y+1}\right)dy = \int \left(1 + \frac{1}{x}\right)dx $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> <br>
+                    $$ y - \log|y+1| = x + \log|x| + c $$
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">
+        4.3 Solution of Linear Differential Equation<br>
+        <span class="gujarati" style="color: #CBD5E1; font-size: 1.1rem;">સુરેખ વિકલ સમીકરણનો ઉકેલ</span>
+    </h2>
+
+    <div class="content-card">
+        
+        <div class="anim-container" style="background:#FFFBEB; margin-bottom: 2rem;">
+            <span class="anim-label">Linear DE Family of Curves (y = ce^kx)</span>
+            <svg width="200" height="100" viewBox="0 0 200 100">
+                <line x1="10" y1="90" x2="190" y2="90" stroke="#94A3B8" stroke-width="2"/>
+                <line x1="10" y1="10" x2="10" y2="90" stroke="#94A3B8" stroke-width="2"/>
+                
+                <path class="curve-path" d="M10,80 Q100,70 180,10" />
+                <path class="curve-path" d="M10,80 Q100,80 180,40" />
+                <path class="curve-path" d="M10,80 Q100,85 180,60" />
+            </svg>
+        </div>
+
+        <h3>Concept <span class="gujarati">(ખ્યાલ)</span></h3>
+        <p>A first-order linear differential equation has the standard form: $$ \frac{dy}{dx} + Py = Q $$ where $P$ and $Q$ are functions of $x$ or constants.</p>
+        <p class="gujarati">સુરેખ વિકલ સમીકરણનું પ્રમાણિત સ્વરૂપ $\frac{dy}{dx} + Py = Q$ છે, જ્યાં $P$ અને $Q$ એ $x$ ના વિધેયો અથવા અચળાંક છે.</p>
+        
+        <p><strong>Step 1:</strong> Find Integrating Factor (I.F.) / સંકલ્યકારક અવયવ = $e^{\int P dx}$</p>
+        <p><strong>Step 2:</strong> General Solution is given by: $$ y \cdot (\text{I.F.}) = \int Q \cdot (\text{I.F.}) dx + c $$</p>
+
+        <div class="real-life-box">
+            <strong>Real-Life Application <span class="gujarati">(વાસ્તવિક જીવનમાં ઉપયોગ)</span>:</strong><br>
+            Extensively used in electrical engineering to analyze RC and RL circuits, determining how voltage and current change over time when a switch is closed.<br>
+            <span class="gujarati">ઇલેક્ટ્રિકલ એન્જિનિયરિંગમાં RC અને RL સર્કિટના વિશ્લેષણ માટે, વોલ્ટેજ અને કરંટનો સમય સાથેનો ફેરફાર જાણવા માટે વપરાય છે.</span>
+        </div>
+
+        <h3>Solved Examples <span class="gujarati">(ઉકેલેલા ઉદાહરણો)</span></h3>
+        <div class="example-grid">
+            <div class="example-card">
+                <h4>Example 1</h4>
+                <div class="step">
+                    Solve: $$ \frac{dy}{dx} + y = 3x $$
+                </div>
+                <div class="step">
+                    Here $P=1, Q=3x$.<br>
+                    I.F. $= e^{\int 1 dx} = e^x$
+                </div>
+                <div class="step">
+                    Solution: $$ y \cdot e^x = \int 3x \cdot e^x dx + c $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> <br>
+                    $$ y e^x = 3(xe^x - e^x) + c $$
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 2</h4>
+                <div class="step">
+                    Solve: $$ \frac{dy}{dx} + 2y = 3e^x $$
+                </div>
+                <div class="step">
+                    Here $P=2, Q=3e^x$.<br>
+                    I.F. $= e^{\int 2 dx} = e^{2x}$
+                </div>
+                <div class="step">
+                    Solution: $$ y \cdot e^{2x} = \int 3e^x \cdot e^{2x} dx $$
+                    $$ y e^{2x} = \int 3e^{3x} dx $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> $$ y e^{2x} = e^{3x} + c $$
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 3</h4>
+                <div class="step">
+                    Solve: $$ \frac{dy}{dx} - y\tan x = 1 $$
+                </div>
+                <div class="step">
+                    Here $P=-\tan x, Q=1$.<br>
+                    I.F. $= e^{\int -\tan x dx} = e^{\log|\cos x|} = \cos x$
+                </div>
+                <div class="step">
+                    Solution: $$ y \cdot \cos x = \int 1 \cdot \cos x dx + c $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> $$ y \cos x = \sin x + c $$
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h4>Example 4</h4>
+                <div class="step">
+                    Solve: $$ \frac{dy}{dx} + \frac{y}{x} = e^x $$
+                </div>
+                <div class="step">
+                    Here $P=\frac{1}{x}, Q=e^x$.<br>
+                    I.F. $= e^{\int \frac{1}{x} dx} = e^{\log x} = x$
+                </div>
+                <div class="step">
+                    Solution: $$ y \cdot x = \int x \cdot e^x dx + c $$
+                </div>
+                <div class="step">
+                    <strong>Final Answer:</strong> <br>
+                    $$ yx = x e^x - e^x + c $$
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lab-section">
+        <h2 class="lab-title">
+            ⚗️ Linear DE Step-by-Step Solver<br>
+            <span class="gujarati" style="color: #93C5FD; font-size: 1.2rem;">સુરેખ વિકલ સમીકરણ ઉકેલકર્તા ટૂલ</span>
+        </h2>
+        
+        <div class="lab-grid">
+            <div class="input-group">
+                <p style="margin-bottom: 1.5rem; color: #CBD5E1;">
+                    Solve equations of the standard form: <br>
+                    <span style="color:white; font-size:1.2rem; font-family:monospace;">dy/dx + [P]y = [Q]e<sup>[R]x</sup></span>
+                </p>
+
+                <div class="input-field">
+                    <label>Constant P (અચળાંક P):</label>
+                    <input type="number" id="inputP" value="2" step="any">
+                </div>
+                <div class="input-field">
+                    <label>Constant Q (અચળાંક Q):</label>
+                    <input type="number" id="inputQ" value="5" step="any">
+                </div>
+                <div class="input-field">
+                    <label>Constant R (અચળાંક R):</label>
+                    <input type="number" id="inputR" value="3" step="any">
+                </div>
+                <button class="calc-btn" onclick="solveEquation()">Calculate (ઉકેલ મેળવો)</button>
+            </div>
+
+            <div class="output-group" id="solutionBox">
+                <div style="text-align:center; color:#94A3B8; margin-top: 4rem;">
+                    <h3>Enter variables and click Calculate to see the magic!</h3>
+                    <p class="gujarati">ચલ દાખલ કરો અને ગણતરી બટન પર ક્લિક કરો.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="page-footer">
+    <div class="visit-counter" style="margin-bottom: 5px;">
+        This Page Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FDifferential-Equations-learning-Module&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+    </div>
+
+    <div class="visit-counter" style="margin-bottom: 15px;">
+        Total Site Visits: 
+        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+    </div>
+    
+    <div class="copyright">
+        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+    </div>
+</footer>
+<script>
+    // Page Visit Counter Logic
+    window.onload = function() {
+        let count = localStorage.getItem('pageVisits');
+        if (!count) {
+            count = 1;
+        } else {
+            count = parseInt(count) + 1;
+        }
+        localStorage.setItem('pageVisits', count);
+        document.getElementById('visitCount').innerText = count;
+    };
+
+    // Interactive Lab Logic
+    function solveEquation() {
+        const P = parseFloat(document.getElementById('inputP').value) || 0;
+        const Q = parseFloat(document.getElementById('inputQ').value) || 0;
+        const R = parseFloat(document.getElementById('inputR').value) || 0;
+        const solutionBox = document.getElementById('solutionBox');
+
+        // Formatting helpers
+        const signP = P >= 0 ? `+ ${P}` : `- ${Math.abs(P)}`;
+        const powerR = R === 1 ? 'x' : (R === -1 ? '-x' : `${R}x`);
+        const powerIF = P === 1 ? 'x' : (P === -1 ? '-x' : `${P}x`);
+        
+        let html = `
+            <div class="lab-equation-display">
+                $$ \\frac{dy}{dx} ${signP} y = ${Q} e^{${powerR}} $$
+            </div>
+            
+            <div style="margin-bottom:1rem;">
+                <strong>Step 1: Identify P and Q / તબક્કો 1: P અને Q ઓળખો</strong><br>
+                Comparing with standard form $\\frac{dy}{dx} + Py = Q(x)$:<br>
+                $$ P = ${P}, \\quad Q(x) = ${Q} e^{${powerR}} $$
+            </div>
+
+            <div style="margin-bottom:1rem;">
+                <strong>Step 2: Find Integrating Factor (I.F.) / તબક્કો 2: સંકલ્યકારક અવયવ શોધો</strong><br>
+                $$ \\text{I.F.} = e^{\\int P dx} = e^{\\int ${P} dx} = e^{${powerIF}} $$
+            </div>
+
+            <div style="margin-bottom:1rem;">
+                <strong>Step 3: Apply the Formula / તબક્કો 3: સૂત્રનો ઉપયોગ કરો</strong><br>
+                $$ y \\cdot (\\text{I.F.}) = \\int Q(x) \\cdot (\\text{I.F.}) dx + c $$
+                $$ y e^{${powerIF}} = \\int (${Q} e^{${powerR}}) (e^{${powerIF}}) dx $$
+            </div>
+        `;
+
+        const exponentSum = P + R;
+        const sumFormatted = exponentSum === 1 ? 'x' : (exponentSum === -1 ? '-x' : `${exponentSum}x`);
+
+        html += `
+            <div style="margin-bottom:1rem;">
+                <strong>Step 4: Integration / તબક્કો 4: સંકલન કરો</strong><br>
+                Combine the exponents: $e^{${powerR}} \\cdot e^{${powerIF}} = e^{${sumFormatted}}$ <br>
+                $$ y e^{${powerIF}} = ${Q} \\int e^{${sumFormatted}} dx $$
+        `;
+
+        if (exponentSum === 0) {
+            html += `
+                Since the exponent is 0, $e^0 = 1$: <br>
+                $$ y e^{${powerIF}} = ${Q} \\int 1 dx $$
+                $$ y e^{${powerIF}} = ${Q}x + c $$
+                <hr style="margin:1rem 0; border:1px solid #CBD5E1;">
+                <strong>Final Answer (અંતિમ જવાબ):</strong>
+                $$ y = (${Q}x + c) e^{-${powerIF}} $$
+            </div>`;
+        } else {
+            const coeff = Q / exponentSum;
+            const coeffFormatted = Number.isInteger(coeff) ? coeff : coeff.toFixed(4);
+            
+            html += `
+                $$ y e^{${powerIF}} = ${Q} \\left( \\frac{e^{${sumFormatted}}}{${exponentSum}} \\right) + c $$
+                $$ y e^{${powerIF}} = ${coeffFormatted} e^{${sumFormatted}} + c $$
+                <hr style="margin:1rem 0; border:1px solid #CBD5E1;">
+                <strong>Final Answer (અંતિમ જવાબ):</strong><br>
+                Divide by $e^{${powerIF}}$ to isolate y:
+                $$ y = ${coeffFormatted} e^{${powerR}} + c e^{-${powerIF}} $$
+            </div>`;
+        }
+
+        solutionBox.innerHTML = html;
+        
+        // Re-render MathJax
+        if (window.MathJax) {
+            MathJax.typesetPromise([solutionBox]).catch(function (err) {
+                console.error('MathJax error: ', err.message);
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
