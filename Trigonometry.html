@@ -29,6 +29,7 @@
             --text-main: #334155;
             --border: #e2e8f0;
             --formula-bg: #eef2ff;
+            --violet: #8b5cf6;
         }
 
         * {
@@ -44,6 +45,36 @@
             line-height: 1.6;
         }
 
+        /* Navigation */
+        .top-nav {
+            background-color: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 20px;
+        }
+        
+        .top-nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .gtu-badge {
+            background: linear-gradient(135deg, var(--primary), var(--violet));
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
         header {
             background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
@@ -53,7 +84,7 @@
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             margin-bottom: 0.5rem;
         }
 
@@ -97,7 +128,7 @@
 
         .topic-title h2 {
             color: var(--dark);
-            font-size: 1.6rem;
+            font-size: clamp(1.4rem, 3vw, 1.6rem);
         }
 
         .topic-title .gujarati {
@@ -160,6 +191,7 @@
             gap: 1rem;
         }
 
+        /* Overflow Fix for Formulas */
         .formula-item {
             background: #fff;
             padding: 1rem;
@@ -167,6 +199,8 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             font-size: 1.1rem;
+            min-width: 0; 
+            overflow-x: auto;
         }
 
         .examples-grid {
@@ -175,6 +209,7 @@
             gap: 1.5rem;
         }
 
+        /* Overflow Fix for Examples */
         .example-card {
             background: #fff;
             border: 1px solid var(--border);
@@ -182,6 +217,15 @@
             padding: 1.5rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             font-size: 0.95rem;
+            min-width: 0;
+            word-wrap: break-word;
+        }
+        
+        .example-card p {
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 4px;
         }
 
         .example-card h4 {
@@ -221,46 +265,76 @@
             border-radius: 8px;
             text-align: center;
             border-top: 3px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .input-group.alt1 { border-top-color: var(--secondary); }
         .input-group.alt2 { border-top-color: var(--accent); }
+        .input-group.alt3 { border-top-color: var(--violet); }
 
         .input-group h3 {
             font-size: 1.2rem;
             margin-bottom: 1rem;
         }
 
-        input[type="number"] {
-            width: 100px;
-            padding: 0.5rem;
-            border: 2px solid var(--secondary);
-            border-radius: 4px;
-            font-size: 1.1rem;
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        input[type="number"], select {
+            width: 110px;
+            padding: 0.6rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
             text-align: center;
             background: #fff;
-            margin: 0.5rem;
+            color: var(--dark);
+            min-height: 44px; /* Touch target */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: var(--secondary);
+        }
+
+        select {
+            width: auto;
+            cursor: pointer;
+            padding-right: 1.5rem;
         }
 
         button.btn-calc {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.8rem 1.5rem;
             font-size: 1rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: transform 0.1s, background 0.3s;
             width: 100%;
-            margin-top: 1rem;
+            margin-top: auto;
+            min-height: 44px;
         }
 
+        button.btn-calc:active { transform: scale(0.98); }
         button.btn-calc:hover { background: #4338ca; }
         .btn-calc.alt1 { background: var(--secondary); }
         .btn-calc.alt1:hover { background: #0284c7; }
         .btn-calc.alt2 { background: var(--accent); }
         .btn-calc.alt2:hover { background: #e11d48; }
+        .btn-calc.alt3 { background: var(--violet); }
+        .btn-calc.alt3:hover { background: #6d28d9; }
 
         .lab-output {
             background: #f8fafc;
@@ -270,6 +344,7 @@
             min-height: 250px;
             border-left: 5px solid var(--secondary);
             font-size: 1.1rem;
+            overflow-x: auto;
         }
 
         footer {
@@ -282,18 +357,29 @@
             align-items: center;
             flex-wrap: wrap;
             border-top: 4px solid var(--secondary);
+            gap: 15px;
         }
 
         .footer-left span { color: white; background: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; }
         .footer-right { color: var(--secondary); font-weight: bold;}
+        
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+            .topic-header { flex-direction: column; text-align: center; }
+            footer { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
-<nav style="background-color: #f8f9fa; padding: 12px 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; border-radius: 0 0 8px 8px;">
-    <a href="https://brp0587.github.io/Poly-math-home/" style="text-decoration: none; color: #2563eb; font-weight: bold; font-size: 16px;">
-        🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
-    </a>
-</nav>
+    <nav class="top-nav">
+        <a href="https://brp0587.github.io/Poly-math-home/">
+            🏠 Back to Home (મુખ્ય પૃષ્ઠ પર પાછા ફરો)
+        </a>
+        <div class="gtu-badge">
+            <i class="fas fa-check-circle"></i> GTU DI01000021 | Unit 2 (20%)
+        </div>
+    </nav>
+
     <header>
         <h1>2. Trigonometry Study Guide</h1>
         <p>ત્રિકોણમિતિ અભ્યાસ માર્ગદર્શિકા</p>
@@ -344,29 +430,25 @@
                     <h4>Example 1</h4>
                     <p>Convert $216^\circ$ to Radian.</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ 216^\circ \times \frac{\pi}{180^\circ} $$</p>
-                    <p>$$ = \frac{216}{180}\pi = \frac{6}{5}\pi $$</p>
+                    <p>$$ \begin{aligned} &= 216^\circ \times \frac{\pi}{180^\circ} \\ &= \frac{216}{180}\pi = \frac{6}{5}\pi \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 2</h4>
                     <p>Convert $450^\circ$ to Radian.</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ 450^\circ \times \frac{\pi}{180^\circ} $$</p>
-                    <p>$$ = \frac{450}{180}\pi = \frac{5}{2}\pi $$</p>
+                    <p>$$ \begin{aligned} &= 450^\circ \times \frac{\pi}{180^\circ} \\ &= \frac{450}{180}\pi = \frac{5}{2}\pi \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 3</h4>
                     <p>Convert $135^\circ$ to Radian.</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ 135^\circ \times \frac{\pi}{180^\circ} $$</p>
-                    <p>$$ = \frac{135}{180}\pi = \frac{3}{4}\pi $$</p>
+                    <p>$$ \begin{aligned} &= 135^\circ \times \frac{\pi}{180^\circ} \\ &= \frac{135}{180}\pi = \frac{3}{4}\pi \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 4</h4>
                     <p>Convert $\frac{2\pi}{3}$ radian to degree.</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ \frac{2\pi}{3} \times \frac{180^\circ}{\pi} $$</p>
-                    <p>$$ = 2 \times 60^\circ = 120^\circ $$</p>
+                    <p>$$ \begin{aligned} &= \frac{2\pi}{3} \times \frac{180^\circ}{\pi} \\ &= 2 \times 60^\circ = 120^\circ \end{aligned} $$</p>
                 </div>
             </div>
         </section>
@@ -394,16 +476,19 @@
 
             <!-- Formulas Box -->
             <div class="formula-box" style="background: #f0fdf4; border-color: #bbf7d0;">
-                <h3 style="color: #166534;">📖 Key Formulas / મહત્વના સૂત્રો (Fundamental Identities)</h3>
+                <h3 style="color: #166534;">📖 Key Formulas / મહત્વના સૂત્રો (Identities & Reciprocals)</h3>
                 <div class="formula-grid">
                     <div class="formula-item">
+                        <strong>Fundamental Identities:</strong><br>
                         $$ \sin^2 \theta + \cos^2 \theta = 1 $$
-                    </div>
-                    <div class="formula-item">
                         $$ 1 + \tan^2 \theta = \sec^2 \theta $$
+                        $$ 1 + \cot^2 \theta = \csc^2 \theta $$
                     </div>
                     <div class="formula-item">
-                        $$ 1 + \cot^2 \theta = \csc^2 \theta $$
+                        <strong>Reciprocal Relations:</strong><br>
+                        $$ \csc \theta = \frac{1}{\sin \theta} $$
+                        $$ \sec \theta = \frac{1}{\cos \theta} $$
+                        $$ \cot \theta = \frac{1}{\tan \theta} $$
                     </div>
                 </div>
             </div>
@@ -413,15 +498,13 @@
                     <h4>Example 1</h4>
                     <p>Evaluate: $\sin 120^\circ$</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ \sin(180^\circ - 60^\circ) = \sin 60^\circ $$</p>
-                    <p>$$ = \frac{\sqrt{3}}{2} $$</p>
+                    <p>$$ \begin{aligned} \sin(180^\circ - 60^\circ) &= \sin 60^\circ \\ &= \frac{\sqrt{3}}{2} \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 2</h4>
                     <p>Evaluate: $\sin 30^\circ + \cos 60^\circ$</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ \frac{1}{2} + \frac{1}{2} $$</p>
-                    <p>$$ = \frac{2}{2} = 1 $$</p>
+                    <p>$$ \begin{aligned} &= \frac{1}{2} + \frac{1}{2} \\ &= \frac{2}{2} = 1 \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 3</h4>
@@ -433,8 +516,7 @@
                     <h4>Example 4</h4>
                     <p>Evaluate: $\sin^2 40^\circ + \sin^2 50^\circ$</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ \sin^2 40^\circ + \sin^2(90^\circ - 40^\circ) $$</p>
-                    <p>$$ = \sin^2 40^\circ + \cos^2 40^\circ = 1 $$</p>
+                    <p>$$ \begin{aligned} &= \sin^2 40^\circ + \sin^2(90^\circ - 40^\circ) \\ &= \sin^2 40^\circ + \cos^2 40^\circ = 1 \end{aligned} $$</p>
                 </div>
             </div>
         </section>
@@ -465,16 +547,25 @@
                 <h3 style="color: var(--accent);">📖 Key Formulas / મહત્વના સૂત્રો</h3>
                 <div class="formula-grid">
                     <div class="formula-item">
-                        <strong>Compound Angles:</strong><br>
+                        <strong>Compound Angles (સંયુક્ત ખૂણાઓ):</strong><br>
                         $$ \sin(A \pm B) = \sin A \cos B \pm \cos A \sin B $$
                         $$ \cos(A \pm B) = \cos A \cos B \mp \sin A \sin B $$
                         $$ \tan(A \pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A \tan B} $$
                     </div>
                     <div class="formula-item">
-                        <strong>Multiple Angles:</strong><br>
+                        <strong>Multiple Angles (ગુણિત ખૂણાઓ):</strong><br>
                         $$ \sin 2A = 2\sin A\cos A = \frac{2\tan A}{1+\tan^2 A} $$
                         $$ \cos 2A = \cos^2 A - \sin^2 A = \frac{1-\tan^2 A}{1+\tan^2 A} $$
                         $$ \tan 2A = \frac{2\tan A}{1-\tan^2 A} $$
+                        $$ \sin 3A = 3\sin A - 4\sin^3 A $$
+                        $$ \cos 3A = 4\cos^3 A - 3\cos A $$
+                    </div>
+                    <div class="formula-item">
+                        <strong>Submultiple Angles (ઉપગુણિત ખૂણાઓ):</strong><br>
+                        $$ \sin A = 2\sin\left(\frac{A}{2}\right)\cos\left(\frac{A}{2}\right) $$
+                        $$ \cos A = \cos^2\left(\frac{A}{2}\right) - \sin^2\left(\frac{A}{2}\right) $$
+                        $$ 1 - \cos A = 2\sin^2\left(\frac{A}{2}\right) $$
+                        $$ 1 + \cos A = 2\cos^2\left(\frac{A}{2}\right) $$
                     </div>
                 </div>
             </div>
@@ -484,8 +575,7 @@
                     <h4>Example 1</h4>
                     <p>If $\tan \theta = \frac{3}{4}$ then find $\tan 2\theta$</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ \tan 2\theta = \frac{2\tan\theta}{1 - \tan^2\theta} $$</p>
-                    <p>$$ = \frac{2(3/4)}{1 - (9/16)} = \frac{3/2}{7/16} = \frac{24}{7} $$</p>
+                    <p>$$ \begin{aligned} \tan 2\theta &= \frac{2\tan\theta}{1 - \tan^2\theta} \\ &= \frac{2(3/4)}{1 - (9/16)} \\ &= \frac{3/2}{7/16} = \frac{24}{7} \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 2</h4>
@@ -499,15 +589,13 @@
                     <p>Prove: $\frac{\cos 10^\circ + \sin 10^\circ}{\cos 10^\circ - \sin 10^\circ} = \tan 55^\circ$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Divide numerator and denominator by $\cos 10^\circ$:</p>
-                    <p>$$ \frac{1 + \tan 10^\circ}{1 - \tan 10^\circ} = \frac{\tan 45^\circ + \tan 10^\circ}{1 - \tan 45^\circ\tan 10^\circ} $$</p>
-                    <p>$$ = \tan(45^\circ + 10^\circ) = \tan 55^\circ $$</p>
+                    <p>$$ \begin{aligned} &= \frac{1 + \tan 10^\circ}{1 - \tan 10^\circ} \\ &= \frac{\tan 45^\circ + \tan 10^\circ}{1 - \tan 45^\circ\tan 10^\circ} \\ &= \tan(45^\circ + 10^\circ) = \tan 55^\circ \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 4</h4>
                     <p>Prove: $(1+\tan 20^\circ)(1+\tan 25^\circ) = 2$</p>
                     <p><strong>Solution:</strong></p>
-                    <p>$$ \tan(20^\circ+25^\circ) = \frac{\tan 20^\circ+\tan 25^\circ}{1-\tan 20^\circ\tan 25^\circ} $$</p>
-                    <p>$$ \tan 45^\circ(1-\tan 20^\circ\tan 25^\circ) = \tan 20^\circ+\tan 25^\circ $$</p>
+                    <p>$$ \begin{aligned} \tan(20^\circ+25^\circ) &= \frac{\tan 20^\circ+\tan 25^\circ}{1-\tan 20^\circ\tan 25^\circ} \\ \tan 45^\circ(1-\tan 20^\circ\tan 25^\circ) &= \tan 20^\circ+\tan 25^\circ \end{aligned} $$</p>
                     <p>Substitute back into expansion: Result = $2$.</p>
                 </div>
             </div>
@@ -633,8 +721,7 @@
                     <p>Find Principal period of $2\sin\theta\cos\theta$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Simplify using double angle formula:</p>
-                    <p>$$ 2\sin\theta\cos\theta = \sin(2\theta) $$</p>
-                    <p>$$ \text{Period} = \frac{2\pi}{2} = \pi $$</p>
+                    <p>$$ \begin{aligned} 2\sin\theta\cos\theta &= \sin(2\theta) \\ \text{Period} &= \frac{2\pi}{2} = \pi \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 3</h4>
@@ -677,14 +764,18 @@
                 <h3 style="color: #b45309;">📖 Key Formulas / મહત્વના સૂત્રો</h3>
                 <div class="formula-grid">
                     <div class="formula-item">
-                        <strong>Sum to Product (S & C):</strong><br>
+                        <strong>Sum to Product (C & D):</strong><br>
                         $$ \sin C + \sin D = 2\sin\left(\frac{C+D}{2}\right)\cos\left(\frac{C-D}{2}\right) $$
+                        $$ \sin C - \sin D = 2\cos\left(\frac{C+D}{2}\right)\sin\left(\frac{C-D}{2}\right) $$
                         $$ \cos C + \cos D = 2\cos\left(\frac{C+D}{2}\right)\cos\left(\frac{C-D}{2}\right) $$
+                        $$ \cos C - \cos D = -2\sin\left(\frac{C+D}{2}\right)\sin\left(\frac{C-D}{2}\right) $$
                     </div>
                     <div class="formula-item">
                         <strong>Product to Sum:</strong><br>
                         $$ 2\sin A\cos B = \sin(A+B) + \sin(A-B) $$
+                        $$ 2\cos A\sin B = \sin(A+B) - \sin(A-B) $$
                         $$ 2\cos A\cos B = \cos(A+B) + \cos(A-B) $$
+                        $$ 2\sin A\sin B = \cos(A-B) - \cos(A+B) $$
                     </div>
                 </div>
             </div>
@@ -695,16 +786,14 @@
                     <p>Prove: $\frac{\sin A + \sin 2A + \sin 3A}{\cos A + \cos 2A + \cos 3A} = \tan 2A$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Group terms: $\frac{(\sin 3A + \sin A) + \sin 2A}{(\cos 3A + \cos A) + \cos 2A}$</p>
-                    <p>$$ = \frac{2\sin 2A\cos A + \sin 2A}{2\cos 2A\cos A + \cos 2A} $$</p>
-                    <p>$$ = \frac{\sin 2A(2\cos A + 1)}{\cos 2A(2\cos A + 1)} = \tan 2A $$</p>
+                    <p>$$ \begin{aligned} &= \frac{2\sin 2A\cos A + \sin 2A}{2\cos 2A\cos A + \cos 2A} \\ &= \frac{\sin 2A(2\cos A + 1)}{\cos 2A(2\cos A + 1)} = \tan 2A \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 2</h4>
                     <p>Prove: $\frac{\cos \theta + \cos 3\theta + \cos 5\theta}{\sin \theta + \sin 3\theta + \sin 5\theta} = \cot 3\theta$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Group first and last terms:</p>
-                    <p>$$ = \frac{2\cos 3\theta\cos 2\theta + \cos 3\theta}{2\sin 3\theta\cos 2\theta + \sin 3\theta} $$</p>
-                    <p>$$ = \frac{\cos 3\theta(2\cos 2\theta + 1)}{\sin 3\theta(2\cos 2\theta + 1)} = \cot 3\theta $$</p>
+                    <p>$$ \begin{aligned} &= \frac{2\cos 3\theta\cos 2\theta + \cos 3\theta}{2\sin 3\theta\cos 2\theta + \sin 3\theta} \\ &= \frac{\cos 3\theta(2\cos 2\theta + 1)}{\sin 3\theta(2\cos 2\theta + 1)} = \cot 3\theta \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 3</h4>
@@ -719,8 +808,7 @@
                     <p>Prove: $\frac{\sin \theta + \sin 2\theta + \sin 4\theta + \sin 5\theta}{\cos \theta + \cos 2\theta + \cos 4\theta + \cos 5\theta} = \tan 3\theta$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Group $(1, 5)$ and $(2, 4)$:</p>
-                    <p>$$ = \frac{2\sin 3\theta\cos 2\theta + 2\sin 3\theta\cos(-\theta)}{2\cos 3\theta\cos 2\theta + 2\cos 3\theta\cos(-\theta)} $$</p>
-                    <p>$$ = \frac{\sin 3\theta(\cos 2\theta + \cos\theta)}{\cos 3\theta(\cos 2\theta + \cos\theta)} = \tan 3\theta $$</p>
+                    <p>$$ \begin{aligned} &= \frac{2\sin 3\theta\cos 2\theta + 2\sin 3\theta\cos(-\theta)}{2\cos 3\theta\cos 2\theta + 2\cos 3\theta\cos(-\theta)} \\ &= \frac{\sin 3\theta(\cos 2\theta + \cos\theta)}{\cos 3\theta(\cos 2\theta + \cos\theta)} = \tan 3\theta \end{aligned} $$</p>
                 </div>
             </div>
         </section>
@@ -756,9 +844,12 @@
                         $$ \tan^{-1} x + \cot^{-1} x = \frac{\pi}{2} $$
                     </div>
                     <div class="formula-item">
-                        <strong>Addition Formula:</strong><br>
+                        <strong>Addition & Subtraction Formula:</strong><br>
                         $$ \tan^{-1} x + \tan^{-1} y = \tan^{-1}\left(\frac{x+y}{1-xy}\right) $$
                         *(Condition: xy < 1)*
+                        <br><br>
+                        $$ \tan^{-1} x - \tan^{-1} y = \tan^{-1}\left(\frac{x-y}{1+xy}\right) $$
+                        *(Condition: xy > -1)*
                     </div>
                 </div>
             </div>
@@ -776,8 +867,7 @@
                     <p>Prove that $\tan^{-1}(\frac{1}{2}) + \tan^{-1}(\frac{1}{3}) = \frac{\pi}{4}$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Use formula $\tan^{-1} a + \tan^{-1} b = \tan^{-1}(\frac{a+b}{1-ab})$:</p>
-                    <p>$$ = \tan^{-1}\left(\frac{1/2 + 1/3}{1 - (1/2)(1/3)}\right) $$</p>
-                    <p>$$ = \tan^{-1}\left(\frac{5/6}{5/6}\right) = \tan^{-1}(1) = \frac{\pi}{4} $$</p>
+                    <p>$$ \begin{aligned} &= \tan^{-1}\left(\frac{1/2 + 1/3}{1 - (1/2)(1/3)}\right) \\ &= \tan^{-1}\left(\frac{5/6}{5/6}\right) = \tan^{-1}(1) = \frac{\pi}{4} \end{aligned} $$</p>
                 </div>
                 <div class="example-card">
                     <h4>Example 3</h4>
@@ -791,62 +881,90 @@
                     <p>Find value: $\tan^{-1}(1)$</p>
                     <p><strong>Solution:</strong></p>
                     <p>Find angle where tangent is 1.</p>
-                    <p>$$ \tan\left(\frac{\pi}{4}\right) = 1 $$</p>
-                    <p>$$ \implies \tan^{-1}(1) = \frac{\pi}{4} $$</p>
+                    <p>$$ \begin{aligned} \tan\left(\frac{\pi}{4}\right) &= 1 \\ \implies \tan^{-1}(1) &= \frac{\pi}{4} \end{aligned} $$</p>
                 </div>
             </div>
         </section>
 
-        <!-- Interactive Lab -->
+        <!-- Advanced Versatile Interactive Lab -->
         <section class="lab-section">
             <div class="lab-header">
-                <h2>Interactive Lab: Mega Trigonometry Tool</h2>
-                <p>ઇન્ટરેક્ટિવ પ્રયોગશાળા: મેગા ત્રિકોણમિતિ સાધન</p>
+                <h2>Interactive Lab: Universal Trigonometry Toolkit</h2>
+                <p>ઇન્ટરેક્ટિવ પ્રયોગશાળા: યુનિવર્સલ ત્રિકોણમિતિ ટૂલકિટ</p>
             </div>
 
             <div class="calculator-grid">
                 
-                <!-- Calc 1: Basic Trig -->
+                <!-- Tool 1: Angle Converter -->
                 <div class="input-group">
-                    <h3 style="color: var(--primary);">1. Basic Trigonometry</h3>
-                    <p style="font-size: 0.9rem; margin-bottom:10px;">મૂળભૂત ત્રિકોણમિતિ</p>
-                    <label>
-                        Angle ($\theta$) in Degrees:
-                        <br>
-                        <input type="number" id="trig-angle" value="45">
-                    </label>
-                    <button class="btn-calc" onclick="solveTrig()">Calculate (ગણતરી કરો)</button>
-                </div>
-
-                <!-- Calc 2: Inverse Trig -->
-                <div class="input-group alt1">
-                    <h3 style="color: var(--secondary);">2. Inverse Trigonometry</h3>
-                    <p style="font-size: 0.9rem; margin-bottom:10px;">ત્રિકોણમિતિય પ્રતિવિધેય</p>
-                    <label>
-                        Input Ratio (Value):
-                        <br>
-                        <input type="number" step="0.1" id="inv-val" value="0.5">
-                    </label>
-                    <button class="btn-calc alt1" onclick="solveInverse()">Calculate (ગણતરી કરો)</button>
-                </div>
-
-                <!-- Calc 3: Compound Angle -->
-                <div class="input-group alt2">
-                    <h3 style="color: var(--accent);">3. Compound Angle $\sin(A+B)$</h3>
-                    <p style="font-size: 0.9rem; margin-bottom:10px;">સંયુક્ત ખૂણાઓ</p>
-                    <div>
-                        <input type="number" id="comp-a" value="30" placeholder="A&deg;">
-                        <input type="number" id="comp-b" value="45" placeholder="B&deg;">
+                    <h3 style="color: var(--primary);">1. Universal Angle Converter</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">ખૂણાના એકમોનું રૂપાંતરણ</p>
+                    <div class="flex-container">
+                        <input type="number" id="conv-val" value="180">
+                        <select id="conv-type">
+                            <option value="d2r">Degrees to Radians</option>
+                            <option value="r2d">Radians to Degrees</option>
+                        </select>
                     </div>
-                    <button class="btn-calc alt2" onclick="solveCompound()">Calculate (ગણતરી કરો)</button>
+                    <button class="btn-calc" onclick="solveConverter()">Convert (રૂપાંતરિત કરો)</button>
+                </div>
+
+                <!-- Tool 2: Master Trigonometric Evaluator -->
+                <div class="input-group alt1">
+                    <h3 style="color: var(--secondary);">2. Master Trig Evaluator</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">તમામ ૬ ત્રિકોણમિતિય વિધેયો</p>
+                    <div class="flex-container">
+                        <input type="number" step="0.1" id="master-angle" value="60">
+                        <select id="master-unit">
+                            <option value="deg">Degrees (&deg;)</option>
+                            <option value="rad">Radians (rad)</option>
+                        </select>
+                    </div>
+                    <button class="btn-calc alt1" onclick="solveMasterTrig()">Calculate (ગણતરી કરો)</button>
+                </div>
+
+                <!-- Tool 3: Dynamic Compound Angle -->
+                <div class="input-group alt2">
+                    <h3 style="color: var(--accent);">3. Dynamic Compound Angles</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">સંયુક્ત ખૂણાના સૂત્રો</p>
+                    <div class="flex-container">
+                        <input type="number" id="dyn-a" value="45" placeholder="A&deg;">
+                        <select id="dyn-op">
+                            <option value="sin+">sin(A + B)</option>
+                            <option value="sin-">sin(A - B)</option>
+                            <option value="cos+">cos(A + B)</option>
+                            <option value="cos-">cos(A - B)</option>
+                            <option value="tan+">tan(A + B)</option>
+                            <option value="tan-">tan(A - B)</option>
+                        </select>
+                        <input type="number" id="dyn-b" value="30" placeholder="B&deg;">
+                    </div>
+                    <button class="btn-calc alt2" onclick="solveCompoundAdvanced()">Evaluate (ઉકેલો)</button>
+                </div>
+                
+                <!-- Tool 4: Sum & Factor Formulas -->
+                <div class="input-group alt3">
+                    <h3 style="color: var(--violet);">4. Sum & Factor Transformation</h3>
+                    <p style="font-size: 0.9rem; margin-bottom:10px;">સરવાળા/બાદબાકી થી ગુણાકાર</p>
+                    <div class="flex-container">
+                        <input type="number" id="sf-c" value="60" placeholder="C&deg;">
+                        <select id="sf-op">
+                            <option value="s+s">sin C + sin D</option>
+                            <option value="s-s">sin C - sin D</option>
+                            <option value="c+c">cos C + cos D</option>
+                            <option value="c-c">cos C - cos D</option>
+                        </select>
+                        <input type="number" id="sf-d" value="30" placeholder="D&deg;">
+                    </div>
+                    <button class="btn-calc alt3" onclick="solveSumFactor()">Transform (પરિવર્તિત કરો)</button>
                 </div>
 
             </div>
             
             <!-- Universal Output Box -->
             <div class="lab-output" id="solution-box">
-                <em>Enter values in any of the calculators above and click calculate to see step-by-step solutions with MathJax rendering here.</em><br>
-                <em style="color: #64748b; font-size:0.9rem;">અહીં સ્ટેપ-બાય-સ્ટેપ ઉકેલ જોવા માટે કોઈપણ કેલ્ક્યુલેટરમાં કિંમતો દાખલ કરો અને ગણતરી કરો બટન દબાવો.</em>
+                <em>Select a tool above, enter your values, and click the button to generate a dynamic step-by-step MathJax solution in exact fractional (p/q) form.</em><br>
+                <em style="color: #64748b; font-size:0.9rem;">અહીં સ્ટેપ-બાય-સ્ટેપ અપૂર્ણાંક ઉકેલ જોવા માટે કોઈપણ કેલ્ક્યુલેટરમાં કિંમતો દાખલ કરો અને બટન દબાવો.</em>
             </div>
         </section>
 
@@ -857,7 +975,7 @@
         <div style="flex: 1; text-align: left;">
             <span style="color: white; background: var(--primary); padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
                 Page Visits: 
-                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FYOUR_PAGE_NAME&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="height: 20px;">
+                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2FUnit2&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="height: 20px;">
             </span>
         </div>
 
@@ -877,163 +995,300 @@
 
     <!-- Interactive JavaScript Logic -->
     <script>
-        // Visit Counter Logic
-        document.addEventListener("DOMContentLoaded", () => {
-            let visits = localStorage.getItem("trig_page_visits");
-            if (!visits) visits = 0;
-            visits = parseInt(visits) + 1;
-            localStorage.setItem("trig_page_visits", visits);
-            document.getElementById("visit-counter").innerText = visits;
-        });
-
-        // ============================================
-        // 1. Basic Trigonometry Calculator
-        // ============================================
-        function solveTrig() {
-            const angleDeg = parseFloat(document.getElementById('trig-angle').value);
-
-            if (isNaN(angleDeg)) {
-                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter a valid number for the angle.</p>`);
-                return;
-            }
-
-            const pi = Math.PI;
-            const angleRad = (angleDeg * pi) / 180;
-            const sinVal = Math.sin(angleRad);
-            const cosVal = Math.cos(angleRad);
-            const tanVal = Math.abs(cosVal) < 1e-10 ? "Undefined" : Math.tan(angleRad);
-
-            const solutionHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">Step-by-Step Solution: Basic Trigonometry / સંપૂર્ણ ઉકેલ:</h3>
-                
-                <p><strong>Step 1: Convert Degree to Radian / અંશને રેડિયનમાં ફેરવો</strong></p>
-                <p>Formula (સૂત્ર): \\( \\text{Radian} = \\text{Degree} \\times \\frac{\\pi}{180} \\)</p>
-                <p>\\( = ${angleDeg} \\times \\frac{\\pi}{180} \\)</p>
-                <p>\\( = ${formatNumber(angleRad)} \\text{ rad} \\)</p>
-                
-                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
-                
-                <p><strong>Step 2: Calculate Functions / વિધેયોની ગણતરી કરો</strong></p>
-                <p><strong>1. Sine (સાઈન):</strong> \\( \\sin(${angleDeg}^\\circ) = ${formatNumber(sinVal)} \\)</p>
-                <p><strong>2. Cosine (કોસાઈન):</strong> \\( \\cos(${angleDeg}^\\circ) = ${formatNumber(cosVal)} \\)</p>
-                <p><strong>3. Tangent (ટેન્જેન્ટ):</strong> \\( \\tan(${angleDeg}^\\circ) = ${typeof tanVal === 'string' ? tanVal : formatNumber(tanVal)} \\)</p>
-            `;
-
-            renderMath(solutionHTML);
-        }
-
-        // ============================================
-        // 2. Inverse Trigonometry Calculator
-        // ============================================
-        function solveInverse() {
-            const val = parseFloat(document.getElementById('inv-val').value);
-
-            if (isNaN(val)) {
-                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter a valid number.</p>`);
-                return;
-            }
-
-            let solutionHTML = `<h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution: Inverse Trigonometry / સંપૂર્ણ ઉકેલ:</h3>`;
-            
-            solutionHTML += `<p><strong>Step 1: Given Value / આપેલ કિંમત:</strong> \\( x = ${val} \\)</p> <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
-
-            // Arcsin and Arccos are only valid between -1 and 1
-            if (val >= -1 && val <= 1) {
-                const asinRad = Math.asin(val);
-                const acosRad = Math.acos(val);
-                
-                solutionHTML += `
-                    <p><strong>Step 2: Inverse Sine (Arcsin)</strong></p>
-                    <p>\\( \\sin^{-1}(${val}) = ${formatNumber(asinRad)} \\text{ rad} \\) OR \\( ${formatNumber(asinRad * 180 / Math.PI)}^\\circ \\)</p>
-                    <br>
-                    <p><strong>Step 3: Inverse Cosine (Arccos)</strong></p>
-                    <p>\\( \\cos^{-1}(${val}) = ${formatNumber(acosRad)} \\text{ rad} \\) OR \\( ${formatNumber(acosRad * 180 / Math.PI)}^\\circ \\)</p>
-                `;
-            } else {
-                solutionHTML += `
-                    <p style="color: red;"><strong>Note:</strong> \\( \\sin^{-1}(x) \\) and \\( \\cos^{-1}(x) \\) are undefined for \\( x < -1 \\) or \\( x > 1 \\). (અવ્યાખ્યાયિત)</p>
-                `;
-            }
-
-            // Arctan is valid for all real numbers
-            const atanRad = Math.atan(val);
-            solutionHTML += `
-                <br>
-                <p><strong>Step 4: Inverse Tangent (Arctan)</strong></p>
-                <p>\\( \\tan^{-1}(${val}) = ${formatNumber(atanRad)} \\text{ rad} \\) OR \\( ${formatNumber(atanRad * 180 / Math.PI)}^\\circ \\)</p>
-            `;
-
-            renderMath(solutionHTML);
-        }
-
-        // ============================================
-        // 3. Compound Angle Calculator (Sin(A+B))
-        // ============================================
-        function solveCompound() {
-            const A = parseFloat(document.getElementById('comp-a').value);
-            const B = parseFloat(document.getElementById('comp-b').value);
-
-            if (isNaN(A) || isNaN(B)) {
-                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter valid numbers for angles A and B.</p>`);
-                return;
-            }
-
-            const radA = A * Math.PI / 180;
-            const radB = B * Math.PI / 180;
-
-            const sinA = Math.sin(radA);
-            const cosB = Math.cos(radB);
-            const cosA = Math.cos(radA);
-            const sinB = Math.sin(radB);
-
-            const result = (sinA * cosB) + (cosA * sinB);
-
-            const solutionHTML = `
-                <h3 style="color: var(--accent); margin-bottom: 1rem;">Step-by-Step Solution: Compound Angle / સંપૂર્ણ ઉકેલ:</h3>
-                
-                <p><strong>Step 1: Write down the formula / સૂત્ર લખો</strong></p>
-                <p>\\( \\sin(A + B) = \\sin A \\cos B + \\cos A \\sin B \\)</p>
-                
-                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
-                
-                <p><strong>Step 2: Substitute the angles / ખૂણાની કિંમત મૂકો</strong></p>
-                <p>Where \\( A = ${A}^\\circ \\) and \\( B = ${B}^\\circ \\)</p>
-                <p>\\( \\sin(${A}^\\circ + ${B}^\\circ) = \\sin(${A}^\\circ) \\cos(${B}^\\circ) + \\cos(${A}^\\circ) \\sin(${B}^\\circ) \\)</p>
-                
-                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
-                
-                <p><strong>Step 3: Calculate Individual Trigonometric Values / વ્યક્તિગત ત્રિકોણમિતિય કિંમતો શોધો</strong></p>
-                <p>\\( \\sin(${A}^\\circ) = ${formatNumber(sinA)} \\)</p>
-                <p>\\( \\cos(${B}^\\circ) = ${formatNumber(cosB)} \\)</p>
-                <p>\\( \\cos(${A}^\\circ) = ${formatNumber(cosA)} \\)</p>
-                <p>\\( \\sin(${B}^\\circ) = ${formatNumber(sinB)} \\)</p>
-                
-                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
-                
-                <p><strong>Step 4: Multiply and Add / ગુણાકાર કરી સરવાળો કરો</strong></p>
-                <p>\\( = (${formatNumber(sinA)} \\times ${formatNumber(cosB)}) + (${formatNumber(cosA)} \\times ${formatNumber(sinB)}) \\)</p>
-                <p>\\( = ${formatNumber(sinA * cosB)} + ${formatNumber(cosA * sinB)} \\)</p>
-                
-                <p><strong>Final Answer (અંતિમ જવાબ):</strong></p>
-                <p>\\( \\sin(${A + B}^\\circ) = ${formatNumber(result)} \\)</p>
-            `;
-
-            renderMath(solutionHTML);
-        }
-
-        // Utility to format numbers cleanly
-        function formatNumber(num) {
-            if (Math.abs(num) < 1e-10) return "0";
-            return num.toFixed(4);
-        }
-
-        // Render MathJax dynamically
         function renderMath(htmlContent) {
             const outputBox = document.getElementById('solution-box');
             outputBox.innerHTML = htmlContent;
             if (window.MathJax) {
                 MathJax.typesetPromise([outputBox]).catch((err) => console.log('MathJax error: ', err.message));
             }
+        }
+
+        // ============================================
+        // Decimal to Fractional / Exact Trig Engine
+        // ============================================
+        function toFraction(num) {
+            if (Math.abs(num) < 1e-7) return "0";
+            if (Math.abs(Math.abs(num) - 1) < 1e-7) return num > 0 ? "1" : "-1";
+            
+            const sign = num < 0 ? "-" : "";
+            const val = Math.abs(num);
+            const eps = 1e-5; 
+            
+            // Exact Standard Trig Values
+            if (Math.abs(val - 0.5) < eps) return sign + "\\frac{1}{2}";
+            if (Math.abs(val - Math.sqrt(3)/2) < eps) return sign + "\\frac{\\sqrt{3}}{2}";
+            if (Math.abs(val - 1/Math.sqrt(2)) < eps) return sign + "\\frac{1}{\\sqrt{2}}";
+            if (Math.abs(val - Math.sqrt(3)) < eps) return sign + "\\sqrt{3}";
+            if (Math.abs(val - 1/Math.sqrt(3)) < eps) return sign + "\\frac{1}{\\sqrt{3}}";
+            if (Math.abs(val - 2/Math.sqrt(3)) < eps) return sign + "\\frac{2}{\\sqrt{3}}";
+            if (Math.abs(val - Math.sqrt(2)) < eps) return sign + "\\sqrt{2}";
+            if (Math.abs(val - 2) < eps) return sign + "2";
+
+            // Compound Angle Intermediate & Final Values
+            if (Math.abs(val - Math.sqrt(3)/(2*Math.sqrt(2))) < eps) return sign + "\\frac{\\sqrt{3}}{2\\sqrt{2}}";
+            if (Math.abs(val - 1/(2*Math.sqrt(2))) < eps) return sign + "\\frac{1}{2\\sqrt{2}}";
+            if (Math.abs(val - (Math.sqrt(3)+1)/(2*Math.sqrt(2))) < eps) return sign + "\\frac{\\sqrt{3}+1}{2\\sqrt{2}}";
+            if (Math.abs(val - (Math.sqrt(3)-1)/(2*Math.sqrt(2))) < eps) return sign + "\\frac{\\sqrt{3}-1}{2\\sqrt{2}}";
+            if (Math.abs(val - (Math.sqrt(3)/4)) < eps) return sign + "\\frac{\\sqrt{3}}{4}";
+            if (Math.abs(val - (2 + Math.sqrt(3))) < eps) return sign + "(2+\\sqrt{3})";
+            if (Math.abs(val - (2 - Math.sqrt(3))) < eps) return sign + "(2-\\sqrt{3})";
+            
+            // Tangent Intermediate additions
+            if (Math.abs(val - (1 + 1/Math.sqrt(3))) < eps) return sign + "\\frac{\\sqrt{3}+1}{\\sqrt{3}}";
+            if (Math.abs(val - (1 - 1/Math.sqrt(3))) < eps) return sign + "\\frac{\\sqrt{3}-1}{\\sqrt{3}}";
+            if (Math.abs(val - (Math.sqrt(3) + 1)) < eps) return sign + "(\\sqrt{3}+1)";
+            if (Math.abs(val - (Math.sqrt(3) - 1)) < eps) return sign + "(\\sqrt{3}-1)";
+            
+            // Use continuous fraction for standard rational numbers
+            const tolerance = 1.0E-6;
+            let h1=1, h2=0, k1=0, k2=1;
+            let b = val;
+            do {
+                let a = Math.floor(b);
+                let aux = h1; h1 = a*h1+h2; h2 = aux;
+                aux = k1; k1 = a*k1+k2; k2 = aux;
+                b = 1/(b-a);
+            } while (Math.abs(val-h1/k1) > val*tolerance);
+
+            if (k1 === 1) return sign + h1;
+            if (k1 <= 100) return sign + `\\frac{${h1}}{${k1}}`;
+            
+            // Fallback for extremely complex numbers (avoids huge fractions)
+            return sign + val.toFixed(4); 
+        }
+
+        // Greatest Common Divisor for fraction reduction
+        function gcd(a, b) {
+            return b ? gcd(b, a % b) : Math.abs(a);
+        }
+
+        // ============================================
+        // 1. Universal Angle Converter
+        // ============================================
+        function solveConverter() {
+            const val = parseFloat(document.getElementById('conv-val').value);
+            const type = document.getElementById('conv-type').value;
+
+            if (isNaN(val)) {
+                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter a valid number.</p>`);
+                return;
+            }
+
+            let html = `<h3 style="color: var(--primary); margin-bottom: 1rem;">Step-by-Step Solution: Angle Conversion</h3>`;
+            
+            if (type === 'd2r') {
+                const radDec = (val * Math.PI) / 180;
+                const div = gcd(val, 180);
+                const num = val / div;
+                const den = 180 / div;
+                const fractionStr = (num === 1 ? "\\pi" : num + "\\pi") + (den === 1 ? "" : " / " + den);
+
+                html += `
+                    <p><strong>Conversion: Degrees to Radians</strong></p>
+                    <p>Formula: \\( \\text{Radian} = \\text{Degree} \\times \\frac{\\pi}{180^\\circ} \\)</p>
+                    <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
+                    <p>\\( = ${val}^\\circ \\times \\frac{\\pi}{180^\\circ} \\)</p>
+                    <p>\\( = \\frac{${val}\\pi}{180} \\)</p>
+                    <p><strong>Final Answer:</strong></p>
+                    <p>\\( = \\frac{${num}\\pi}{${den}} \\text{ radians} \\) OR \\( \\approx ${radDec.toFixed(4)} \\text{ rad} \\)</p>
+                `;
+            } else {
+                const deg = (val * 180) / Math.PI;
+                html += `
+                    <p><strong>Conversion: Radians to Degrees</strong></p>
+                    <p>Formula: \\( \\text{Degree} = \\text{Radian} \\times \\frac{180^\\circ}{\\pi} \\)</p>
+                    <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
+                    <p>\\( = ${val} \\times \\frac{180^\\circ}{\\pi} \\)</p>
+                    <p><strong>Final Answer:</strong></p>
+                    <p>\\( = ${deg.toFixed(4)}^\\circ \\)</p>
+                `;
+            }
+            renderMath(html);
+        }
+
+        // ============================================
+        // 2. Master Trigonometric Evaluator
+        // ============================================
+        function solveMasterTrig() {
+            const val = parseFloat(document.getElementById('master-angle').value);
+            const unit = document.getElementById('master-unit').value;
+
+            if (isNaN(val)) {
+                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter a valid number.</p>`);
+                return;
+            }
+
+            let rad = val;
+            let displayStr = `${val} \\text{ rad}`;
+            
+            if (unit === 'deg') {
+                rad = (val * Math.PI) / 180;
+                displayStr = `${val}^\\circ`;
+            }
+
+            const sinV = Math.sin(rad);
+            const cosV = Math.cos(rad);
+            
+            // Handle near zero for division
+            const isCosZero = Math.abs(cosV) < 1e-10;
+            const isSinZero = Math.abs(sinV) < 1e-10;
+
+            const tanV = isCosZero ? "\\infty \\text{ (Undefined)}" : toFraction(sinV / cosV);
+            const secV = isCosZero ? "\\infty \\text{ (Undefined)}" : toFraction(1 / cosV);
+            const cscV = isSinZero ? "\\infty \\text{ (Undefined)}" : toFraction(1 / sinV);
+            const cotV = isSinZero ? "\\infty \\text{ (Undefined)}" : toFraction(cosV / sinV);
+
+            let html = `
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Step-by-Step Solution: Master Trig Evaluator</h3>
+                <p><strong>Angle Evaluated:</strong> \\( \\theta = ${displayStr} \\)</p>
+                <hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <p><strong>Sine:</strong> \\( \\sin(${displayStr}) = ${toFraction(sinV)} \\)</p>
+                        <p><strong>Cosine:</strong> \\( \\cos(${displayStr}) = ${toFraction(cosV)} \\)</p>
+                        <p><strong>Tangent:</strong> \\( \\tan(${displayStr}) = ${tanV} \\)</p>
+                    </div>
+                    <div>
+                        <p><strong>Cosecant:</strong> \\( \\csc(${displayStr}) = ${cscV} \\)</p>
+                        <p><strong>Secant:</strong> \\( \\sec(${displayStr}) = ${secV} \\)</p>
+                        <p><strong>Cotangent:</strong> \\( \\cot(${displayStr}) = ${cotV} \\)</p>
+                    </div>
+                </div>
+            `;
+            renderMath(html);
+        }
+
+        // ============================================
+        // 3. Dynamic Compound Angle
+        // ============================================
+        function solveCompoundAdvanced() {
+            const A = parseFloat(document.getElementById('dyn-a').value);
+            const B = parseFloat(document.getElementById('dyn-b').value);
+            const op = document.getElementById('dyn-op').value;
+
+            if (isNaN(A) || isNaN(B)) {
+                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter valid numbers.</p>`);
+                return;
+            }
+
+            const radA = A * Math.PI / 180;
+            const radB = B * Math.PI / 180;
+
+            const sinA = Math.sin(radA); const cosA = Math.cos(radA); const tanA = Math.tan(radA);
+            const sinB = Math.sin(radB); const cosB = Math.cos(radB); const tanB = Math.tan(radB);
+
+            let html = `<h3 style="color: var(--accent); margin-bottom: 1rem;">Step-by-Step Solution: Compound Angles</h3>`;
+            html += `<p>Where \\( A = ${A}^\\circ \\) and \\( B = ${B}^\\circ \\)</p><hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            let formula, step1, step2, finalRes;
+
+            switch(op) {
+                case "sin+":
+                    formula = "\\sin(A + B) = \\sin A \\cos B + \\cos A \\sin B";
+                    step1 = `\\left(${toFraction(sinA)}\\right)\\left(${toFraction(cosB)}\\right) + \\left(${toFraction(cosA)}\\right)\\left(${toFraction(sinB)}\\right)`;
+                    step2 = `${toFraction(sinA*cosB)} + ${toFraction(cosA*sinB)}`;
+                    finalRes = toFraction((sinA*cosB) + (cosA*sinB));
+                    break;
+                case "sin-":
+                    formula = "\\sin(A - B) = \\sin A \\cos B - \\cos A \\sin B";
+                    step1 = `\\left(${toFraction(sinA)}\\right)\\left(${toFraction(cosB)}\\right) - \\left(${toFraction(cosA)}\\right)\\left(${toFraction(sinB)}\\right)`;
+                    step2 = `${toFraction(sinA*cosB)} - ${toFraction(cosA*sinB)}`;
+                    finalRes = toFraction((sinA*cosB) - (cosA*sinB));
+                    break;
+                case "cos+":
+                    formula = "\\cos(A + B) = \\cos A \\cos B - \\sin A \\sin B";
+                    step1 = `\\left(${toFraction(cosA)}\\right)\\left(${toFraction(cosB)}\\right) - \\left(${toFraction(sinA)}\\right)\\left(${toFraction(sinB)}\\right)`;
+                    step2 = `${toFraction(cosA*cosB)} - ${toFraction(sinA*sinB)}`;
+                    finalRes = toFraction((cosA*cosB) - (sinA*sinB));
+                    break;
+                case "cos-":
+                    formula = "\\cos(A - B) = \\cos A \\cos B + \\sin A \\sin B";
+                    step1 = `\\left(${toFraction(cosA)}\\right)\\left(${toFraction(cosB)}\\right) + \\left(${toFraction(sinA)}\\right)\\left(${toFraction(sinB)}\\right)`;
+                    step2 = `${toFraction(cosA*cosB)} + ${toFraction(sinA*sinB)}`;
+                    finalRes = toFraction((cosA*cosB) + (sinA*sinB));
+                    break;
+                case "tan+":
+                    formula = "\\tan(A + B) = \\frac{\\tan A + \\tan B}{1 - \\tan A \\tan B}";
+                    step1 = `\\frac{${toFraction(tanA)} + ${toFraction(tanB)}}{1 - \\left(${toFraction(tanA)}\\right)\\left(${toFraction(tanB)}\\right)}`;
+                    step2 = `\\frac{${toFraction(tanA+tanB)}}{1 - ${toFraction(tanA*tanB)}}`;
+                    finalRes = toFraction((tanA+tanB)/(1 - (tanA*tanB)));
+                    break;
+                case "tan-":
+                    formula = "\\tan(A - B) = \\frac{\\tan A - \\tan B}{1 + \\tan A \\tan B}";
+                    step1 = `\\frac{${toFraction(tanA)} - ${toFraction(tanB)}}{1 + \\left(${toFraction(tanA)}\\right)\\left(${toFraction(tanB)}\\right)}`;
+                    step2 = `\\frac{${toFraction(tanA-tanB)}}{1 + ${toFraction(tanA*tanB)}}`;
+                    finalRes = toFraction((tanA-tanB)/(1 + (tanA*tanB)));
+                    break;
+            }
+
+            html += `
+                <p><strong>Formula:</strong> \\( ${formula} \\)</p>
+                <p><strong>Substitute exact fractional values:</strong></p>
+                <p>\\( = ${step1} \\)</p>
+                <p>\\( = ${step2} \\)</p>
+                <p><strong>Final Answer:</strong></p>
+                <p>\\( = ${finalRes} \\)</p>
+            `;
+            renderMath(html);
+        }
+
+        // ============================================
+        // 4. Sum & Factor Formulas (C & D)
+        // ============================================
+        function solveSumFactor() {
+            const C = parseFloat(document.getElementById('sf-c').value);
+            const D = parseFloat(document.getElementById('sf-d').value);
+            const op = document.getElementById('sf-op').value;
+
+            if (isNaN(C) || isNaN(D)) {
+                renderMath(`<p style="color: red;"><strong>Error:</strong> Please enter valid numbers.</p>`);
+                return;
+            }
+
+            const sumHalf = (C + D) / 2;
+            const diffHalf = (C - D) / 2;
+
+            let html = `<h3 style="color: var(--violet); margin-bottom: 1rem;">Step-by-Step Solution: Factor Formulas</h3>`;
+            html += `<p>Where \\( C = ${C}^\\circ \\) and \\( D = ${D}^\\circ \\)</p><hr style="border: 0; border-bottom: 1px solid var(--border); margin: 15px 0;">`;
+
+            let formula, step1;
+
+            switch(op) {
+                case "s+s":
+                    formula = "\\sin C + \\sin D = 2\\sin\\left(\\frac{C+D}{2}\\right)\\cos\\left(\\frac{C-D}{2}\\right)";
+                    step1 = `2\\sin\\left(\\frac{${C}+${D}}{2}\\right)\\cos\\left(\\frac{${C}-${D}}{2}\\right)`;
+                    html += `<p><strong>Formula:</strong> \\( ${formula} \\)</p>`;
+                    html += `<p>\\( = ${step1} \\)</p>`;
+                    html += `<p><strong>Final Factored Form:</strong></p>`;
+                    html += `<p>\\( = 2\\sin(${sumHalf}^\\circ)\\cos(${diffHalf}^\\circ) \\)</p>`;
+                    break;
+                case "s-s":
+                    formula = "\\sin C - \\sin D = 2\\cos\\left(\\frac{C+D}{2}\\right)\\sin\\left(\\frac{C-D}{2}\\right)";
+                    step1 = `2\\cos\\left(\\frac{${C}+${D}}{2}\\right)\\sin\\left(\\frac{${C}-${D}}{2}\\right)`;
+                    html += `<p><strong>Formula:</strong> \\( ${formula} \\)</p>`;
+                    html += `<p>\\( = ${step1} \\)</p>`;
+                    html += `<p><strong>Final Factored Form:</strong></p>`;
+                    html += `<p>\\( = 2\\cos(${sumHalf}^\\circ)\\sin(${diffHalf}^\\circ) \\)</p>`;
+                    break;
+                case "c+c":
+                    formula = "\\cos C + \\cos D = 2\\cos\\left(\\frac{C+D}{2}\\right)\\cos\\left(\\frac{C-D}{2}\\right)";
+                    step1 = `2\\cos\\left(\\frac{${C}+${D}}{2}\\right)\\cos\\left(\\frac{${C}-${D}}{2}\\right)`;
+                    html += `<p><strong>Formula:</strong> \\( ${formula} \\)</p>`;
+                    html += `<p>\\( = ${step1} \\)</p>`;
+                    html += `<p><strong>Final Factored Form:</strong></p>`;
+                    html += `<p>\\( = 2\\cos(${sumHalf}^\\circ)\\cos(${diffHalf}^\\circ) \\)</p>`;
+                    break;
+                case "c-c":
+                    formula = "\\cos C - \\cos D = -2\\sin\\left(\\frac{C+D}{2}\\right)\\sin\\left(\\frac{C-D}{2}\\right)";
+                    step1 = `-2\\sin\\left(\\frac{${C}+${D}}{2}\\right)\\sin\\left(\\frac{${C}-${D}}{2}\\right)`;
+                    html += `<p><strong>Formula:</strong> \\( ${formula} \\)</p>`;
+                    html += `<p>\\( = ${step1} \\)</p>`;
+                    html += `<p><strong>Final Factored Form:</strong></p>`;
+                    html += `<p>\\( = -2\\sin(${sumHalf}^\\circ)\\sin(${diffHalf}^\\circ) \\)</p>`;
+                    break;
+            }
+
+            renderMath(html);
         }
     </script>
 </body>
