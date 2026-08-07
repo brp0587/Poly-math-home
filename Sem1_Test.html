@@ -63,26 +63,34 @@
         .summary-title { font-size: 1.8em; font-weight: bold; margin-bottom: 10px; }
         .summary-stats { font-size: 1.2em; margin-bottom: 15px; }
         .summary-msg { font-size: 1.1em; font-weight: bold; padding: 10px; border-radius: 6px; display: inline-block; }
-        @media(max-width: 768px) { body { padding: 10px; padding-bottom: 110px; } .container { padding: 15px; } .options { grid-template-columns: 1fr; } }
-        @media(min-width: 769px) { .action-buttons-container { flex-direction: row; } }
-        @media print { body { background: #fff; padding: 0; color: #000; } .container { box-shadow: none; margin: 0; padding: 0; } .controls, .action-buttons-container, .page-, #timer-display, nav { display: none !important; } .question-block { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; } }
         
-        .page- {
+        /* Updated Footer CSS to match the image */
+        .page-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 2rem;
             background-color: #0F172A;
-            color: #9CA3AF;
             border-top: 4px solid #2563EB;
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin-top: 3rem;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        .page- .copyright { text-align: right; line-height: 1.5; }
-        @media (max-width: 768px) { 
-            .page-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
-            .page-footer .copyright { text-align: center; }
+
+        .footer-left, .footer-center, .footer-right {
+            flex: 1;
         }
+
+        @media(max-width: 768px) { 
+            body { padding: 10px; padding-bottom: 110px; } 
+            .container { padding: 15px; } 
+            .options { grid-template-columns: 1fr; } 
+            .page-footer { flex-direction: column; text-align: center; }
+            .footer-left, .footer-center, .footer-right { text-align: center !important; justify-content: center; display: flex; width: 100%; }
+        }
+        @media(min-width: 769px) { .action-buttons-container { flex-direction: row; } }
+        @media print { body { background: #fff; padding: 0; color: #000; } .container { box-shadow: none; margin: 0; padding: 0; } .controls, .action-buttons-container, .page-footer, #timer-display, nav { display: none !important; } .question-block { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; } }
     </style>
 </head>
 <body>
@@ -144,18 +152,25 @@
 </div>
 
 <footer class="page-footer">
-    <div class="visit-counter" style="margin-bottom: 5px;">
-        This Page Visits: 
-        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2Fpractice-test&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="vertical-align: middle;">
+    <!-- Left Side: Individual Page Visits -->
+    <div class="footer-left" style="text-align: left;">
+        <span style="color: white; background: #2563eb; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
+            Page Visits: 
+            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io%2Fpractice-test&labelColor=%230F172A&countColor=%2310B981&style=flat" alt="Page Counter" style="height: 20px;">
+        </span>
     </div>
 
-    <div class="visit-counter" style="margin-bottom: 15px;">
-        Total Site Visits: 
-        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="vertical-align: middle;">
+    <!-- Center: Global Site Visits -->
+    <div class="footer-center" style="text-align: center;">
+        <span style="color: white; background: #1e293b; border: 1px solid #475569; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+            Total Site Visits: 
+            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fbrp0587.github.io&labelColor=%230F172A&countColor=%23A855F7&style=flat" alt="Global Counter" style="height: 20px;">
+        </span>
     </div>
-    
-    <div class="copyright">
-        &copy; Prepared by Bhavin R Patel, Lecturer Mathematics
+
+    <!-- Right Side: Copyright -->
+    <div class="footer-right" style="text-align: right; font-weight: bold; color: #f59e0b;">
+        Prepared by Bhavin R Patel, Lecturer Mathematics
     </div>
 </footer>
     
